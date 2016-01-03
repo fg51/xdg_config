@@ -1,0 +1,35 @@
+
+"=============================================
+" NOTE: FONT
+"=============================================
+"set guifont=DejaVu\ Sans\ Mono\ 11
+set guifont=Ricty\ Diminished\ 13
+
+
+
+"=============================================
+" NOTE: MENU DISPLAY
+"=============================================
+set guioptions-=m
+set guioptions-=T
+set showtabline=1
+
+
+"=============================================
+" NOTE: Better Command-line completion
+"=============================================
+set wildmenu
+
+"===================
+" NOTE: anothor buffer
+"===================
+set hidden
+
+"===================
+" NOTE: Window size
+"===================
+set lines=60
+set columns=100
+
+
+" EoF

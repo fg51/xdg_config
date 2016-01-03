@@ -1,0 +1,357 @@
+if !1 | finish | endif
+
+
+"=============================================
+" NeoBundle
+"=============================================
+if has('vim_starting')
+    if &compatible
+        set nocompatible
+    endif
+
+    set runtimepath+=~/.config/vim/bundle/neobundle.vim/
+endif
+call neobundle#begin(expand('~/.config/vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+
+NeoBundle 'https://github.com/Shougo/neocomplete.git'
+NeoBundle 'https://github.com/Shougo/neosnippet.git'
+NeoBundle 'https://github.com/Shougo/neosnippet-snippets'
+NeoBundle 'https://github.com/Shougo/unite.vim.git', {'autoload': {'commands': ['Unite']}}
+NeoBundleLazy 'https://github.com/Shougo/vimfiler.git', {'autoload': {'commands': ['VimFiler', 'VimFilerExplorer']}, 'depends': ['unite.vim']}
+NeoBundle 'https://github.com/Shougo/neomru.vim'
+NeoBundleLazy 'https://github.com/Shougo/vimshell.git', {'autoload': {'commands': ['VimShell']}}
+NeoBundleLazy 'https://github.com/Shougo/vinarise.git', {'autoload': {'commands': ['Vinarise']}}
+NeoBundleLazy 'https://github.com/thinca/vim-quickrun.git', {'autoload': {'commands': ['QuickRun']}}
+"NeoBundleLazy 'https://github.com/kelan/gyp.vim', {'autoload': {'filetypes': ['gypi']}}
+NeoBundleLazy 'https://github.com/kevinw/pyflakes-vim.git', {'autoload': {'filetypes': ['python']}}
+NeoBundle 'https://github.com/itchyny/lightline.vim'
+NeoBundleLazy 'https://github.com/sjl/gundo.vim', {'autoload': {'commands': ['GundoShow']}}
+NeoBundleLazy 'https://github.com/h1mesuke/unite-outline.git', {'autoload': {'unite_sources': ['outline']}}
+"NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
+NeoBundle 'kmnk/vim-unite-giti'
+NeoBundle 'tpope/vim-fugitive'
+"NeoBundleLazy 'https://github.com/h1mesuke/vim-alignta.git', {'autoload': {'commands': ['Alignta']}}
+NeoBundleLazy 'h1mesuke/vim-alignta', {'autoload': {'commands': ['Alignta']}}
+NeoBundleLazy 'https://github.com/yuratomo/w3m.vim', {'autoload': {'commands': ['W3m', 'W3mTab']}}
+NeoBundle 'https://github.com/tpope/vim-surround.git'
+NeoBundle 'https://github.com/kien/ctrlp.vim.git'
+
+NeoBundle 'https://github.com/Shougo/vimproc.git', {'build': {
+      \     'windows' : 'echo "Sorry, cannot update."',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak', }, }
+
+NeoBundleLazy 'https://github.com/kelan/gyp.vim', {'autoload': {'filetypes': ['gyp']}}
+"NeoBundle 'https://github.com/kelan/gyp.vim'
+
+NeoBundleLazy 'majutsushi/tagbar', {'autoload': {'commands': ['Tagbar',],},}
+
+NeoBundle 'tomasr/molokai'
+
+
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
+"----------------------------------------
+
+
+let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_cygwin = has('win32unix')
+
+
+"=============================================
+" NOTE: ENCODING
+"=============================================
+"set encoding=euc-jp
+set encoding=utf-8  "NOTE: for vim
+
+"set fileencodings=iso-2022-jp.sjis
+""set fileencoding=utf-8  "NOTE: for file
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis,utf-8
+set fileformats=unix,dos
+
+"augroup filetypedetect
+"    au BufRead,BufNewFile *.dis* setfiletype dis
+"augroup END
+
+
+"===================
+" NOTE: visual
+"===================
+syntax on
+set number
+set ruler
+set list
+"set listchars=tab:>-,extends:>,precedes:<,nbsp:%,trail:-
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
+
+
+"=============================================
+" NOTE: HIGHLIGHT SEARCH
+"=============================================
+set hlsearch
+set ignorecase
+set smartcase
+
+set incsearch
+set showmatch
+
+
+"=============================================
+" NOTE: STATUS LINE
+"=============================================
+set laststatus=2
+set statusline=%n\%y
+set statusline+=[%{(&fenc!=''?&fenc:&enc)}]
+set statusline+=[%{Getff()}]
+set statusline+=%m%r\%F%=[%l/%L]
+
+function! Getff()
+    if &ff == 'unix'
+        return 'LF'
+    elseif &ff == 'dos'
+        return 'CR+LF'
+    elseif &ff == 'mac'
+        return 'CR'
+    else
+        return '?'
+    endif
+endfunction
+
+
+
+"===================
+" NOTE: INDENT TAB
+"===================
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set smartindent
+set smarttab
+"shiftround"
+
+
+"===================
+" NOTE: Window size
+"===================
+set cmdheight=2
+
+
+"======================================
+"Sect: set backup file
+"======================================
+"if has('win32') || has('win64')
+if s:is_windows
+  set directory=c:/tmp/swap,c:/temp/swap
+  set backupdir=c:/tmp/swap,c:/temp/swap
+  set undodir=c:/tmp/undo,c:/temp/undo
+else
+  set directory=~/.cache/vim/swap
+  set backupdir=~/.cache/vim/backup
+  set undodir=~/.cache/vim/undo
+endi
+set viminfo=
+
+
+"======================================
+"Sect: TAB
+"======================================
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2   "always output tabline"
+
+
+
+
+"=============================================
+" NOTE: SCHEME
+"=============================================
+syntax on
+let g:molokai_original = 1
+colorscheme molokai
+
+
+"=============================================
+" NOTE: FOLD
+"=============================================
+set foldmethod=indent
+set foldlevel=1
+set nofoldenable
+
+
+"=============================================
+" NOTE: Others
+"=============================================
+set completeopt=menuone
+" no scrach(preview)
+
+set wrap
+set title
+
+set mouse=a
+
+set backspace=indent,eol,start
+set clipboard=unnamed,autoselect
+
+
+
+"========================================
+" NOTE: SET FILETYPE
+"========================================
+autocmd BufNewFile,BufRead *.{py} set filetype=python
+autocmd BufNewFile,BufRead *.{gyp,gypi} set filetype=gyp
+"autocmd MyAutoGroup BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+set ft=markdown
+
+
+"=============================================
+" NOTE: NEO COMPLETE
+"=============================================
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#max_list = 5
+let g:neocomplete#auto_completion_start_length = 3
+let g:neocomplete#enable_underbar_completion = 0
+let g:NeoComplete#EnableAtStartup = 1
+
+nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit
+" --------------------------------------------------
+
+
+"
+" NOTE: NEOSNIPPET
+"
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+"" SuperTab like snippets behavior.
+"imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+""
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+let g:neosnippet#snippets_directory='~/.vim/neosnippets'
+let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
+
+
+"=============================================
+" NOTE: W3C
+"=============================================
+let g:w3m#external_browser = 'firefox'
+" --------------------------------------------
+
+
+"
+" NOTE: LIGHTLINE
+"
+let g:lightline = {'colorscheme': 'solarized',
+    \ 'mode_map': {'c': 'NORMAL'},
+    \ 'active': {
+        \ 'left': [['mode', 'paste'], ['fugitive', 'filename']]
+    \ },
+    \'component_function': {
+        \ 'modified': 'MyModified',
+        \ 'readonly': 'MyReadonly',
+        \ 'fugitive': 'MyFugitive',
+        \ 'filename': 'MyFilename',
+        \ 'fileformat': 'MyFileformat',
+        \ 'filetype': 'MyFiletype',
+        \ 'fileencoding': 'MyFileencoding',
+        \ 'mode': 'MyMode'
+    \ }
+\}
+
+
+"
+"NOTE: functions for LIGHTLINE
+"
+function! MyModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      return fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+
+"======================================
+" END: LIGHTLINE
+"======================================
+

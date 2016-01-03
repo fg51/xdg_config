@@ -1,1 +1,1 @@
-# xdg_config
+# config files
