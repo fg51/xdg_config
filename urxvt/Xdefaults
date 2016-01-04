@@ -11,8 +11,8 @@ Xft.hintstyle:              hintslight
 !-------------------------------------------------------------------------------
 ! URxvt settings
 !-------------------------------------------------------------------------------
-!URxvt.depth:                32
-!URxvt.geometry:             90x30
+URxvt.depth:                32
+URxvt.geometry:             90x30
 URxvt.transparent:          false
 URxvt.fading:               0
 ! URxvt.urgentOnBell:         true
@@ -22,23 +22,27 @@ URxvt.saveLines:            10000
 URxvt.internalBorder:       3
 URxvt.lineSpace:            0
 
-!----------------------------------------
+!
 ! Fonts
-!----------------------------------------
+!
 URxvt.allow_bold:           true
-URxvt*font: xft:RictyDimished-Regular:size=9:antialias=true
-!URxvt*font: xft:SourceHanSansJP-ExtraLight:size=8:antialias=true
-URxvt*boldFont: xft:RictyDImished-Bold:size=9:antialias=true
+!URxvt*font: xft:RictyDimished-Regular:size=10:antialias=true
+!URxvt*font: xft:SourceHanSansJP-ExtraLight:size=9:antialias=true
+URxvt*font: xft:NotoSansUI-Regular:size=10:antialias=true
+!URxvt*font: xft:NotoSans-Regular:size=10:antialias=true
+!URxvt*boldFont: xft:RictyDImishedUI-Bold:size=10:antialias=true
+!URxvt*boldFont: xft:SourceHanSansJP-Bold:size=9:antialias=true
+!URxvt*boldFont: xft:NotoSansUI-Bold:size=11:antialias=true
 
-!----------------------------------------
+!
 ! Fix font space
-!----------------------------------------
-!URxvt*letterSpace: -1
+!
+URxvt*letterSpace: -1
 
 
-!----------------------------------------
+!
 ! Scrollbar
-!----------------------------------------
+!
 URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
@@ -64,20 +68,20 @@ URxvt.cursorColor:          #657b83
 URxvt.cursorUnderline:      false
 
 
-!----------------------------------------
+!
 ! Pointer
-!----------------------------------------
+!
 URxvt.pointerBlank:         true
 
-! iso 14755 disable
+!! iso 14755 disable
 URxvt*iso14755: false
 
 
-!----------------------------------------
+!
 ! transpancy
-!----------------------------------------
-! urxvt*shading: 20 
-urxvt*shading: 10
+!
+!urxvt*shading: 20 
+URxvt*shading: 10
 URxvt*inheritPixmap: true
 
 
@@ -88,43 +92,48 @@ URxvt*inheritPixmap: true
 ! ref https://github.com/brianbuccola/dotfiles/blob/master/xcolors/molokai
 ! vim: set ft=xdefaults:
 !----------------------------------------
-URxvt*background:   #000000
-URxvt*foreground:   #d0d0d0
-
+!URxvt*background:   #000000
+!URxvt*foreground:   #d0d0d0
+URxvt*background:   #002b36
+URxvt*foreground:   #657b83
+*fadeColor:#002b36
 URxvt*cursorColor:  #d0d0d0
+
+URxvt*pointercolorBackground: #586e75
+URxvt*pointercolorForeground: #93a1a1
 
 URxvt*colorBD:      #3579a8
 URxvt*colorUL:      #4eb4fa
 
-!black
+!! black
 URxvt*color0:       #000000
 URxvt*color8:       #1c1c1c
 
-!red
+!! red
 URxvt*color1:       #960050
 URxvt*color9:       #ff0090
 
-!green
+!! green
 URxvt*color2:       #66aa11
 URxvt*color10:      #80ff00
 
-!yellow
+!! yellow
 URxvt*color3:       #c47f2c
 URxvt*color11:      #ffba68
 
-!blue
+!! blue
 URxvt*color4:       #30309b
 URxvt*color12:      #5f5fee
 
-!magenta
+!! magenta
 URxvt*color5:       #7e40a5
 URxvt*color13:      #bb88dd
 
-!cyan
+!! cyan
 URxvt*color6:       #3579a8
 URxvt*color14:      #4eb4fa
 
-!white
+!! white
 URxvt*color7:       #5f5f5f
 URxvt*color15:      #d0d0d0
 

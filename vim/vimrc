@@ -272,8 +272,8 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-let g:neosnippet#snippets_directory='~/.vim/neosnippets'
-let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
+let g:neosnippet#snippets_directory='~/.config/vim/neosnippets'
+let g:neosnippet#snippets_directory='~/.config/vim/bundle/neosnippet-snippets/neosnippets'
 
 
 "=============================================

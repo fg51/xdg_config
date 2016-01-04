@@ -16,8 +16,11 @@ set -gx ANYENV_ROOT $HOME/.anyenv
 #
 set -gx PYENV_ROOT $ANYENV_ROOT/envs/pyenv
 set -gx PATH $PYENV_ROOT/shims $PYENV_ROOT/bin $PATH
-pyenv rehash >/dev/null ^&1
+#pyenv rehash >/dev/null ^&1
 
+eval (pyenv init fish)
 eval (pyenv virtualenv-init fish)
-#eval (pyenv virtualenv-init -)
+#. (pyenv init fish)
+#. (pyenv virtualenv-init fish)
+
 
