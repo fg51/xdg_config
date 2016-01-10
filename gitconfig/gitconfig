@@ -1,0 +1,11 @@
+[user]
+	name = jiita
+	email = zknsftk1msrk@gmail.com
+[alias]
+	ci = commit
+[push]
+	default = simple
+[ghq]
+	root = ~/.ghq_data
+	root = ~/.go/third_party/src
+	root = ~/.go/project/src

@@ -1,0 +1,17 @@
+[ui]
+username = jiita
+editor = vim
+#merge = vimdiff
+
+[extensions]
+graphlog =
+color =
+eol =
+histedit =
+#info = ~/.hgextentions/info.py
+#flow = ~/Dropbox/tools/hg_tool/hgflow/src/hgflow.py
+flow = $HOME/.config/mercurial/hgflow.py
+
+
+[defaults]
+#glog = --template 'changeset:   {rev}:{node|short} {tags}\nsummary:             {desc|firstline|fill68|tabindent|tabindent}\n\n'
