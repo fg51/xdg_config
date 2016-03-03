@@ -36,6 +36,24 @@ do
 end
 -- }}}
 
+
+-- add 2016.02.05
+function delay_raise ()
+    -- 5 ms ages in computer time, but I won't notice it.
+    local raise_timer = timer {timeout = 0.005}
+    raise_timer:connect_signal(
+            "timeout",
+            function()
+                if client.focus then
+                    client.focus:raise()
+                end
+                raise_timer:stop()
+    end)
+    raise_timer:start()
+end
+-- END add 2016.02.05
+
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
@@ -156,11 +174,14 @@ mytasklist.buttons = awful.util.table.join(
                                           end),
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
+                                              --if client.focus then client.focus:raise() end
+                                              delay_raise()
+
                                           end),
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
+                                              --if client.focus then client.focus:raise() end
+                                              delay_raise()
                                           end))
 
 for s = 1, screen.count() do
@@ -223,11 +244,14 @@ globalkeys = awful.util.table.join(
         function ()
             awful.client.focus.byidx( 1)
             if client.focus then client.focus:raise() end
+            delay_raise()
         end),
     awful.key({ modkey,           }, "k",
         function ()
             awful.client.focus.byidx(-1)
-            if client.focus then client.focus:raise() end
+            --if client.focus then client.focus:raise() end
+            delay_raise()
+
         end),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
@@ -240,9 +264,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
+            --if client.focus then
+            --    client.focus:raise()
+            --end
+            delay_raise()
+
         end),
 
     -- Standard program
@@ -371,6 +397,9 @@ awful.rules.rules = {
     --   properties = { tag = tags[1][2] } },
 }
 -- }}}
+
+
+
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.

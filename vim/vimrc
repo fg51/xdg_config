@@ -52,6 +52,25 @@ NeoBundleLazy 'majutsushi/tagbar', {'autoload': {'commands': ['Tagbar',],},}
 NeoBundle 'tomasr/molokai'
 
 
+" for HASKELL
+"
+NeoBundleLazy 'eagletmt/neco-ghc', {
+            \ 'autoload': { 'filetypes': ['haskell']},
+            \ }
+
+NeoBundleLazy 'osyo-manga/vim-watchdogs', {
+            \ 'autoload': { 'filetypes': ['haskell']},
+            \ }
+
+NeoBundleLazy 'ujihisa/ref-hoogle', {
+            \ 'autoload': { 'filetypes': ['haskell']},
+            \ }
+
+NeoBundleLazy 'ujihisa/unite-haskellimport', {
+            \ 'autoload': { 'filetypes': ['haskell']},
+            \ }
+
+
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
@@ -232,6 +251,12 @@ autocmd BufNewFile,BufRead *.{gyp,gypi} set filetype=gyp
 autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 set ft=markdown
 
+
+" for HASKELL
+"
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:ycm_semantic_triggers = {'haskell':['.']}
 
 "=============================================
 " NOTE: NEO COMPLETE

@@ -1,5 +1,20 @@
+set -gx PATH $HOME/.bin $PATH
+
 set -gx EDITOR vim
 set -gx SUDO_EDITOR vim
+
+set -gx CPPUTEST_HOME $HOME/.ghq_data/github.com/cpputest/cpputest
+
+alias image sxiv
+alias paraview /opt/paraview/bin/paraview
+
+
+# fix java for xmonad wmname
+set -gx wmname LG3D
+
+# fix zip for mojibake
+set -gx ZIPINFOOPT -OCP932
+set -gx UNZIPOPT -OCP932
 
 
 #
@@ -38,6 +53,11 @@ set -gx GOPATH $HOME/.go/third_party
 
 set -gx PATH $HOME/.go/third_party/bin $HOME/.go/project/bin $PATH
 
+#
+# HASKELL
+#
+# set -gx PATH $HOME/.cabal/bin $PATH
+set -gx PATH $HOME/.local/bin $PATH
 
 #
 # FUNCTIONS
@@ -51,3 +71,6 @@ function pecod
     find .| _p cd
 end
 
+function pecoghq
+    ghq list --full-path| _p cd
+end
