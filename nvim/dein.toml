@@ -119,9 +119,13 @@ hook_add = '''
     \: "\<TAB>"
 
   let g:neosnippet#enable_snipmate_compatibility = 1
-  "let g:neosnippet#disable_runtime_snippets = {'_' : 1} " for reloading directory
-  "let g:neosnippet#snippets_directory = ['~/.config/vim/snippets']
-  "let g:neosnippet#snippets_directory+=[g:dein_dir . '/github.com/Shougo/neosnippet-snippets/neosnippets']
+  let g:neosnippet#disable_runtime_snippets = {'_' : 1} " for reloading directory
+  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
+  let g:neosnippet#snippets_directory+=[g:dein_dir . '/github.com/Shougo/neosnippet-snippets/neosnippets']
+
+  if has('conceal') " For snippet_complete marker.
+    set conceallevel=2 concealcursor=i
+  endif
 '''
 
 [[plugins]]
@@ -140,18 +144,13 @@ repo = 'tpope/vim-surround'
 
 # code check {{{
 [[plugins]]
+repo = 'cohama/vim-hier'
+
+[[plugins]]
 repo = 'osyo-manga/shabadou.vim'
 
 [[plugins]]
-repo = 'cohama/vim-hier'
-
-## [[plugins]]
-## repo = 'osyo-manga/vim-watchdogs'
-## depends = ['Shougo/vimproc', 'thinca/vim-quickrun', 'osyo-manga/shabadou.vim', 'cohama/vim-hier']
-## #on_src = """
-## #
-## #"""
-# }}} code check
+repo = 'dannyob/quickfixstatus'
 
 [[plugins]]
 repo    = 'osyo-manga/vim-watchdogs'
@@ -161,33 +160,44 @@ depends = [
   'shabadou.vim',
   'vim-quickrun',
 ]
-#on_idle = 1
-# hook_add         = '''
-#   let g:quickrun_config = get(g:, 'quickrun_config', {})
-#   let g:quickrun_config['watchdogs_checker/_'] = {'outputter/quickfix/open_cmd': ''}
-#   let g:quickrun_config['watchdogs_checker/jshint'] = {'cmdopt': '--config `/.jshintrc'}
-# '''
-#hook_post_source = '''
-#  call watchdogs#setup(g:quickrun_config)
-#'''
+on_idle = 1
+hook_add         = '''
+  let g:watchdogs_check_BufWritePost_enable = 1
+  let g:watchdogs_check_CursorHold_enable = 1
+
+  let g:quickrun_config = get(g:, 'quickrun_config', {})
+  let g:quickrun_config['watchdogs_checker/jshint'] = {'cmdopt': '--config `/.jshintrc'}
+
+  let s:pyflakes = executable('pyflakes3')? 'pyflakes3':
+    \ executable('python3')? 'python3':
+    \ executable('pyflakes')? 'pyflakes':
+    \ 'python'
+  let s:cmdopt = executable('pyflakes3')? '':
+    \ executable('pyflakes')? 'pyflakes':
+    \ executable('python3')? '-m pyflakes':
+    \ executable('pyflakes')? '' :
+    \ '-m pyflakes'
+  let g:quickrun_config["watchdogs_checker/pyflakes3"] = {
+    \ "command": s:pyflakes,
+    \ "cmdopt" : s:cmdopt,
+    \ "exec": "%c %o %s:p",
+    \ "errorformat": '%f:%l:%m',
+    \ }
+  unlet s:pyflakes
+  unlet s:cmdopt
+
+  let g:quickrun_config["python/watchdogs_checker"] = {
+    \ "type": "watchdogs_checker/pyflakes3",
+    \ }
 
 
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-hook_add = '''
-  if !exists("g:quickrun_config")
-    let g:quickrun_config = {}
-  endif
-  let g:quickrun_config = {
-    \  "_" : {
-    \    "hook/shabadoubi_touch_henshin/enable" : 1,
-    \    "hook/shabadoubi_touch_henshin/wait" : 20,
-    \    "outputter/buffer/split" : ":botright 8sp",
-    \    "runner" : "vimproc",
-    \    "runner/vimproc/updatetime" : 40,
-    \  }
-    \}
 '''
+# let g:quickrun_config['watchdogs_checker/_'] = {'outputter/quickfix/open_cmd': ''}
+hook_post_source = '''
+  call watchdogs#setup(g:quickrun_config)
+'''
+# }}} code check
+
 
 # others {{{
 [[plugins]]

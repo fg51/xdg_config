@@ -184,84 +184,9 @@ set nostartofline
 
 
 
-" vim-watchdogs {{{
-if dein#tap("vim-watchdogs")
-  let g:watchdogs_check_BufWritePost_enable = 1
-  let g:watchdogs_check_CursorHold_enable = 1
-""   if !exists("g:quickrun_config")
-""     let g:quickrun_config = {}
-""   endif
-""   "" let g:quickrun_config["watchdogs_checker/_"] = {
-""   ""   \ "outputter/quickfix/open_cmd" : "",
-""   ""   \ "runner/vimproc/updatetime" : 50,
-""   ""   \ "hook/qfsigns_update/enable_exit": 1,
-""   ""   \ "hook/qfsigns_update/priority_exit": 3,
-""   ""   \}
-""   "" let s:pyflake = system('pyflakes --version 2>/dev/null')
-""   "" if s:pyflake != ""
-""   ""   let g:quickrun_config["python/watchdogs_checker"] = {
-""   ""     \ "type" : "watchdogs_checker/flake8"
-""   ""     \}
-""   "" endif
-"" 
-""   let s:pyflakes = executable('pyflakes3')? 'pyflakes3':
-""     \ executable('python3')? 'python3':
-""     \ executable('pyflakes')? 'pyflakes':
-""     \ 'python'
-""   let s:cmdopt = executable('pyflakes3')? '':
-""     \ executable('pyflakes')? 'pyflakes':
-""     \ executable('python3')? '-m pyflakes':
-""     \ executable('pyflakes')? '' :
-""     \ '-m pyflakes'
-""   let g:quickrun_config["watchdogs_checker/pyflakes3"] = {
-""     \ "command": s:pyflakes,
-""     \ "cmdopt" : s:cmdopt,
-""     \ "exec": "%c %o %s:p",
-""     \ "errorformat": '%f:%l:%m',
-""     \ }
-""   unlet s:pyflakes
-""   unlet s:cmdopt
-"" 
-""   let g:quickrun_config["python/watchdogs_checker"] = {
-""     \ "type": "watchdogs_checker/pyflakes3",
-""     \ }
-"" 
-"" 
-""   let g:quickrun_config["python/watchdogs_checker/_"] = {
-""    \ "outputter/quickfix/open_cmd" : "",
-""     \ "runner/vimproc/updatetime" : 50,
-""     \ "hook/qfsigns_update/enable_exit": 1,
-""     \ "hook/qfsigns_update/priority_exit": 3,
-""     \}
-""   "let s:pyflake = system('pyflakes --version 2>/dev/null')
-""   "" let s:is_pyflakes = executable('pyflakes')
-""   "" if s:is_pyflakes
-""   ""   let g:quickrun_config["python/watchdogs_checker"] = {
-""   ""     \ "type" : "watchdogs_checker/flake8"
-""   ""     \}
-""   "" endif
-"" 
-""   
-""   call watchdogs#setup(g:quickrun_config)
-
-
-endif
-
-" }}} vim-watchdogs
-
-
-" NEOSNIPPET {{{
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
-" }}} NEOSNIPPET
-
-
 
 " SET FILETYPE {{{
 "autocmd BufNewFile,BufRead *.{py} set filetype=python
-"autocmd myautocmd,BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
 set ft=markdown
