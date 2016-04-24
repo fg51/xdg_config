@@ -1,20 +1,36 @@
+[[plugins]]
+repo    = 'Shougo/vimfiler'
+on_cmd  = ['VimFiler', 'VimFilerExplorer']
+depends = ['unite.vim']
+hook_add = '''
+  nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit
+'''
 
-NeoBundleLazy 'https://github.com/Shougo/vimfiler.git', {
-    \ 'autoload': {'commands': ['VimFiler', 'VimFilerExplorer']},
-    \ 'depends': ['unite.vim']
-    \ }
-NeoBundleLazy 'Shougo/vimshell', {'autoload': {'commands': ['VimShell']}}
-NeoBundleLazy 'https://github.com/Shougo/vinarise.git', {'autoload': {'commands': ['Vinarise']}}
-NeoBundleLazy 'https://github.com/thinca/vim-quickrun.git', {'autoload': {'commands': ['QuickRun']}}
+[[plugins]]
+repo = 'Shougo/vimshell'
+on_cmd = ['VimShell']
 
-NeoBundleLazy 'https://github.com/sjl/gundo.vim', {'autoload': {'commands': ['GundoShow']}}
-NeoBundleLazy 'https://github.com/h1mesuke/unite-outline.git', {
-    \ 'autoload': {'unite_sources': ['outline']}}
-NeoBundleLazy 'h1mesuke/vim-alignta', {'autoload': {'commands': ['Alignta']}}
-NeoBundleLazy 'https://github.com/yuratomo/w3m.vim', {'autoload': {'commands': ['W3m', 'W3mTab']}}
+[[plugins]]
+repo = 'Shougo/vinarise'
+on_cmd = ['Vinarise']
+
+# [[plugins]]
+# repo = 'thinca/vim-quickrun'
+# on_cmd = ['QuickRun']
+
+[[plugins]]
+repo = 'sjl/gundo.vim'
+on_cmd = ['GundoShow']
 
 
-NeoBundleLazy 'majutsushi/tagbar', {'autoload': {'commands': ['Tagbar',],},}
+[[plugins]]
+repo = 'yuratomo/w3m.vim'
+on_cmd = ['W3m', 'W3mTab']
+
+
+[[plugins]]
+repo = 'h1mesuke/vim-alignta'
+on_cmd =  ['Alignta']
 
 
 # GIT {{{
@@ -24,24 +40,29 @@ on_cmd = ['Gstatus']
 # }}} GIT
 
 
-
-# PYTHON
-#
-#NeoBundleLazy 'kevinw/pyflakes-vim.git', {
-#    \ 'autoload': {'filetypes': ['python']} }
+# syntax {{{
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml']
+# }}}
 
 
 # HASKELL {{{
 [[plugins]]
 repo = 'eagletmt/neco-ghc'
 on_ft = ['haskell']
+hook_add = '''
+  let g:haskellmode_completion_ghc = 0
+  autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+  let g:ycm_semantic_triggers = {'haskell':['.']}
+'''
 
 [[plugins]]
-repo = 'ujihisa/ref-hoogle', {
+repo = 'ujihisa/ref-hoogle'
 on_ft = ['haskell']
 
 [[plugins]]
-repo = 'ujihisa/unite-haskellimport', {
+repo = 'ujihisa/unite-haskellimport'
 on_ft = ['haskell']
 # }}} HASKELL
 
@@ -70,6 +91,9 @@ on_ft = ['javascript', 'typescript', 'html']
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
 on_ft = ['typescript']
+hook_add = '''
+  let g:js_indent_typescript = 1
+'''
 
 [[plugins]]
 repo = 'Quramy/tsuquyomi'
@@ -80,3 +104,24 @@ repo  = 'clausreinke/typescript-tools'
 on_ft = ['typescript']
 
 # }}} HTML
+
+
+# others {{{
+[[plugins]]
+repo = 'chrisbra/csv.vim'
+on_ft = ['csv']
+
+
+## ## PYTHON
+## ##[[plugins]]
+## ##repo = 'kevinw/pyflakes-vim'
+## ##on_ft = ['python']
+
+## [[plugins]]
+## ##repo = 'majutsushi/tagbar'
+## #{'autoload': {'commands': ['Tagbar',]
+
+## [[plugins]]
+## repo = 'h1mesuke/unite-outline'
+## 'unite_sources': ['outline']
+
