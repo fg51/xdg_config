@@ -1,46 +1,85 @@
+#
+# fisherman
+#
+set fisher_home ~/.local/share/fisherman
+set fisher_config ~/.config/fisherman
+source $fisher_home/config.fish
+
+
+#
+# my bin path
+#
+set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.bin $PATH
-
-set -gx EDITOR vim
-set -gx SUDO_EDITOR vim
-
-set -gx CPPUTEST_HOME $HOME/.ghq_data/github.com/cpputest/cpputest
 
 alias image sxiv
 alias paraview /opt/paraview/bin/paraview
 
 
+# EDITOR
+#
+set -gx EDITOR vim
+set -gx SUDO_EDITOR vim
+
+
 # fix java for xmonad wmname
 set -gx wmname LG3D
+
 
 # fix zip for mojibake
 set -gx ZIPINFOOPT -OCP932
 set -gx UNZIPOPT -OCP932
 
 
-#
 # XDG
 #
 set -gx XDG_CONFIG_DIR $HOME/.config
 set -gx XDG_DATA_DIR $HOME/.local/sharconfig
 
 
+# GIT
 #
+
+# fish git prompt
+set __fish_git_prompt_showdirtystate 'yes'
+set __fish_git_prompt_showstashstate 'yes'
+set __fish_git_prompt_showupstream 'yes'
+set __fish_git_prompt_color_branch yellow
+
+# Status Chars
+set __fish_git_prompt_char_dirtystate '⚡'
+set __fish_git_prompt_char_stagedstate '→'
+set __fish_git_prompt_char_stashstate '↩'
+set __fish_git_prompt_char_upstream_ahead '↑'
+set __fish_git_prompt_char_upstream_behind '↓'
+
+function fish_prompt
+    set last_status $status
+    set_color $fish_color_cwd
+    printf '%s' (prompt_pwd)
+    set_color normal
+    printf '%s ' (__fish_git_prompt)
+    set_color normal
+end
+
+
+# CPPUTEST
+#
+set -gx CPPUTEST_HOME $HOME/.ghq_data/github.com/cpputest/cpputest
+
+
+
+
 # TODO: as eval "$(anyenv init -)"
 #
 set -gx ANYENV_ROOT $HOME/.anyenv
 
 
-#
 # as eval "$(pyenv init -)"
 #
 set -gx PYENV_ROOT $ANYENV_ROOT/envs/pyenv
 set -gx PATH $PYENV_ROOT/shims $PYENV_ROOT/bin $PATH
-#pyenv rehash >/dev/null ^&1
-
-eval (pyenv init fish)
-eval (pyenv virtualenv-init fish)
-#. (pyenv init fish)
-#. (pyenv virtualenv-init fish)
+status --is-interactive; and . (pyenv init -| psub); and . (pyenv virtualenv-init -| psub)
 
 
 #
@@ -50,27 +89,15 @@ eval (pyenv virtualenv-init fish)
 #set -gx GOPATH $HOME/.go/third_party $GOPATH
 #set -gx GOPATH "$HOME/.go/third_party" "$HOME/.go/project"
 set -gx GOPATH $HOME/.go/third_party
-
 set -gx PATH $HOME/.go/third_party/bin $HOME/.go/project/bin $PATH
 
-#
-# HASKELL
-#
-# set -gx PATH $HOME/.cabal/bin $PATH
-set -gx PATH $HOME/.local/bin $PATH
 
+
+# NVM
 #
-# FUNCTIONS
-#
-function _p --description 'Peco wrapper'
-    peco | read LINE
-    eval $argv[1] $LINE
+# CAUTION: require fish_pkg: bass
+function nvm_init
+    bass source $HOME/.local/share/nvm/nvm.sh
 end
 
-function pecod
-    find .| _p cd
-end
 
-function pecoghq
-    ghq list --full-path| _p cd
-end

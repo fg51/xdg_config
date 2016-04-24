@@ -12,7 +12,7 @@ endif
 " conditions
 "
 let g:is_windows = has('win32') || has('win64')
-let g:is_unix = has('')
+let g:is_unix = has('unix')
 let g:is_gui = has('gui_running')
 let g:is_teminal = !g:is_gui
 let g:is_unicode = (&termencoding ==# 'utf-8' || &encoding == 'utf-8')
@@ -77,22 +77,22 @@ set nocursorline
 "let g:cursorcolumn_flg = 0
 
 set laststatus=2
-"set statusline=%n\%y
-"set statusline+=[%{(&fenc!=''?&fenc:&enc)}]
-"set statusline+=[%{Getff()}]
-"set statusline+=%m%r\%F%=[%l/%L]
-"
-"function! Getff()
-"  if &ff == 'unix'
-"    return 'LF'
-"  elseif &ff == 'dos'
-"    return 'CR+LF'
-"  elseif &ff == 'mac'
-"    return 'CR'
-"  else
-"    return '?'
-"  endif
-"endfunction
+set statusline=%n\%y
+set statusline+=[%{(&fenc!=''?&fenc:&enc)}]
+set statusline+=[%{Getff()}]
+set statusline+=%m%r\%F%=[%l/%L]
+
+function! Getff()
+  if &ff == 'unix'
+    return 'LF'
+  elseif &ff == 'dos'
+    return 'CR+LF'
+  elseif &ff == 'mac'
+    return 'CR'
+  else
+    return '?'
+  endif
+endfunction
 
 
 
@@ -185,37 +185,7 @@ endif "isdirectory(s:dein_repo_dir)
 " }}} DEIN
 
 
-
-" OTHERS {{{
-
-" COLOR
-"
-"if has('nvim')
-"    let $NVIM_TUI_ENABLE_TRU_COLOR=1
-"endif
-
-"" enable python3
-""
-"let g:python3_host_prog = '~/.anyenv/envs/pyenv/shims/python'
-
-" for 'leafgarland/typescript-vim'
-let g:js_indent_typescript = 1
-
-
-" color scheme
-"
-syntax on
-let g:molokai_original = 1
-colorscheme molokai
-
-" }}} OTHERS
-
-
-
-
-"
-" NOTE: LIGHTLINE
-"
+" LIGHTLINE {{{
 let g:lightline = {'colorscheme': 'solarized',
     \ 'mode_map': {'c': 'NORMAL'},
     \ 'active': {
@@ -233,15 +203,10 @@ let g:lightline = {'colorscheme': 'solarized',
     \ }
 \}
 
-
-"
-"NOTE: functions for LIGHTLINE
-"
 function! MyModified()
     return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-    echo "foo"
 function! MyReadonly()
     return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
 endfunction
@@ -281,7 +246,30 @@ function! MyMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
+" }}} LIGHTLINE
 
-"======================================
-" END: LIGHTLINE
-"======================================
+
+" OTHERS {{{
+
+" COLOR
+"
+if has('nvim')
+    let $NVIM_TUI_ENABLE_TRU_COLOR=1
+endif
+
+" enable python3
+"
+let g:python3_host_prog = '~/.anyenv/envs/pyenv/shims/python'
+
+" for 'leafgarland/typescript-vim'
+let g:js_indent_typescript = 1
+
+
+" color scheme
+"
+syntax on
+let g:molokai_original = 1
+colorscheme molokai
+
+" }}} OTHERS
+

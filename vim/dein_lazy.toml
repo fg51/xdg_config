@@ -1,0 +1,82 @@
+
+NeoBundleLazy 'https://github.com/Shougo/vimfiler.git', {
+    \ 'autoload': {'commands': ['VimFiler', 'VimFilerExplorer']},
+    \ 'depends': ['unite.vim']
+    \ }
+NeoBundleLazy 'Shougo/vimshell', {'autoload': {'commands': ['VimShell']}}
+NeoBundleLazy 'https://github.com/Shougo/vinarise.git', {'autoload': {'commands': ['Vinarise']}}
+NeoBundleLazy 'https://github.com/thinca/vim-quickrun.git', {'autoload': {'commands': ['QuickRun']}}
+
+NeoBundleLazy 'https://github.com/sjl/gundo.vim', {'autoload': {'commands': ['GundoShow']}}
+NeoBundleLazy 'https://github.com/h1mesuke/unite-outline.git', {
+    \ 'autoload': {'unite_sources': ['outline']}}
+NeoBundleLazy 'h1mesuke/vim-alignta', {'autoload': {'commands': ['Alignta']}}
+NeoBundleLazy 'https://github.com/yuratomo/w3m.vim', {'autoload': {'commands': ['W3m', 'W3mTab']}}
+
+
+NeoBundleLazy 'majutsushi/tagbar', {'autoload': {'commands': ['Tagbar',],},}
+
+
+# GIT {{{
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+on_cmd = ['Gstatus']
+# }}} GIT
+
+
+
+# PYTHON
+#
+#NeoBundleLazy 'kevinw/pyflakes-vim.git', {
+#    \ 'autoload': {'filetypes': ['python']} }
+
+
+# HASKELL {{{
+[[plugins]]
+repo = 'eagletmt/neco-ghc'
+on_ft = ['haskell']
+
+[[plugins]]
+repo = 'ujihisa/ref-hoogle', {
+on_ft = ['haskell']
+
+[[plugins]]
+repo = 'ujihisa/unite-haskellimport', {
+on_ft = ['haskell']
+# }}} HASKELL
+
+
+# HTML {{{
+[[plugins]]
+repo  = 'mattn/emmet-vim'
+on_ft = ['javascript', 'typescript', 'html', 'css']
+
+[[plugins]]
+repo  = 'hokaccha/vim-html5validator'
+on_ft = ['javascript', 'typescript', 'html']
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+on_ft = ['javascript', 'typescript', 'html']
+
+[[plugins]]
+repo = 'jason0x43/vim-js-indent'
+on_ft = ['javascript', 'typescript', 'html']
+
+[[plugins]]
+repo = 'othree/javascript-libraries-syntax.vim'
+on_ft = ['javascript', 'typescript', 'html']
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+on_ft = ['typescript']
+
+[[plugins]]
+repo  = 'clausreinke/typescript-tools'
+on_ft = ['typescript']
+
+# }}} HTML
