@@ -36,15 +36,15 @@ hook_add = '''
           \ 'mode': 'MyMode'
       \ }
   \}
-  
+
   function! MyModified()
       return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
   endfunction
-  
+
   function! MyReadonly()
       return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
   endfunction
-  
+
   function! MyFilename()
     return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
           \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
@@ -53,7 +53,7 @@ hook_add = '''
           \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
           \ ('' != MyModified() ? ' ' . MyModified() : '')
   endfunction
-  
+
   function! MyFugitive()
     try
       if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
@@ -63,19 +63,19 @@ hook_add = '''
     endtry
     return ''
   endfunction
-  
+
   function! MyFileformat()
     return winwidth(0) > 70 ? &fileformat : ''
   endfunction
-  
+
   function! MyFiletype()
     return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
   endfunction
-  
+
   function! MyFileencoding()
     return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
   endfunction
-  
+
   function! MyMode()
     return winwidth(0) > 60 ? lightline#mode() : ''
   endfunction
@@ -119,9 +119,10 @@ hook_add = '''
     \: "\<TAB>"
 
   let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#disable_runtime_snippets = {'_' : 1} " for reloading directory
+  " for reloading directory
+  let g:neosnippet#disable_runtime_snippets = {'_' : 1}
   let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-  let g:neosnippet#snippets_directory+=[g:dein_dir . '/github.com/Shougo/neosnippet-snippets/neosnippets']
+  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
 
   if has('conceal') " For snippet_complete marker.
     set conceallevel=2 concealcursor=i
@@ -131,7 +132,7 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 hook_add = '''
-  "let g:neosnippet#snippets_directory += [g:dein_dir . '/github.com/honza/vim-snippets/snippets']
+  let g:neosnippet#snippets_directory += [g:dein_dir . '/github.com/honza/vim-snippets/snippets']
 '''
 
 [[plugins]]
