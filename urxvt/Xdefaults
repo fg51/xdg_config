@@ -34,6 +34,7 @@ URxvt*font: xft:NotoSansUI-Regular:size=10:antialias=true
 !URxvt*boldFont: xft:SourceHanSansJP-Bold:size=9:antialias=true
 !URxvt*boldFont: xft:NotoSansUI-Bold:size=11:antialias=true
 
+
 !
 ! Fix font space
 !

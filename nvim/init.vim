@@ -32,26 +32,26 @@ let g:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 if isdirectory(s:dein_repo_dir)
-    "set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-    let &runtimepath = &runtimepath . "," . s:dein_repo_dir
+  "set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+  let &runtimepath = &runtimepath . "," . s:dein_repo_dir
 
-    "if dein#load_state(g:dein_dir)
-        call dein#begin(g:dein_dir)
+  "if dein#load_state(g:dein_dir)
+    call dein#begin(g:dein_dir)
 
-        let s:config_dir = expand('$HOME/.config/nvim')
-        let s:toml      = s:config_dir . '/dein.toml'
-        let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
+    let s:config_dir = expand('$HOME/.config/nvim')
+    let s:toml      = s:config_dir . '/dein.toml'
+    let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
 
-        call dein#load_toml(s:toml, {'lazy': 0})
-        call dein#load_toml(s:lazy_toml, {'lazy': 1})
+    call dein#load_toml(s:toml, {'lazy': 0})
+    call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-        call dein#end()
-        call dein#save_state()
-    "endif "if dein#load_state(s:dein_dir)
+    call dein#end()
+    call dein#save_state()
+  "endif "if dein#load_state(s:dein_dir)
 
-    if dein#check_install()
-        call dein#install()
-    endif "if dein#check_install()
+  if dein#check_install()
+    call dein#install()
+  endif "if dein#check_install()
 endif "isdirectory(s:dein_repo_dir)
 filetype plugin indent on
 syntax on
@@ -159,6 +159,24 @@ let g:vim_indent_cont = 0
 "endfunction
 
 set completeopt-=preview    " what is this ???
+
+let g:markdown_fenced_languages = [
+\ 'cpp',
+\ 'haskell',
+\ 'ninja',
+\ 'python',
+\ 'sh',
+\ ]
+"\ 'css',
+"\ 'fortran',
+"\ 'html',
+"\ 'javascript',
+"\ 'json=javascript',
+"\ 'lua',
+"\ 'ruby',
+"\ 'verilog',
+"\ 'xml',
+
 " }}} VIEW
 
 

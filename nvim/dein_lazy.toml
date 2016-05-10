@@ -57,7 +57,24 @@ on_cmd = ['Gstatus']
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = ['toml']
+[[plugins]]
+repo = 'ekalinin/Dockerfile.vim'
+on_ft = ['dockerfile']
 # }}}
+
+
+# LANG C {{{
+[[plugins]]
+repo = 'justmao945/vim-clang'
+on_ft = ['c', 'cpp']
+hook_add = '''
+  let g:clang_auto = 0
+  let g:clang_c_completeopt = 'menuone'
+  let g:clang_cpp_completeopt = 'menuone'
+  let g:clang_cpp_options = '-std=c++14 -stdlib=libc++'
+'''
+
+# }}} LANG C
 
 
 # HASKELL {{{
@@ -80,26 +97,33 @@ on_ft = ['haskell']
 # }}} HASKELL
 
 
+# PYTHON {{{
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = ['python']
+# }}} PYTON
+
+
 # HTML {{{
 [[plugins]]
 repo  = 'mattn/emmet-vim'
-on_ft = ['javascript', 'typescript', 'html', 'css']
+on_ft = ['css', 'html', 'javascript', 'markdown', 'typescript', ]
 
 [[plugins]]
 repo  = 'hokaccha/vim-html5validator'
-on_ft = ['javascript', 'typescript', 'html']
+on_ft = ['html', 'javascript', 'typescript',]
 
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
-on_ft = ['javascript', 'typescript', 'html']
+on_ft = ['html', 'javascript', 'typescript',]
 
 [[plugins]]
 repo = 'jason0x43/vim-js-indent'
-on_ft = ['javascript', 'typescript', 'html']
+on_ft = ['html', 'javascript', 'typescript',]
 
 [[plugins]]
 repo = 'othree/javascript-libraries-syntax.vim'
-on_ft = ['javascript', 'typescript', 'html']
+on_ft = ['html', 'javascript', 'typescript',]
 
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
@@ -125,7 +149,7 @@ repo = 'chrisbra/csv.vim'
 on_ft = ['csv']
 
 
-## ## PYTHON
+
 ## ##[[plugins]]
 ## ##repo = 'kevinw/pyflakes-vim'
 ## ##on_ft = ['python']
