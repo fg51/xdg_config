@@ -28,33 +28,40 @@ scriptencoding utf-8
 
 " # DEIN {{{
 "
-let g:dein_dir = expand('~/.cache/dein')
+let s:config_dir = expand('$HOME/.config/nvim')
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('/home/flamefly/.cache') : $XDG_CACHE_HOME
+let g:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-if isdirectory(s:dein_repo_dir)
-  "set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-  let &runtimepath = &runtimepath . "," . s:dein_repo_dir
+" Required:
+set runtimepath+=/home/flamefly/.cache/dein/repos/github.com/Shougo/dein.vim
+"let &runtimepath = g:dein_dir . '/repos/github.com/Shougo/dein.vim,' . $runtimepath
 
-  "if dein#load_state(g:dein_dir)
-    call dein#begin(g:dein_dir)
+" Required:
+call dein#begin(g:dein_dir)
 
-    let s:config_dir = expand('$HOME/.config/nvim')
-    let s:toml      = s:config_dir . '/dein.toml'
-    let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
+" Let dein manage dein
+" Required:
+call dein#add('Shougo/dein.vim')
 
-    call dein#load_toml(s:toml, {'lazy': 0})
-    call dein#load_toml(s:lazy_toml, {'lazy': 1})
+let s:toml_file = s:config_dir . '/dein.toml'
+call dein#load_toml(s:toml_file)
 
-    call dein#end()
-    call dein#save_state()
-  "endif "if dein#load_state(s:dein_dir)
+let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
+call dein#load_toml(s:lazy_toml)
 
-  if dein#check_install()
-    call dein#install()
-  endif "if dein#check_install()
-endif "isdirectory(s:dein_repo_dir)
+" Required:
+call dein#end()
+
+" Required:
 filetype plugin indent on
-syntax on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
 " }}} DEIN
 
 
@@ -104,7 +111,8 @@ endif
 
 " ## VIEW {{{
 if g:is_nvim
-  let $NVIM_TUI_ENABLE_TRU_COLOR=1
+  let $NVIM_TUI_ENABLE_TRU_COLOR=1 "NOTE: old command
+  "set termguicolors
 endif
 if g:is_teminal
   set t_Co=256
@@ -166,11 +174,11 @@ let g:markdown_fenced_languages = [
 \ 'ninja',
 \ 'python',
 \ 'sh',
+\ 'css',
+\ 'html',
+\ 'javascript',
 \ ]
-"\ 'css',
 "\ 'fortran',
-"\ 'html',
-"\ 'javascript',
 "\ 'json=javascript',
 "\ 'lua',
 "\ 'ruby',
@@ -187,7 +195,11 @@ if has('autoselect')
   set clipboard+=autoselect
 elseif has('unnamedplus') "CAUTION: need xclip
   set clipboard+=unnamedplus
+else
+  set clipboard+=unnamedplus
 endif
+set clipboard+=unnamedplus
+
 set virtualedit& virtualedit+=block
 " }}} INPUT
 
@@ -236,3 +248,5 @@ set mouse=a
 
 " }}} OTHERS
 
+
+set guifont=Ricty\ Diminished\ 13

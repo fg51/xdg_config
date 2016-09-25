@@ -41,4 +41,11 @@ fi
 #exec xterm -geometry 80x66+0+0 -name login
 #exec urxvt&
 #exec awesome
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+export DefaultIMModule=fcitx
+fcitx-autostart
+
 exec $1

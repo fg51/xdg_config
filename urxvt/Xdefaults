@@ -28,17 +28,25 @@ URxvt.lineSpace:            0
 URxvt.allow_bold:           true
 !URxvt*font: xft:RictyDimished-Regular:size=10:antialias=true
 !URxvt*font: xft:SourceHanSansJP-ExtraLight:size=9:antialias=true
+
 URxvt*font: xft:NotoSansUI-Regular:size=10:antialias=true
+
 !URxvt*font: xft:NotoSans-Regular:size=10:antialias=true
 !URxvt*boldFont: xft:RictyDImishedUI-Bold:size=10:antialias=true
 !URxvt*boldFont: xft:SourceHanSansJP-Bold:size=9:antialias=true
 !URxvt*boldFont: xft:NotoSansUI-Bold:size=11:antialias=true
 
+!URxvt*font: xft:RictyDimished-Regular:size=10:antialias=true
+!URxvt*font: xft:RictyDiminished-Regular:size=10:antialias=true
+
+!URxvt*font: xft:RictyDimished-Regular:size=11:antialias=true
 
 !
 ! Fix font space
 !
-URxvt*letterSpace: -1
+!URxvt*letterSpace: -1
+URxvt*letterSpace: -3
+!URxvt*letterSpace: -5
 
 
 !

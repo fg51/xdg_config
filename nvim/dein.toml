@@ -84,23 +84,31 @@ hook_add = '''
 [[plugins]]
 repo = 'tomasr/molokai'
 hook_add = '''
-  set background=dark
   let g:molokai_original = 1
-  autocmd myautocmd VimEnter * colorscheme molokai
+  autocmd myautocmd VimEnter * colorscheme molokai "TODO: transpansy
 '''
+  #set background=dark
 # }}} View
 
 
 # Input {{{
+#[[plugins]]
+#repo = 'Shougo/neocomplete'
+#hook_add = '''
+#  let g:acp_enableAtStartup = 0
+#  let g:neocomplete#enable_at_startup = 1
+#  let g:neocomplete#max_list = 5
+#  let g:neocomplete#auto_completion_start_length = 3
+#  let g:neocomplete#enable_underbar_completion = 0
+#  let g:NeoComplete#EnableAtStartup = 1
+#'''
+
 [[plugins]]
-repo = 'Shougo/neocomplete'
+repo = 'Shougo/deoplete.nvim'
 hook_add = '''
-  let g:acp_enableAtStartup = 0
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#max_list = 5
-  let g:neocomplete#auto_completion_start_length = 3
-  let g:neocomplete#enable_underbar_completion = 0
-  let g:NeoComplete#EnableAtStartup = 1
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#max_list = 5
+  let g:deoplete#auto_complete_start_length = 3
 '''
 
 [[plugins]]

@@ -1,8 +1,13 @@
 [user]
-	name = jiita
+	name = kflange
 	email = zknsftk1msrk@gmail.com
 [alias]
 	ci = commit
+	cae = commit --allow-empty
+	ffs = flow feature start
+	fff = flow feature finish
+	frs = flow release start
+	frf = flow release finish
 [push]
 	default = simple
 [ghq]
