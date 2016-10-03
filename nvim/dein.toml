@@ -104,44 +104,7 @@ hook_add = '''
 #'''
 
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-hook_add = '''
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#max_list = 5
-  let g:deoplete#auto_complete_start_length = 3
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet'
-hook_add = '''
-  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-  " SuperTab like snippets behavior.
-  imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: pumvisible() ? "\<C-n>" : "\<TAB>"
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: "\<TAB>"
-
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  " for reloading directory
-  let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-
-  if has('conceal') " For snippet_complete marker.
-    set conceallevel=2 concealcursor=i
-  endif
-'''
-
-[[plugins]]
 repo = 'Shougo/neosnippet-snippets'
-hook_add = '''
-  let g:neosnippet#snippets_directory += [g:dein_dir . '/github.com/honza/vim-snippets/snippets']
-'''
 
 [[plugins]]
 repo = 'honza/vim-snippets'
@@ -169,14 +132,20 @@ depends = [
   'shabadou.vim',
   'vim-quickrun',
 ]
-on_idle = 1
+##on_idle = 1
 hook_add = '''
   let g:watchdogs_check_BufWritePost_enable = 1
   let g:watchdogs_check_CursorHold_enable = 1
 
   let g:quickrun_config = get(g:, 'quickrun_config', {})
+  "let g:quickrun_config["watchdogs_checker/_"] = {
+  "    \ "outputter/quickfix/open_cmd": "",
+  "    \}
+
   let g:quickrun_config['watchdogs_checker/jshint'] = {'cmdopt': '--config `/.jshintrc'}
 
+
+  "{{{ python
   let s:pyflakes = executable('pyflakes3')? 'pyflakes3':
     \ executable('python3')? 'python3':
     \ executable('pyflakes')? 'pyflakes':
@@ -198,8 +167,16 @@ hook_add = '''
   let g:quickrun_config["python/watchdogs_checker"] = {
     \ "type": "watchdogs_checker/pyflakes3",
     \ }
+   "}}} END python
+
+  let g:quickrun_config["watchdogs_checker/clang_check"] = {
+    \ "command": "clang-check",
+    \ "exec"   : "%c %s:p -- %o",
+    \ "cmdopt" : "--std=c++11 -Iinclude -Iinc",
+    \ }
+    hogehoge
+
 '''
-# let g:quickrun_config['watchdogs_checker/_'] = {'outputter/quickfix/open_cmd': ''}
 hook_post_source = '''
   call watchdogs#setup(g:quickrun_config)
 '''

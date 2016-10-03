@@ -38,20 +38,25 @@ set runtimepath+=/home/flamefly/.cache/dein/repos/github.com/Shougo/dein.vim
 "let &runtimepath = g:dein_dir . '/repos/github.com/Shougo/dein.vim,' . $runtimepath
 
 " Required:
-call dein#begin(g:dein_dir)
+if dein#load_state(g:dein_dir)
+    call dein#begin(g:dein_dir)
 
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
+    " Let dein manage dein
+    " Required:
+    call dein#add('Shougo/dein.vim')
 
-let s:toml_file = s:config_dir . '/dein.toml'
-call dein#load_toml(s:toml_file)
+    let s:toml_file = s:config_dir . '/dein.toml'
+    call dein#load_toml(s:toml_file)
 
-let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
-call dein#load_toml(s:lazy_toml)
+    let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
+    call dein#load_toml(s:lazy_toml)
 
-" Required:
-call dein#end()
+
+    " Required:
+    call dein#end()
+    call dein#save_state()
+endif
+
 
 " Required:
 filetype plugin indent on
@@ -250,3 +255,5 @@ set mouse=a
 
 
 set guifont=Ricty\ Diminished\ 13
+
+
