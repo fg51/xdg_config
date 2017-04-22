@@ -224,6 +224,7 @@ set nostartofline
 "autocmd BufNewFile,BufRead *.{py} set filetype=python
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
+autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
 set ft=markdown
 " }}}
 

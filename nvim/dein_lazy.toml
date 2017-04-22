@@ -60,6 +60,9 @@ on_ft = ['toml']
 [[plugins]]
 repo = 'ekalinin/Dockerfile.vim'
 on_ft = ['dockerfile']
+[[plugins]]
+repo = 'digitaltoad/vim-pug'
+on_ft = ['pug']
 # }}}
 
 

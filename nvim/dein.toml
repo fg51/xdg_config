@@ -169,13 +169,17 @@ hook_add = '''
     \ }
    "}}} END python
 
+
+  let g:quickrun_config["watchdogs_checker/clang"] = {
+    \ "command"   : "clang",
+    \ "exec"      : "%c %o -fsyntax-only -Iinclude -Iinc %s:p ",
+    \ }
+
   let g:quickrun_config["watchdogs_checker/clang_check"] = {
     \ "command": "clang-check",
     \ "exec"   : "%c %s:p -- %o",
     \ "cmdopt" : "--std=c++11 -Iinclude -Iinc",
     \ }
-    hogehoge
-
 '''
 hook_post_source = '''
   call watchdogs#setup(g:quickrun_config)

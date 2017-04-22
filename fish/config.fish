@@ -1,9 +1,9 @@
 #
 # fisherman
 #
-set fisher_home ~/.local/share/fisherman
-set fisher_config ~/.config/fisherman
-source $fisher_home/config.fish
+#set fisher_home ~/.local/share/fisherman
+#set fisher_config ~/.config/fisherman
+#source $fisher_home/config.fish
 
 
 #
@@ -13,6 +13,7 @@ set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.bin $PATH
 
 alias image sxiv
+alias view_pdf evince
 alias paraview /opt/paraview/bin/paraview
 
 
