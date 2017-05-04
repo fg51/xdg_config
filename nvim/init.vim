@@ -2,13 +2,14 @@ if 0 | endif
 
 " # INITIALIZE {{{
 "
+if &compatible
+  set nocompatible
+endif
+
 augroup myautocmd
   autocmd!
 augroup END
 
-if &compatible
-  set nocompatible
-endif
 
 " ## conditions {{{
 "
@@ -16,7 +17,7 @@ let g:is_nvim = has('nvim')
 let g:is_windows = has('win32') || has('win64')
 let g:is_unix = has('unix')
 let g:is_gui = has('gui_running')
-let g:is_teminal = !g:is_gui
+let g:is_terminal = !g:is_gui
 let g:is_unicode = (&termencoding ==# 'utf-8' || &encoding == 'utf-8')
     \ && !(exists('g:discard_unicode') && g:discard_unicode != 0)
 " }}} conditions
@@ -29,27 +30,29 @@ scriptencoding utf-8
 " # DEIN {{{
 "
 let s:config_dir = expand('$HOME/.config/nvim')
-let s:cache_home = empty($XDG_CACHE_HOME) ? expand('/home/flamefly/.cache') : $XDG_CACHE_HOME
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('$HOME/.cache') : $XDG_CACHE_HOME
 let g:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
+let s:dein_cache_path = expand('~/.cache/dein')
+
 " Required:
-set runtimepath+=/home/flamefly/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 "let &runtimepath = g:dein_dir . '/repos/github.com/Shougo/dein.vim,' . $runtimepath
 
 " Required:
-if dein#load_state(g:dein_dir)
-    call dein#begin(g:dein_dir)
+if dein#load_state(s:dein_cache_path)
+    call dein#begin(s:dein_cache_path)
 
     " Let dein manage dein
     " Required:
     call dein#add('Shougo/dein.vim')
 
     let s:toml_file = s:config_dir . '/dein.toml'
-    call dein#load_toml(s:toml_file)
+    call dein#load_toml(s:toml_file, {'lazy' : 0})
 
     let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
-    call dein#load_toml(s:lazy_toml)
+    call dein#load_toml(s:lazy_toml, {'lazy' : 1})
 
 
     " Required:
@@ -57,17 +60,17 @@ if dein#load_state(g:dein_dir)
     call dein#save_state()
 endif
 
-
-" Required:
-filetype plugin indent on
-syntax enable
-
 " If you want to install not installed plugins on startup.
 if dein#check_install()
   call dein#install()
 endif
 
 " }}} DEIN
+
+
+" Required:
+filetype plugin indent on
+syntax enable
 
 
 " # VIM OPTIONS {{{
@@ -119,7 +122,7 @@ if g:is_nvim
   let $NVIM_TUI_ENABLE_TRU_COLOR=1 "NOTE: old command
   "set termguicolors
 endif
-if g:is_teminal
+if g:is_terminal
   set t_Co=256
 endif
 

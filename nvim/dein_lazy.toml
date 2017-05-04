@@ -179,29 +179,5 @@ hook_source = '''
 '''
 on_i = 1
 
-[[plugins]]
-repo = 'Shougo/neosnippet'
-hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-
-  "smap <expr><TAB> neosnippet#expandable_or_jumpable()?
-  "  \ "\<Plug>(neosnippet_expand_or_jump)":"\<TAB>"
-
-  "let g:neosnippet#enable_snipmate_compatibility = 1
-  "" for reloading directory
-  "let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos//github.com/honza/vim-snippets/snippets']
-
-  if has('conceal') " For snippet_complete marker.
-    set conceallevel=2 concealcursor=niv
-  endif
-'''
-on_i = 1
-on_ft = ['snippet']
-depends = ['neosnippet-snippets']
 
 
