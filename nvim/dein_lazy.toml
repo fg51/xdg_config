@@ -101,9 +101,9 @@ on_ft = ['haskell']
 
 
 # PYTHON {{{
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = ['python']
+#[[plugins]]
+#repo = 'davidhalter/jedi-vim'
+#on_ft = ['python']
 # }}} PYTON
 
 

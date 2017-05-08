@@ -260,4 +260,7 @@ set mouse=a
 
 set guifont=Ricty\ Diminished\ 13
 
+" imap <C-k> <Plug>(neosnippet_expand_or_jump)
+" smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k> <Plug>(neosnippet_expand_target)
 
