@@ -146,7 +146,8 @@ repo = 'tpope/vim-surround'
 repo = 'w0rp/ale'
 hook_add = '''
   let g:ale_linters = {
-    \ 'python': ['pylint', 'flake8']
+    \ 'python': ['pylint', 'flake8', 'mypy'],
+    \ 'haskell': []
   \}
   let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
   let g:ale_c_gcc_options = '-std=c11 -Wall -Iinc -Iinclude'
@@ -159,6 +160,10 @@ hook_add = '''
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 '''
+#  let g:ale_linters = {
+#    \ 'python': ['pylint', 'flake8']
+#  \}
+
 
 
 #[[plugins]]
@@ -254,5 +259,21 @@ hook_add = '''
   let QFixHowm_DiaryFile = 'diary/%Y/%m/%Y-%m-%d-000000.howm'
 '''
 
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#max_list = 5
+  let g:deoplete#auto_complete_start_length = 3
+  "let g:deoplete#enable_camel_case = 0
+  "let g:deoplete#enable_ignore_case = 0
+  "let g:deoplete#enable_refresh_always = 0
+  "let g:deoplete#enable_smart_case = 1
+  "let g:deoplete#file#enable_buffer_path = 1
+  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+    \  neosnippet#expandable_or_jumpable() ?
+    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+'''
 # }}} others
+
 

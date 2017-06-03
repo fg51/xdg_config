@@ -101,4 +101,13 @@ function nvm_init
     bass source $HOME/.local/share/nvm/nvm.sh
 end
 
+# oh-my-fish/plugin-peco
+function fish_user_key_bindings
+    bind \cr 'peco_select_history (commandline -b)'
+end
 
+# fish-peco_select_ghq_reopsitory
+function fish_user_key_bindings
+  bind \cr 'peco_select_history (commandline -b)'
+  bind \c] peco_select_ghq_repository  # 追加
+end

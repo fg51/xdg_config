@@ -228,6 +228,8 @@ set nostartofline
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
+autocmd myautocmd BufNewFile,BufRead *.{js,ts,pug} set tabstop=2 softtabstop=2 shiftwidth=2
+autocmd myautocmd BufNewFile,BufRead *.{c,cpp,hs} set tabstop=2 softtabstop=2 shiftwidth=2
 set ft=markdown
 " }}}
 
@@ -264,3 +266,5 @@ set guifont=Ricty\ Diminished\ 13
 " smap <C-k> <Plug>(neosnippet_expand_or_jump)
 " xmap <C-k> <Plug>(neosnippet_expand_target)
 
+"let g:python_host_prog = system('(type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(pyenv global | grep python2)/bin/python"); echo -n $(which python2)')
+"let g:python3_host_prog = system('(type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(pyenv global | grep python3)/bin/python"); echo -n $(which python3)')
