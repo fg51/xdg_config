@@ -64,13 +64,6 @@ function fish_prompt
 end
 
 
-# CPPUTEST
-#
-set -gx CPPUTEST_HOME $HOME/.ghq_data/github.com/cpputest/cpputest
-
-
-
-
 # TODO: as eval "$(anyenv init -)"
 #
 set -gx ANYENV_ROOT $HOME/.anyenv
@@ -80,34 +73,26 @@ set -gx ANYENV_ROOT $HOME/.anyenv
 #
 set -gx PYENV_ROOT $ANYENV_ROOT/envs/pyenv
 set -gx PATH $PYENV_ROOT/shims $PYENV_ROOT/bin $PATH
-status --is-interactive; and . (pyenv init -| psub); and . (pyenv virtualenv-init -| psub)
+
+if test -d $PYENV_ROOT
+    status --is-interactive; and . (pyenv init -| psub); and . (pyenv virtualenv-init -| psub)
+end
 
 
 #
 # GO
 #
-#set -gx GOPATH $HOME/.go/project
-#set -gx GOPATH $HOME/.go/third_party $GOPATH
-#set -gx GOPATH "$HOME/.go/third_party" "$HOME/.go/project"
 set -gx GOPATH $HOME/.go/third_party
 set -gx PATH $HOME/.go/third_party/bin $HOME/.go/project/bin $PATH
 
 
-
-# NVM
-#
-# CAUTION: require fish_pkg: bass
-function nvm_init
-    bass source $HOME/.local/share/nvm/nvm.sh
-end
-
 # oh-my-fish/plugin-peco
-function fish_user_key_bindings
-    bind \cr 'peco_select_history (commandline -b)'
-end
+# function fish_user_key_bindings
+#     bind \cr 'peco_select_history (commandline -b)'
+# end
 
 # fish-peco_select_ghq_reopsitory
 function fish_user_key_bindings
   bind \cr 'peco_select_history (commandline -b)'
-  bind \c] peco_select_ghq_repository  # 追加
+  bind \c] peco_select_ghq_repository
 end

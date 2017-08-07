@@ -11,6 +11,6 @@
 [push]
 	default = simple
 [ghq]
-	root = ~/.ghq_data
+	root = ~/.ghq
 	root = ~/.go/third_party/src
 	root = ~/.go/project/src
