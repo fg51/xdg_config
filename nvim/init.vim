@@ -266,5 +266,6 @@ set guifont=Ricty\ Diminished\ 13
 " smap <C-k> <Plug>(neosnippet_expand_or_jump)
 " xmap <C-k> <Plug>(neosnippet_expand_target)
 
-"let g:python_host_prog = system('(type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(pyenv global | grep python2)/bin/python"); echo -n $(which python2)')
-"let g:python3_host_prog = system('(type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(pyenv global | grep python3)/bin/python"); echo -n $(which python3)')
+
+let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim2/bin/python2')
+let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim3/bin/python3')

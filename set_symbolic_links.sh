@@ -2,8 +2,8 @@
 
 ln -s $HOME/.config/gitconfig/gitconfig $HOME/.gitconfig
 
-ln -s $HOME/.config/vim/vimrc $HOME/.vimrc
-ln -s $HOME/.config/vim/gvimrc $HOME/.gvimrc
+# ln -s $HOME/.config/vim/vimrc $HOME/.vimrc
+# ln -s $HOME/.config/vim/gvimrc $HOME/.gvimrc
 
 ln -s $HOME/.config/urxvt/Xdefaults $HOME/.Xdefaults
 

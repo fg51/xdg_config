@@ -1,6 +1,6 @@
 [user]
-	name = kflange
 	email = zknsftk1msrk@gmail.com
+	useConfigOnly = true
 [alias]
 	ci = commit
 	cae = commit --allow-empty
