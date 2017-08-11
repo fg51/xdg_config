@@ -1,6 +1,6 @@
-!-------------------------------------------------------------------------------
+!
 ! Xft settings
-!-------------------------------------------------------------------------------
+!
 Xft.dpi:                    96
 Xft.antialias:              true
 Xft.rgba:                   rgb
@@ -8,9 +8,9 @@ Xft.hinting:                true
 Xft.hintstyle:              hintslight
 
 
-!-------------------------------------------------------------------------------
+!
 ! URxvt settings
-!-------------------------------------------------------------------------------
+!
 URxvt.depth:                32
 URxvt.geometry:             90x30
 URxvt.transparent:          false
@@ -26,27 +26,20 @@ URxvt.lineSpace:            0
 ! Fonts
 !
 URxvt.allow_bold:           true
-!URxvt*font: xft:RictyDimished-Regular:size=10:antialias=true
-!URxvt*font: xft:SourceHanSansJP-ExtraLight:size=9:antialias=true
 
-URxvt*font: xft:NotoSansUI-Regular:size=10:antialias=true
+!!URxvt*font: xft:RictyDiminished-Regular:size=10:antialias=true
 
-!URxvt*font: xft:NotoSans-Regular:size=10:antialias=true
-!URxvt*boldFont: xft:RictyDImishedUI-Bold:size=10:antialias=true
-!URxvt*boldFont: xft:SourceHanSansJP-Bold:size=9:antialias=true
-!URxvt*boldFont: xft:NotoSansUI-Bold:size=11:antialias=true
+!URxvt*font: xft:NotoSansUI-Regular:size=10:antialias=true
+!URxvt*letterSpace: -3
 
-!URxvt*font: xft:RictyDimished-Regular:size=10:antialias=true
-!URxvt*font: xft:RictyDiminished-Regular:size=10:antialias=true
-
-!URxvt*font: xft:RictyDimished-Regular:size=11:antialias=true
+URxvt*font: xft:NasuM:size=11:antialias=true
+URxvt*letterSpace: -3
 
 !
 ! Fix font space
 !
-!URxvt*letterSpace: -1
-URxvt*letterSpace: -3
-!URxvt*letterSpace: -5
+!!!URxvt*letterSpace: -1
+!!!URxvt*letterSpace: -5
 
 
 !
@@ -56,9 +49,9 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 
-!----------------------------------------
+!
 ! Perl extensions
-!----------------------------------------
+!
 URxvt.perl-ext-common:      default,tabbedex,clipboard
 !URxvt.matcher.button:       1
 !!URxvt.urlLauncher:          google-chrome
@@ -69,9 +62,9 @@ URxvt.perl-ext-common:      default,tabbedex,clipboard
 !URxvt.tabbed.not-consumable-keys: 0xff22, 0xff23, 0xff2a
 
 
-!----------------------------------------
+!
 ! Cursor
-!----------------------------------------
+!
 URxvt.cursorBlink:          false
 URxvt.cursorColor:          #657b83
 URxvt.cursorUnderline:      false
@@ -94,13 +87,13 @@ URxvt*shading: 10
 URxvt*inheritPixmap: true
 
 
-!----------------------------------------
+!
 ! Color
-!----------------------------------------
+!
 ! Molokai
 ! ref https://github.com/brianbuccola/dotfiles/blob/master/xcolors/molokai
 ! vim: set ft=xdefaults:
-!----------------------------------------
+!
 !URxvt*background:   #000000
 !URxvt*foreground:   #d0d0d0
 URxvt*background:   #002b36
@@ -145,4 +138,3 @@ URxvt*color14:      #4eb4fa
 !! white
 URxvt*color7:       #5f5f5f
 URxvt*color15:      #d0d0d0
-
