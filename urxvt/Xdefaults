@@ -52,7 +52,7 @@ URxvt.scrollBar:            false
 !
 ! Perl extensions
 !
-URxvt.perl-ext-common:      default,tabbedex,clipboard
+URxvt.perl-ext-common:      default,tabbedex,clipboard,selection-to-clipboard
 !URxvt.matcher.button:       1
 !!URxvt.urlLauncher:          google-chrome
 !URxvt.keysym.M-t:           perl:tabbedex:new_tab
