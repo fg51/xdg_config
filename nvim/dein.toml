@@ -106,6 +106,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
+on_i = 1
+on_ft = ['snippet']
+depends = ['neosnippet-snippets']
 hook_source = '''
   imap <C-k> <Plug>(neosnippet_expand_or_jump)
   smap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -126,9 +129,6 @@ hook_source = '''
 #    set conceallevel=2 concealcursor=niv
 #  endif
 #'''
-on_i = 1
-on_ft = ['snippet']
-depends = ['neosnippet-snippets']
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -243,28 +243,28 @@ hook_add = '''
 
 
 # others {{{
-[[plugins]]
-repo = 'Shougo/neomru.vim'
+# [[plugins]]
+# repo = 'Shougo/neomru.vim'
 
-[[plugins]]
-repo = 'Shougo/unite.vim'
+# [[plugins]]
+# repo = 'Shougo/unite.vim'
 
-[[plugins]]
-repo = 'kien/ctrlp.vim'
 
-[[plugins]]
-repo = 'fuenor/qfixhowm'
-hook_add = '''
-  let QFixHowm_key = 'g'
-  let howm_dir = '~/Dropbox/memo/howm'
-  let howm_filename      = '%Y/%m/%Y-%m-%d-%H%M%S.howm'
-  let howm_fileencoding  = 'utf-8'
-  let howm_fileformat    = 'unix'
-  let QFixHowm_DiaryFile = 'diary/%Y/%m/%Y-%m-%d-000000.howm'
-'''
+# [[plugins]]
+# repo = 'fuenor/qfixhowm'
+# hook_add = '''
+#   let QFixHowm_key = 'g'
+#   let howm_dir = '~/Dropbox/memo/howm'
+#   let howm_filename      = '%Y/%m/%Y-%m-%d-%H%M%S.howm'
+#   let howm_fileencoding  = 'utf-8'
+#   let howm_fileformat    = 'unix'
+#   let QFixHowm_DiaryFile = 'diary/%Y/%m/%Y-%m-%d-000000.howm'
+# '''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+on_i = 1
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#max_list = 5
@@ -278,6 +278,13 @@ hook_source = '''
     \  neosnippet#expandable_or_jumpable() ?
     \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 '''
+hook_post_source = '''
+  let g:deoplete#omni_patterns = {}
+'''
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+depends = 'deoplete.vim'
+on_i = 1
+on_ft = 'python'
 # }}} others
-
-

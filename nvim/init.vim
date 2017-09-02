@@ -245,9 +245,6 @@ set ft=markdown
 " OTHERS {{{
 
 
-"" enable python3
-""
-"let g:python3_host_prog = '~/.anyenv/envs/pyenv/shims/python'
 
 
 
@@ -267,5 +264,9 @@ set guifont=Ricty\ Diminished\ 13
 " xmap <C-k> <Plug>(neosnippet_expand_target)
 
 
+"" set python3, python2
+""
+" let g:python_host_prog = '~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim2'
+" let g:python3_host_prog = '~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim3'
 let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim2/bin/python2')
 let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim3/bin/python3')
