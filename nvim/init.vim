@@ -118,10 +118,10 @@ endif
 
 
 " ## VIEW {{{
-if g:is_nvim
-  let $NVIM_TUI_ENABLE_TRU_COLOR=1 "NOTE: old command
-  "set termguicolors
-endif
+" if g:is_nvim
+"   let $NVIM_TUI_ENABLE_TRU_COLOR=1 "NOTE: old command
+"   "set termguicolors
+" endif
 if g:is_terminal
   set t_Co=256
 endif
@@ -129,22 +129,6 @@ endif
 set cmdheight=3 "set cmdheight=2
 set nocursorline
 set laststatus=2
-"set statusline=%n\%y
-"set statusline+=[%{(&fenc!=''?&fenc:&enc)}]
-"set statusline+=[%{Getff()}]
-"set statusline+=%m%r\%F%=[%l/%L]
-"
-"function! Getff()
-"  if &ff == 'unix'
-"    return 'LF'
-"  elseif &ff == 'dos'
-"    return 'CR+LF'
-"  elseif &ff == 'mac'
-"    return 'CR'
-"  else
-"    return '?'
-"  endif
-"endfunction
 
 set list
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
@@ -244,11 +228,6 @@ set ft=markdown
 
 " OTHERS {{{
 
-
-
-
-
-set completeopt=menuone
 " no scrach(preview)
 set title
 set mouse=a
@@ -266,7 +245,8 @@ set guifont=Ricty\ Diminished\ 13
 
 "" set python3, python2
 ""
-" let g:python_host_prog = '~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim2'
-" let g:python3_host_prog = '~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim3'
+" let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim2/bin/python2')
+" let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim3/bin/python3')
 let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim2/bin/python2')
 let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim3/bin/python3')
+
