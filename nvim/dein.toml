@@ -106,13 +106,15 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
-on_i = 1
-on_ft = ['snippet']
-depends = ['neosnippet-snippets']
+depends = ['neosnippet-snippets', 'vim-snippets']
 hook_source = '''
   imap <C-k> <Plug>(neosnippet_expand_or_jump)
   smap <C-k> <Plug>(neosnippet_expand_or_jump)
   xmap <C-k> <Plug>(neosnippet_expand_target)
+
+  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
+  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
+  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
 '''
 #
 #  "smap <expr><TAB> neosnippet#expandable_or_jumpable()?
@@ -155,6 +157,8 @@ hook_add = '''
 
   let g:ale_cpp_clang_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
   let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
+
+  let g:ale_python_mypy_options = '-s'
 
   let g:ale_lint_on_enter = 0
   let g:ale_lint_on_save = 1
@@ -245,9 +249,6 @@ hook_add = '''
 
 # others {{{
 # [[plugins]]
-# repo = 'Shougo/neomru.vim'
-
-# [[plugins]]
 # repo = 'Shougo/unite.vim'
 
 
@@ -287,5 +288,14 @@ hook_post_source = '''
 repo = 'zchee/deoplete-jedi'
 if = 'has("nvim")'
 depends = 'deoplete.vim'
+
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+if = 'has("nvim")'
+depends = 'neomru.nvim'
 
 # }}} others

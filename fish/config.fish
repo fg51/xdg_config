@@ -10,7 +10,7 @@
 # my bin path
 #
 set -gx PATH $HOME/.local/bin $PATH
-set -gx PATH $HOME/.bin $PATH
+set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
 
 alias image sxiv
 alias view_pdf evince
