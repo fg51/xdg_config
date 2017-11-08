@@ -82,8 +82,8 @@ end
 #
 # GO
 #
-set -gx GOPATH $HOME/.go/third_party
-set -gx PATH $HOME/.go/third_party/bin $HOME/.go/project/bin $PATH
+set -gx GOPATH $HOME/.go
+set -gx PATH $HOME/.go/bin $PATH
 
 
 # oh-my-fish/plugin-peco

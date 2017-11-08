@@ -214,6 +214,7 @@ autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml tabstop=2 softta
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
 autocmd myautocmd BufNewFile,BufRead *.{js,ts,pug} set tabstop=2 softtabstop=2 shiftwidth=2
 autocmd myautocmd BufNewFile,BufRead *.{c,cpp,hs} set tabstop=2 softtabstop=2 shiftwidth=2
+autocmd myautocmd BufNewFile,BufRead *.{go} set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
 set ft=markdown
 " }}}
 
