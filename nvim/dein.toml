@@ -18,16 +18,16 @@ hook_post_update = '''
 '''
 
 # View {{{
-#  [[plugins]]
-#  repo = 'itchyny/lightline.vim'
-#  hook_add = '''
-#    let g:lightline = {'colorscheme': 'solarized',
-#        \ 'mode_map': {'c': 'NORMAL'},
-#    \}
-#  '''
-#  #      \ 'active': {
-#  #          \ 'left': [['mode', 'paste'], ['fugitive', 'filename', 'ale']]
-#  #      \ },
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {'colorscheme': 'solarized',
+      \ 'mode_map': {'c': 'NORMAL'},
+  \}
+'''
+#      \ 'active': {
+#          \ 'left': [['mode', 'paste'], ['fugitive', 'filename', 'ale']]
+#      \ },
 
 [[plugins]]
 repo = 'tomasr/molokai'
@@ -74,55 +74,40 @@ hook_source = '''
     set conceallevel=2 concealcursor=niv
   endif
 '''
-#  #
-#  #  "smap <expr><TAB> neosnippet#expandable_or_jumpable()?
-#  #  "  \ "\<Plug>(neosnippet_expand_or_jump)":"\<TAB>"
-#  #
-#  #  "let g:neosnippet#enable_snipmate_compatibility = 1
-#  #  "" for reloading directory
-#  #  "let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-#  #  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-#  #  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-#  #  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos//github.com/honza/vim-snippets/snippets']
-#  #
-#  #  if has('conceal') " For snippet_complete marker.
-#  #    set conceallevel=2 concealcursor=niv
-#  #  endif
-#  #'''
 
 
-#  [[plugins]]
-#  repo = 'tpope/vim-surround'
-#  # }}} Input
+[[plugins]]
+repo = 'tpope/vim-surround'
+# }}} Input
 
 
-#  # code check {{{
-#  [[plugins]]
-#  repo = 'w0rp/ale'
-#  hook_add = '''
-#    let g:ale_linters = {
-#      "\ 'cpp': [],
-#      \ 'python': ['pylint', 'flake8', 'mypy'],
-#      \ 'haskell': []
-#    \}
-#    let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
-#    let g:ale_c_gcc_options = '-std=c11 -Wall -Iinc -Iinclude'
-#  
-#    let g:ale_cpp_clang_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
-#    let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
-#  
-#    let g:ale_python_mypy_options = '-s'
-#  
-#    let g:ale_lint_on_enter = 0
-#    let g:ale_lint_on_save = 1
-#    let g:ale_lint_on_text_changed = 0
-#    let g:ale_set_quickfix = 1    "for quickfix
-#    let g:ale_open_list = 1   "for quickfix
-#    nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-#    nmap <silent> <C-j> <Plug>(ale_next_wrap)
-#  '''
-#  
-#  
+# code check {{{
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+  let g:ale_linters = {
+    "\ 'cpp': [],
+    \ 'python': ['pylint', 'flake8', 'mypy'],
+    \ 'haskell': []
+  \}
+  let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
+  let g:ale_c_gcc_options = '-std=c11 -Wall -Iinc -Iinclude'
+
+  let g:ale_cpp_clang_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
+  let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
+
+  let g:ale_python_mypy_options = '-s'
+
+  let g:ale_lint_on_enter = 0
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 0
+  let g:ale_set_quickfix = 1    "for quickfix
+  let g:ale_open_list = 1   "for quickfix
+  nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+  nmap <silent> <C-j> <Plug>(ale_next_wrap)
+'''
+
+
 #  # others {{{
 #  # [[plugins]]
 #  # repo = 'Shougo/unite.vim'
@@ -161,37 +146,15 @@ hook_source = '''
 hook_post_source = '''
   let g:deoplete#omni_patterns = {}
 '''
-# inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-# \  neosnippet#expandable_or_jumpable() ?
-# \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-# 
-#   "imap <C-k> <Plug>(neosnippet_expand_or_jump)
-#   "smap <C-k> <Plug>(neosnippet_expand_or_jump)
-#   "xmap <C-k> <Plug>(neosnippet_expand_target)
-# 
-#   "" SuperTab like snippets behavior.
-#   "imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-#   "  \ "\<Plug>(neosnippet_expand_or_jump)"
-#   "  \: pumvisible() ? "\<C-n>" : "\<TAB>"
-#   "smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-#   "  \ "\<Plug>(neosnippet_expand_or_jump)"
-#   "  \: "\<TAB>"
-# '''
 
-#  [[plugins]]
-#  repo = 'zchee/deoplete-jedi'
-#  if = 'has("nvim")'
-#  depends = 'deoplete.vim'
-#  
-#  
-#  [[plugins]]
-#  repo = 'Shougo/neomru.vim'
-#  
-#  [[plugins]]
-#  repo = 'Shougo/denite.nvim'
-#  if = 'has("nvim")'
-#  depends = 'neomru.nvim'
-#  
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+if = 'has("nvim")'
+depends = 'neomru.nvim'
+
 #  # [[plugins]]
 #  # repo = 'Yggdroot/indentLine'
 #  # hook_source = '''
@@ -199,5 +162,5 @@ hook_post_source = '''
 #  # '''
 #  # let g:indentLine_color_term = 111
 #  # let g:indentLine_color_gui = '#909090'
-#  
-#  # }}} others
+
+# }}} others
