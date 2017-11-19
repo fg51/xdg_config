@@ -52,7 +52,7 @@ if dein#load_state(s:dein_repo_path)
 
   let s:toml = s:config_dir . '/dein.toml'
   call dein#load_toml(s:toml, {'lazy' : 0})
-  let s:lazy_toml = s:config_dir . '/dein_lazy1.toml'
+  let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
   call dein#load_toml(s:lazy_toml, {'lazy' : 1})
 
 

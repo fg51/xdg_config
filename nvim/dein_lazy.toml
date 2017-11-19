@@ -192,3 +192,10 @@ on_ft = ['csv']
 ##     \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 ## '''
 ## on_i = 1
+
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+if = 'has("nvim")'
+on_ft = 'python'
+#depends = 'deoplete.vim'
