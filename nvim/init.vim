@@ -30,34 +30,49 @@ scriptencoding utf-8
 " # DEIN {{{
 "
 let s:config_dir = expand('$HOME/.config/nvim')
-let s:cache_home = empty($XDG_CACHE_HOME) ? expand('$HOME/.cache') : $XDG_CACHE_HOME
-let g:dein_dir = s:cache_home . '/dein'
-let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
+" let s:cache_home = empty($XDG_CACHE_HOME) ? expand('$HOME/.cache') : $XDG_CACHE_HOME
+" let g:dein_dir = s:cache_home . '/dein'
+" let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-let s:dein_cache_path = expand('~/.cache/dein')
+" let s:dein_cache_path = expand('~/.cache/dein')
+let s:dein_repo_path = $HOME . '.cache/dein'
+
 
 " Required:
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-"let &runtimepath = g:dein_dir . '/repos/github.com/Shougo/dein.vim,' . $runtimepath
+" set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+
 
 " Required:
-if dein#load_state(s:dein_cache_path)
-    call dein#begin(s:dein_cache_path)
+" if dein#load_state($HOME . '/.config/nvim/dein')
+if dein#load_state(s:dein_repo_path)
+  let g:dein#cache_directory = $HOME . '/.cache/nvim/dein/cache'
+  call dein#begin($HOME . '/.cache/dein') " repo-path
+  call dein#add('Shougo/dein.vim')
 
-    " Let dein manage dein
-    " Required:
-    call dein#add('Shougo/dein.vim')
-
-    let s:toml_file = s:config_dir . '/dein.toml'
-    call dein#load_toml(s:toml_file, {'lazy' : 0})
-
-    let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
-    call dein#load_toml(s:lazy_toml, {'lazy' : 1})
+  let s:toml = s:config_dir . '/dein.toml'
+  call dein#load_toml(s:toml, {'lazy' : 0})
+  "let s:lazy_toml = s:config_dir . '/dein.toml'
+  "call dein#load_toml(s:lazy_toml, {'lazy' : 1})
 
 
-    " Required:
-    call dein#end()
-    call dein#save_state()
+" if dein#load_state(s:dein_cache_path)
+"     call dein#begin(s:dein_cache_path)
+
+"    " Let dein manage dein
+"    " Required:
+"    call dein#add('Shougo/dein.vim')
+"
+"    let s:toml_file = s:config_dir . '/dein.toml'
+"    call dein#load_toml(s:toml_file, {'lazy' : 0})
+"
+"    let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
+"    call dein#load_toml(s:lazy_toml, {'lazy' : 1})
+
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
 endif
 
 " If you want to install not installed plugins on startup.
