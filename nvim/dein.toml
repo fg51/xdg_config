@@ -3,6 +3,7 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
+build = 'make'
 hook_post_update = '''
   if dein#util#_is_windows()
     let cmd = 'tools\\update-dll-mingw'
@@ -31,58 +32,49 @@ hook_add = '''
 [[plugins]]
 repo = 'tomasr/molokai'
 hook_add = '''
-  let g:molokai_original = 1
-  autocmd myautocmd VimEnter * colorscheme molokai "TODO: transpansy
+let g:molokai_original = 1
+autocmd myautocmd VimEnter * colorscheme molokai "TODO: transpansy
 '''
-  #set background=dark
+# set background=dark
 # }}} View
 
 
-# Input {{{
-##[[plugins]]
-##repo = 'Shougo/neocomplete'
-##hook_add = '''
-##  let g:acp_enableAtStartup = 0
-##  let g:neocomplete#enable_at_startup = 1
-##  let g:neocomplete#max_list = 5
-##  let g:neocomplete#auto_completion_start_length = 3
-##  let g:neocomplete#enable_underbar_completion = 0
-##  let g:NeoComplete#EnableAtStartup = 1
-##'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets', 'vim-snippets']
-hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-
-  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
-'''
-#
-#  "smap <expr><TAB> neosnippet#expandable_or_jumpable()?
-#  "  \ "\<Plug>(neosnippet_expand_or_jump)":"\<TAB>"
-#
-#  "let g:neosnippet#enable_snipmate_compatibility = 1
-#  "" for reloading directory
-#  "let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-#  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-#  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-#  let g:neosnippet#snippets_directory+=[g:dein_dir . '/repos//github.com/honza/vim-snippets/snippets']
-#
-#  if has('conceal') " For snippet_complete marker.
-#    set conceallevel=2 concealcursor=niv
-#  endif
-#'''
+#  # Input {{{
+#  ##[[plugins]]
+#  ##repo = 'Shougo/neocomplete'
+#  ##hook_add = '''
+#  ##  let g:acp_enableAtStartup = 0
+#  ##  let g:neocomplete#enable_at_startup = 1
+#  ##  let g:neocomplete#max_list = 5
+#  ##  let g:neocomplete#auto_completion_start_length = 3
+#  ##  let g:neocomplete#enable_underbar_completion = 0
+#  ##  let g:NeoComplete#EnableAtStartup = 1
+#  ##'''
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'honza/vim-snippets'
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+depends = ['neosnippet-snippets', 'vim-snippets']
+on_ft = ['snippet']
+hook_source = '''
+  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
+  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
+  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
+
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+
+  if has('conceal') " For snippet_complete marker.
+    set conceallevel=2 concealcursor=niv
+  endif
+'''
+
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -116,48 +108,44 @@ hook_add = '''
 '''
 
 
-# others {{{
-# [[plugins]]
-# repo = 'Shougo/unite.vim'
-
-
-# [[plugins]]
-# repo = 'fuenor/qfixhowm'
-# hook_add = '''
-#   let QFixHowm_key = 'g'
-#   let howm_dir = '~/Dropbox/memo/howm'
-#   let howm_filename      = '%Y/%m/%Y-%m-%d-%H%M%S.howm'
-#   let howm_fileencoding  = 'utf-8'
-#   let howm_fileformat    = 'unix'
-#   let QFixHowm_DiaryFile = 'diary/%Y/%m/%Y-%m-%d-000000.howm'
-# '''
+#  # others {{{
+#  # [[plugins]]
+#  # repo = 'Shougo/unite.vim'
+#  
+#  
+#  # [[plugins]]
+#  # repo = 'fuenor/qfixhowm'
+#  # hook_add = '''
+#  #   let QFixHowm_key = 'g'
+#  #   let howm_dir = '~/Dropbox/memo/howm'
+#  #   let howm_filename      = '%Y/%m/%Y-%m-%d-%H%M%S.howm'
+#  #   let howm_fileencoding  = 'utf-8'
+#  #   let howm_fileformat    = 'unix'
+#  #   let QFixHowm_DiaryFile = 'diary/%Y/%m/%Y-%m-%d-000000.howm'
+#  # '''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 if = 'has("nvim")'
-on_event = 'InsertcharPre'
+if = 'has("python3")'
+on_event = 'InsertEnter'
+# on_event = 'InsertcharPre'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#max_list = 5
-  let g:deoplete#auto_complete_start_length = 3
-  "let g:deoplete#enable_camel_case = 0
-  "let g:deoplete#enable_ignore_case = 0
-  "let g:deoplete#enable_refresh_always = 0
-  "let g:deoplete#enable_smart_case = 1
-  "let g:deoplete#file#enable_buffer_path = 1
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-    \  neosnippet#expandable_or_jumpable() ?
-    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+"    let g:deoplete#max_list = 5
+"    let g:deoplete#auto_complete_start_length = 3
+"    "let g:deoplete#enable_camel_case = 0
+"    "let g:deoplete#enable_ignore_case = 0
+"    "let g:deoplete#enable_refresh_always = 0
+"    "let g:deoplete#enable_smart_case = 1
+"    "let g:deoplete#file#enable_buffer_path = 1
+    inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+      \  neosnippet#expandable_or_jumpable() ?
+      \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 '''
 hook_post_source = '''
   let g:deoplete#omni_patterns = {}
 '''
-
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-if = 'has("nvim")'
-depends = 'deoplete.vim'
-
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
@@ -167,12 +155,12 @@ repo = 'Shougo/denite.nvim'
 if = 'has("nvim")'
 depends = 'neomru.nvim'
 
-# [[plugins]]
-# repo = 'Yggdroot/indentLine'
-# hook_source = '''
-# let g:indentLine_char = ''
-# '''
-# let g:indentLine_color_term = 111
-# let g:indentLine_color_gui = '#909090'
+#  # [[plugins]]
+#  # repo = 'Yggdroot/indentLine'
+#  # hook_source = '''
+#  # let g:indentLine_char = ''
+#  # '''
+#  # let g:indentLine_color_term = 111
+#  # let g:indentLine_color_gui = '#909090'
 
 # }}} others
