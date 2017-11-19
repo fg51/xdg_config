@@ -1,8 +1,12 @@
 chromium
 Electron
+GPUCache
+Local Storage
+Preferences
 Zeal
 gtk-2.0
 .mypy_cache
+configstore
 
 fish/completions/
 fish/conf.d/

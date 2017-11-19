@@ -1,0 +1,5 @@
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+if = 'has("nvim")'
+on_ft = 'python'
+#depends = 'deoplete.vim'
