@@ -22,65 +22,11 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {'colorscheme': 'solarized',
       \ 'mode_map': {'c': 'NORMAL'},
-      \ 'active': {
-          \ 'left': [['mode', 'paste'], ['fugitive', 'filename', 'ale']]
-      \ },
-      \'component_function': {
-          \ 'modified': 'MyModified',
-          \ 'readonly': 'MyReadonly',
-          \ 'fugitive': 'MyFugitive',
-          \ 'filename': 'MyFilename',
-          \ 'fileformat': 'MyFileformat',
-          \ 'filetype': 'MyFiletype',
-          \ 'fileencoding': 'MyFileencoding',
-          \ 'mode': 'MyMode',
-          \ 'ale': 'ALEGetStatusLine'
-      \ }
   \}
-
-  function! MyModified()
-      return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-  endfunction
-
-  function! MyReadonly()
-      return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'x' : ''
-  endfunction
-
-  function! MyFilename()
-    return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-          \  &ft == 'unite' ? unite#get_status_string() :
-          \  &ft == 'vimshell' ? vimshell#get_status_string() :
-          \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-          \ ('' != MyModified() ? ' ' . MyModified() : '')
-  endfunction
-
-  function! MyFugitive()
-    try
-      if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-        return fugitive#head()
-      endif
-    catch
-    endtry
-    return ''
-  endfunction
-
-  function! MyFileformat()
-    return winwidth(0) > 70 ? &fileformat : ''
-  endfunction
-
-  function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-  endfunction
-
-  function! MyFileencoding()
-    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-  endfunction
-
-  function! MyMode()
-    return winwidth(0) > 60 ? lightline#mode() : ''
-  endfunction
 '''
+#      \ 'active': {
+#          \ 'left': [['mode', 'paste'], ['fugitive', 'filename', 'ale']]
+#      \ },
 
 [[plugins]]
 repo = 'tomasr/molokai'
@@ -169,83 +115,6 @@ hook_add = '''
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 '''
 
-#  let g:ale_linters = {
-#    \ 'python': ['pylint', 'flake8']
-#  \}
-
-
-
-#[[plugins]]
-#repo = 'cohama/vim-hier'
-#
-#[[plugins]]
-#repo = 'osyo-manga/shabadou.vim'
-#
-#[[plugins]]
-#repo = 'dannyob/quickfixstatus'
-#
-#[[plugins]]
-#repo    = 'osyo-manga/vim-watchdogs'
-#depends = [
-#  'vim-hier',
-#  'quickfixstatus',
-#  'shabadou.vim',
-#  'vim-quickrun',
-#]
-###on_idle = 1
-#hook_add = '''
-#  let g:watchdogs_check_BufWritePost_enable = 1
-#  let g:watchdogs_check_CursorHold_enable = 1
-#
-#  let g:quickrun_config = get(g:, 'quickrun_config', {})
-#  "let g:quickrun_config["watchdogs_checker/_"] = {
-#  "    \ "outputter/quickfix/open_cmd": "",
-#  "    \}
-#
-#  let g:quickrun_config['watchdogs_checker/jshint'] = {'cmdopt': '--config `/.jshintrc'}
-#
-#
-#  "{{{ python
-#  let s:pyflakes = executable('pyflakes3')? 'pyflakes3':
-#    \ executable('python3')? 'python3':
-#    \ executable('pyflakes')? 'pyflakes':
-#    \ 'python'
-#  let s:cmdopt = executable('pyflakes3')? '':
-#    \ executable('pyflakes')? 'pyflakes':
-#    \ executable('python3')? '-m pyflakes':
-#    \ executable('pyflakes')? '' :
-#    \ '-m pyflakes'
-#  let g:quickrun_config["watchdogs_checker/pyflakes3"] = {
-#    \ "command": s:pyflakes,
-#    \ "cmdopt" : s:cmdopt,
-#    \ "exec": "%c %o %s:p",
-#    \ "errorformat": '%f:%l:%m',
-#    \ }
-#  unlet s:pyflakes
-#  unlet s:cmdopt
-#
-#  let g:quickrun_config["python/watchdogs_checker"] = {
-#    \ "type": "watchdogs_checker/pyflakes3",
-#    \ }
-#   "}}} END python
-#
-#
-#  let g:quickrun_config["watchdogs_checker/clang"] = {
-#    \ "command"   : "clang",
-#    \ "exec"      : "%c %o -fsyntax-only -Iinclude -Iinc %s:p ",
-#    \ }
-#
-#  let g:quickrun_config["watchdogs_checker/clang_check"] = {
-#    \ "command": "clang-check",
-#    \ "exec"   : "%c %s:p -- %o",
-#    \ "cmdopt" : "--std=c++11 -Iinclude -Iinc",
-#    \ }
-#'''
-#hook_post_source = '''
-#  call watchdogs#setup(g:quickrun_config)
-#'''
-## }}} code check
-
 
 # others {{{
 # [[plugins]]
@@ -297,5 +166,13 @@ repo = 'Shougo/neomru.vim'
 repo = 'Shougo/denite.nvim'
 if = 'has("nvim")'
 depends = 'neomru.nvim'
+
+# [[plugins]]
+# repo = 'Yggdroot/indentLine'
+# hook_source = '''
+# let g:indentLine_char = ''
+# '''
+# let g:indentLine_color_term = 111
+# let g:indentLine_color_gui = '#909090'
 
 # }}} others

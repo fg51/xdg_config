@@ -1,4 +1,8 @@
 chromium
+Electron
+Zeal
+gtk-2.0
+.mypy_cache
 
 fish/completions/
 fish/conf.d/

@@ -75,9 +75,9 @@ syntax enable
 
 " # VIM OPTIONS {{{
 " ## INDENT {{{
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set expandtab
 set autoindent
 set smartindent
@@ -208,13 +208,10 @@ set nostartofline
 
 
 " SET FILETYPE {{{
-"autocmd BufNewFile,BufRead *.{py} set filetype=python
+autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml tabstop=2 softtabstop=2 shiftwidth=2
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
-autocmd myautocmd BufNewFile,BufRead *.{js,ts,pug} set tabstop=2 softtabstop=2 shiftwidth=2
-autocmd myautocmd BufNewFile,BufRead *.{c,cpp,hs} set tabstop=2 softtabstop=2 shiftwidth=2
-autocmd myautocmd BufNewFile,BufRead *.{go} set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
 set ft=markdown
 " }}}
 
