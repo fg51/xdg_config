@@ -13,9 +13,7 @@ augroup END
 
 " ## conditions {{{
 "
-let g:is_nvim = has('nvim')
 let g:is_windows = has('win32') || has('win64')
-let g:is_unix = has('unix')
 let g:is_gui = has('gui_running')
 let g:is_terminal = !g:is_gui
 let g:is_unicode = (&termencoding ==# 'utf-8' || &encoding == 'utf-8')
@@ -27,14 +25,14 @@ scriptencoding utf-8
 " }}} INITIALIZE
 
 
+" {{{ python3, python2
+let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim2/bin/python2')
+let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim3/bin/python3')
+" }}}
+
 " # DEIN {{{
 "
 let s:config_dir = expand('$HOME/.config/nvim')
-" let s:cache_home = empty($XDG_CACHE_HOME) ? expand('$HOME/.cache') : $XDG_CACHE_HOME
-" let g:dein_dir = s:cache_home . '/dein'
-" let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-" let s:dein_cache_path = expand('~/.cache/dein')
 let s:dein_repo_path = $HOME . '.cache/dein'
 
 
@@ -44,7 +42,6 @@ set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 
 " Required:
-" if dein#load_state($HOME . '/.config/nvim/dein')
 if dein#load_state(s:dein_repo_path)
   let g:dein#cache_directory = $HOME . '/.cache/nvim/dein/cache'
   call dein#begin($HOME . '/.cache/dein') " repo-path
@@ -55,21 +52,6 @@ if dein#load_state(s:dein_repo_path)
   call dein#load_toml(s:toml, {'lazy' : 0})
   let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
   call dein#load_toml(s:lazy_toml, {'lazy' : 1})
-
-
-" if dein#load_state(s:dein_cache_path)
-"     call dein#begin(s:dein_cache_path)
-
-"    " Let dein manage dein
-"    " Required:
-"    call dein#add('Shougo/dein.vim')
-"
-"    let s:toml_file = s:config_dir . '/dein.toml'
-"    call dein#load_toml(s:toml_file, {'lazy' : 0})
-"
-"    let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
-"    call dein#load_toml(s:lazy_toml, {'lazy' : 1})
-
 
   " Required:
   call dein#end()
@@ -224,11 +206,11 @@ set nostartofline
 
 
 " SET FILETYPE {{{
-autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
-autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml tabstop=2 softtabstop=2 shiftwidth=2
-autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
 autocmd myautocmd BufNewFile,BufRead *.{go} set nolist noexpandtab
+autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
+autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
+autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
 set ft=markdown
 " }}}
 
@@ -258,10 +240,4 @@ set guifont=Ricty\ Diminished\ 13
 " xmap <C-k> <Plug>(neosnippet_expand_target)
 
 
-"" set python3, python2
-""
-" let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim2/bin/python2')
-" let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/miniconda-latest/envs/neovim3/bin/python3')
-let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim2/bin/python2')
-let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim3/bin/python3')
-
+set t_ut=
