@@ -49,6 +49,7 @@ if dein#load_state(s:dein_repo_path)
   let g:dein#cache_directory = $HOME . '/.cache/nvim/dein/cache'
   call dein#begin($HOME . '/.cache/dein') " repo-path
   call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
   let s:toml = s:config_dir . '/dein.toml'
   call dein#load_toml(s:toml, {'lazy' : 0})
@@ -227,6 +228,7 @@ autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softta
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml tabstop=2 softtabstop=2 shiftwidth=2
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
+autocmd myautocmd BufNewFile,BufRead *.{go} set nolist noexpandtab
 set ft=markdown
 " }}}
 

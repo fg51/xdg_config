@@ -14,3 +14,7 @@
 	root = ~/.ghq
 	root = ~/.go/third_party/src
 	root = ~/.go/project/src
+[merge]
+	ff = false
+[pull]
+	rebase = perserve
