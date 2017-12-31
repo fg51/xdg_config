@@ -17,4 +17,4 @@
 [merge]
 	ff = false
 [pull]
-	rebase = perserve
+	rebase = preserve
