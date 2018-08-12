@@ -185,3 +185,22 @@ repo = 'zchee/deoplete-jedi'
 if = 'has("nvim")'
 on_ft = 'python'
 depends = 'deoplete.vim'
+
+
+# Rust {{{
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rust']
+hook_add = '''
+  let g:rustfmt_autosave = 1
+'''
+# }}} Rust
+
+# Golang {{{
+[[plugins]]
+repo = 'vim-jp/vim-go-extra'
+on_ft = ['go']
+hook_add = '''
+  autocmd FileType go autocmd BufWritePre <buffer> Fmt
+'''
+# }}}

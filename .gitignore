@@ -20,9 +20,12 @@ fish/functions/zadd.awk
 fish/fishd.*
 
 fisherman/bd/
+fisherman/fzf/
 fisherman/getopts/
+fisherman/get/
 fisherman/peco*
 fisherman/z/
+fish/fisherman
 
 nvim/.netrwhist/
 
@@ -54,3 +57,5 @@ menus/
 mimeapps.list
 nvim/.netrwhist
 user-dirs.locale
+
+yarn/

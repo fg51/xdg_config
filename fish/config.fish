@@ -11,6 +11,7 @@
 #
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
+set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 
 alias image sxiv
 alias view_pdf evince
@@ -78,10 +79,14 @@ if test -d $PYENV_ROOT
     status --is-interactive; and . (pyenv init -| psub); and . (pyenv virtualenv-init -| psub)
 end
 
+set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
+set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
+set -gx PATH $NDENV_ROOT/shims $PATH
 
 #
 # GO
 #
+set -gx GOROOT (go env GOROOT)
 set -gx GOPATH $HOME/.go
 set -gx PATH $HOME/.go/bin $PATH
 
@@ -96,3 +101,13 @@ function fish_user_key_bindings
   bind \cr 'peco_select_history (commandline -b)'
   bind \c] peco_select_ghq_repository
 end
+
+set -gx HPACK https://raw.githubusercontent.com/kflange/hpack_template/master/hpack.hsfile://raw.githubusercontent.com/kflange/hpack_template/master/hpack.hsfiles
+
+# RUST
+# set -gx RUST_ROOT (rustc --print sysroot)/lib
+set -gx RUST_ROOT $HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu
+set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH (rustc --print sysroot)/lib
+# set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src
+set -gx CARGO_ROOT $HOME/.cargo
+set -gx PATH $CARGO_ROOT/bin $PATH

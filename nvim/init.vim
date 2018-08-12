@@ -37,8 +37,10 @@ let s:dein_repo_path = $HOME . '.cache/dein'
 
 
 " Required:
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 " set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
+set runtimepath+=$GOPATH/src/github.com/nsf/gocode/nvim
 
 
 " Required:
@@ -206,7 +208,7 @@ set nostartofline
 
 
 " SET FILETYPE {{{
-autocmd myautocmd BufNewFile,BufRead *.{go} set nolist noexpandtab
+" autocmd myautocmd BufNewFile,BufRead *.{go} set noexpandtab
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
 autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
@@ -220,7 +222,6 @@ set ft=markdown
 "" let g:haskellmode_completion_ghc = 0
 "" autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 "" let g:ycm_semantic_triggers = {'haskell':['.']}
-
 
 
 " OTHERS {{{

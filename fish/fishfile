@@ -1,12 +1,8 @@
 fisherman/await
 0rax/fish-bd
-fisherman/fnm
 fisherman/fzf
 fisherman/get
-fisherman/get_file_age
 fisherman/getopts
-fisherman/last_job_id
-fisherman/menu
 oh-my-fish/plugin-peco
 yoshiori/fish-peco_select_ghq_repository
 fisherman/z
