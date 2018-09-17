@@ -12,5 +12,8 @@
 	default = simple
 [ghq]
 	root = ~/.ghq
-	root = ~/.go/third_party/src
-	root = ~/.go/project/src
+	root = ~/.go
+[merge]
+	ff = false
+[pull]
+	rebase = preserve

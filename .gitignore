@@ -20,10 +20,42 @@ fish/functions/zadd.awk
 fish/fishd.*
 
 fisherman/bd/
+fisherman/fzf/
 fisherman/getopts/
+fisherman/get/
 fisherman/peco*
 fisherman/z/
+fish/fisherman
 
 nvim/.netrwhist/
 
 fnm
+
+databases/
+GPUCache/
+IndexedDB/
+Local Storage/
+Preferences
+QuotaManager
+QuotaManager-journal
+
+dconf/
+fcitx/
+fish/functions/await.fish
+fish/functions/fnm.fish
+fish/functions/get_file_age.fish
+fish/functions/last_job_id.fish
+fish/functions/menu.fish
+fish/functions/node.fish
+fish/functions/npm.fish
+fisherman/await/
+fisherman/get_file_age/
+fisherman/last_job_id/
+fisherman/menu/
+kicad/
+menus/
+mimeapps.list
+nvim/.netrwhist
+user-dirs.locale
+
+yarn/
