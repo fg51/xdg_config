@@ -204,3 +204,13 @@ hook_add = '''
   autocmd FileType go autocmd BufWritePre <buffer> Fmt
 '''
 # }}}
+
+# vue {{{
+[[plugins]]
+repo = 'posva/vim-vue'
+on_ft = ['vue']
+hook_add = '''
+"autocmd FileType vue syntax sync fromstart
+'''
+# }}}
+
