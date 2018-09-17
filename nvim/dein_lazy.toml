@@ -180,11 +180,11 @@ hook_add = '''
   let gen_tags#gtags_auto_gen = 1
 '''
 
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-if = 'has("nvim")'
-on_ft = 'python'
-depends = 'deoplete.vim'
+# [[plugins]]
+# repo = 'zchee/deoplete-jedi'
+# if = 'has("nvim")'
+# on_ft = 'python'
+# depends = 'deoplete.vim'
 
 
 # Rust {{{

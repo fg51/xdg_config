@@ -1,3 +1,6 @@
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
 # View {{{
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -42,7 +45,7 @@ repo = 'honza/vim-snippets'
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets', 'vim-snippets']
+depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
 hook_source = '''
   let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
@@ -80,8 +83,15 @@ hook_add = '''
   let g:ale_lint_on_enter = 0
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
+  let g:ale_sign_column_always = 1
+  let g:ale_set_loclist = 0
   let g:ale_set_quickfix = 1    "for quickfix
   let g:ale_open_list = 1   "for quickfix
+  let g:ale_list_window_size = 5
+  " let g:ale_completion_enabled = 1
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 '''
@@ -100,6 +110,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+depends = ['context_filetype']
 if = 'has("nvim")'
 if = 'has("python3")'
 # on_event = 'InsertEnter'
@@ -153,3 +164,24 @@ repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
 repo = 'vim-scripts/gtags.vim'
+
+
+[[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+depends = ['context_filetype']
+build = 'bash install.sh'
+hook_source = '''
+  let g:LanguageClient_serverCommands = {
+  \ 'python': ['pyls'],
+  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+  \ 'vue': ['vls'],
+  \ 'html': [],
+  \ 'javascript': [],
+  \ 'css': [],
+  \ }
+  let g:LanguageClient_autoStart = 1
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+'''
