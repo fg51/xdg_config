@@ -72,11 +72,11 @@ set -gx ANYENV_ROOT $HOME/.anyenv
 
 # as eval "$(pyenv init -)"
 #
-set -gx PYENV_ROOT $ANYENV_ROOT/envs/pyenv
-set -gx PATH $PYENV_ROOT/shims $PYENV_ROOT/bin $PATH
+set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
+set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
 
 if test -d $PYENV_ROOT
-    status --is-interactive; and . (pyenv init -| psub); and . (pyenv virtualenv-init -| psub)
+    status --is-interactive; and source (pyenv init -| psub); and source (pyenv virtualenv-init -| psub)
 end
 
 set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
@@ -102,7 +102,7 @@ function fish_user_key_bindings
   bind \c] peco_select_ghq_repository
 end
 
-set -gx HPACK https://raw.githubusercontent.com/kflange/hpack_template/master/hpack.hsfile://raw.githubusercontent.com/kflange/hpack_template/master/hpack.hsfiles
+set -gx GTAGSLABEL pygments
 
 # RUST
 # set -gx RUST_ROOT (rustc --print sysroot)/lib
