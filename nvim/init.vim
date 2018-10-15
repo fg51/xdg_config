@@ -39,15 +39,16 @@ let s:dein_repo_path = $HOME . '.cache/dein'
 " Required:
 set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 " set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
-set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
-set runtimepath+=$GOPATH/src/github.com/nsf/gocode/nvim
+"set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
+"set runtimepath+=$GOPATH/src/github.com/nsf/gocode/nvim
 
 
 " Required:
 if dein#load_state(s:dein_repo_path)
-  let g:dein#cache_directory = $HOME . '/.cache/nvim/dein/cache'
+  let g:dein#cache_directory = $HOME . '/.cache/dein'
   call dein#begin($HOME . '/.cache/dein') " repo-path
-  call dein#add('Shougo/dein.vim')
+  " call dein#add('Shougo/dein.vim')
+  call dein#add($HOME . '/.cache/dein')
   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
   let s:toml = s:config_dir . '/dein.toml'
