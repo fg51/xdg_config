@@ -1,0 +1,39 @@
+snippet myvega
+  <!DOCTYPE HTML>
+  <html>
+    <head>
+      <title>Embedding Vega-Lite</title>
+      <script src="https://cdn.jsdelivr.net/npm/vega@4.4.0"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc12"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.29.1"></script>
+    </head>
+    <body>
+      <div id="vis"></div>
+
+      <script charset="utf-8">
+      var yourVlSpec = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v2.0.json',
+        description: 'A simple bar cart with embedded data.',
+        data: {
+          values: [
+            {a: 'A', b: 28},
+            {a: 'B', b: 55},
+            {a: 'C', b: 43},
+            {a: 'D', b: 91},
+            {a: 'E', b: 81},
+            {a: 'F', b: 53},
+            {a: 'G', b: 19},
+            {a: 'H', b: 87},
+            {a: 'I', b: 52},
+          ],
+        },
+        mark: 'bar',
+        encoding: {
+          x: {field: 'a', type: 'ordinal'},
+          y: {field: 'b', type: 'quantitative'},
+        },
+      };
+      vegaEmbed('#vis', yourVlSpec);
+      </script>
+    </body>
+  </html>
