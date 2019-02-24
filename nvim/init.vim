@@ -215,6 +215,7 @@ autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softta
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
 "autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
 autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
+autocmd myautocmd BufNewFile,BufRead *.template.yaml setlocal filetype=cloudformation.yaml
 set ft=markdown
 " }}}
 

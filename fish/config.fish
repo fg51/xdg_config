@@ -65,6 +65,10 @@ function fish_prompt
 end
 
 
+# aws
+complete -c aws -f -a '(begin; set -lx COMP_SHELL fish; set -lx COMP_LINE (commandline); aws_completer; end)'
+
+
 # TODO: as eval "$(anyenv init -)"
 #
 set -gx ANYENV_ROOT $HOME/.anyenv
