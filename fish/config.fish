@@ -106,8 +106,8 @@ set -gx GTAGSLABEL pygments
 
 # RUST
 # set -gx RUST_ROOT (rustc --print sysroot)/lib
-set -gx RUST_ROOT $HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu
-set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH (rustc --print sysroot)/lib
-# set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src
+set -gx RUST_ROOT $HOME/.rustup/toolchains/beta-x86_64-unknown-linux-gnu
 set -gx CARGO_ROOT $HOME/.cargo
 set -gx PATH $CARGO_ROOT/bin $PATH
+set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH (rustc --print sysroot)/lib
+# set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src

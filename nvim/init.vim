@@ -210,7 +210,7 @@ set nostartofline
 
 " SET FILETYPE {{{
 " autocmd myautocmd BufNewFile,BufRead *.{go} set noexpandtab
-autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*,txt} set filetype=markdown
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
 autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
