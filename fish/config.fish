@@ -93,7 +93,7 @@ set -gx PATH $NDENV_ROOT/shims $PATH
 set -gx GOROOT (go env GOROOT)
 set -gx GOPATH $HOME/.go
 set -gx PATH $HOME/.go/bin $PATH
-
+set -gx GO111MODULE on
 
 # oh-my-fish/plugin-peco
 # function fish_user_key_bindings
