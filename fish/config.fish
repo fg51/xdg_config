@@ -8,7 +8,6 @@
 
 #
 # my bin path
-#
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
@@ -68,27 +67,33 @@ end
 # TODO: as eval "$(anyenv init -)"
 #
 set -gx ANYENV_ROOT $HOME/.anyenv
-
+# TODO: as eval "$(anyenv init -)"
+# anyenv init - fish | source
+# set -Ux fish_user_paths $ANYENV_ROOT/bin $fish_user_paths
+# status --is-interactive; and source (anyenv init -|psub)
+# status --is-interactive; and anyenv init - fish | source
+# anyenv init - fish | source
+# eval (anyenv init)
 
 # as eval "$(pyenv init -)"
 #
 set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
-set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
+# set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
 
-if test -d $PYENV_ROOT
-    status --is-interactive; and source (pyenv init -| psub); and source (pyenv virtualenv-init -| psub)
-end
+# if test -d $PYENV_ROOT
+#     status --is-interactive; and source (pyenv init -| psub); and source (pyenv virtualenv-init -| psub)
+# end
 
-set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
-set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
-set -gx PATH $NDENV_ROOT/shims $PATH
+# set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
+# set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
+# set -gx PATH $NDENV_ROOT/shims $PATH
 
 #
 # GO
-#
-set -gx GOROOT (go env GOROOT)
-set -gx GOPATH $HOME/.go
-set -gx PATH $HOME/.go/bin $PATH
+# set -gx GOROOT (go env GOROOT)
+# set -Ux GOPATH $HOME/.go
+# set -Ux PATH $HOME/.go/bin $PATH
+set -gx fish_user_paths $HOME/.go/bin $fish_user_paths
 
 
 # oh-my-fish/plugin-peco
@@ -97,10 +102,10 @@ set -gx PATH $HOME/.go/bin $PATH
 # end
 
 # fish-peco_select_ghq_reopsitory
-function fish_user_key_bindings
-  bind \cr 'peco_select_history (commandline -b)'
-  bind \c] peco_select_ghq_repository
-end
+# function fish_user_key_bindings
+#   bind \cr 'peco_select_history (commandline -b)'
+#   bind \c] peco_select_ghq_repository
+# end
 
 set -gx GTAGSLABEL pygments
 

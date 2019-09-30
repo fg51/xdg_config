@@ -69,6 +69,14 @@ on_ft = ['dockerfile']
 [[plugins]]
 repo = 'digitaltoad/vim-pug'
 on_ft = ['pug']
+
+[[plugins]]
+repo = 'sirtaj/vim-openscad'
+on_ft = ['scad']
+
+[[plugins]]
+repo = 'jparise/vim-graphql'
+on_ft = ['graphql']
 # }}}
 
 
@@ -142,9 +150,9 @@ hook_add = '''
   let g:js_indent_typescript = 1
 '''
 
-[[plugins]]
-repo = 'Quramy/tsuquyomi'
-on_ft = ['typescript']
+#[[plugins]]
+#repo = 'Quramy/tsuquyomi'
+#on_ft = ['typescript']
 
 #[[plugins]]
 #repo  = 'clausreinke/typescript-tools'
@@ -203,4 +211,9 @@ on_ft = ['go']
 hook_add = '''
   autocmd FileType go autocmd BufWritePre <buffer> Fmt
 '''
+# }}}
+
+# Vue.js {{{
+repo = 'posva/vim-vue'
+on_ft = ['vue']
 # }}}

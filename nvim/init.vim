@@ -214,7 +214,10 @@ autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*,txt} set filetype
 autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
 autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
-autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
+"autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
+autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
+autocmd myautocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+autocmd myautocmd BufNewFile,BufRead *.{scad} set filetype=scad
 set ft=markdown
 " }}}
 
@@ -244,3 +247,8 @@ set guifont=Ricty\ Diminished\ 13
 
 
 set t_ut=
+
+" for alacritty 24bit color {{{
+" execute "set t_8f=\e[38;2;%lu;%lu;%lum"
+" execute "set t_8b=\e[48;2;%lu;%lu;%lum"
+" }}} for alacritty
