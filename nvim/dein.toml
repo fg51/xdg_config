@@ -9,18 +9,20 @@ hook_add = '''
       \ 'mode_map': {'c': 'NORMAL'},
   \}
 '''
-#      \ 'active': {
-#          \ 'left': [['mode', 'paste'], ['fugitive', 'filename', 'ale']]
-#      \ },
 
 [[plugins]]
 repo = 'tomasr/molokai'
 on_event=['VimEnter']
 hook_add = '''
-set t_Co=256
 let g:molokai_original = 1
 set background=dark
 colorscheme molokai
+
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+highlight LineNr ctermbg=none
+highlight Folded ctermbg=none
+highlight EndOfBuffer ctermbg=none
 '''
 # hook_add = '''
 # set background=dark
@@ -34,6 +36,11 @@ colorscheme molokai
 # autocmd myautocmd VimEnter * colorscheme molokai "TODO: transpansy
 # }}} View
 
+[[plugins]]
+repo = 'joshdick/onedark.vim'
+
+[[plugins]]
+repo = 'sickill/vim-monokai'
 
 #  # Input {{{
 #  ##[[plugins]]
@@ -47,24 +54,30 @@ colorscheme molokai
 #  ##  let g:NeoComplete#EnableAtStartup = 1
 #  ##'''
 
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'honza/vim-snippets'
 
 [[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
+repo = 'SirVer/ultisnips'
 hook_source = '''
-  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
-
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
+  let g:UltiSnipsExpandTrigger='<c-k>'
 '''
+
+# [[plugins]]
+# repo = 'Shougo/neosnippet'
+# depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
+# hook_source = '''
+#   let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
+#   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
+#   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
+#
+#   imap <C-k> <Plug>(neosnippet_expand_or_jump)
+#   smap <C-k> <Plug>(neosnippet_expand_or_jump)
+#   xmap <C-k> <Plug>(neosnippet_expand_target)
+# '''
 #  if has('conceal') " For snippet_complete marker.
 #    set conceallevel=2 concealcursor=niv
 #  endif
@@ -77,7 +90,8 @@ repo = 'tpope/vim-surround'
 
 # code check {{{
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'dense-analysis/ale'
+# repo = 'w0rp/ale'
 hook_add = '''
   let g:ale_linters = {
     \ 'python': ['pylint', 'flake8', 'mypy'],
@@ -125,27 +139,27 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = ['context_filetype']
-if = 'has("nvim")'
-if = 'has("python3")'
+# if = 'has("nvim")'
+# if = 'has("python3")'
 # on_event = 'InsertEnter'
 on_event = 'InsertcharPre'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
-"    let g:deoplete#max_list = 5
-"    let g:deoplete#auto_complete_start_length = 3
-"    "let g:deoplete#enable_camel_case = 0
-"    "let g:deoplete#enable_ignore_case = 0
-"    "let g:deoplete#enable_refresh_always = 0
-"    "let g:deoplete#enable_smart_case = 1
-"    "let g:deoplete#file#enable_buffer_path = 1
+  let g:deoplete#max_list = 5
+  let g:deoplete#auto_complete_start_length = 3
+   "let g:deoplete#enable_camel_case = 0
+   "let g:deoplete#enable_ignore_case = 0
+   "let g:deoplete#enable_refresh_always = 0
+   "let g:deoplete#enable_smart_case = 1
+   "let g:deoplete#file#enable_buffer_path = 1
 
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-    \  neosnippet#expandable_or_jumpable() ?
-    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+"  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+"    \  neosnippet#expandable_or_jumpable() ?
+"    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 '''
-hook_post_source = '''
-  let g:deoplete#omni_patterns = {}
-'''
+# hook_post_source = '''
+#   let g:deoplete#omni_patterns = {}
+# '''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
@@ -188,11 +202,11 @@ build = 'bash install.sh'
 hook_source = '''
   let g:LanguageClient_serverCommands = {
   \ 'python': ['pyls'],
-  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+  \ 'rust': ['rustup', 'run', 'beta', 'rls'],
   \ 'vue': ['vls'],
-  \ 'html': [],
-  \ 'javascript': [],
-  \ 'css': [],
+  " \ 'html': [],
+  \ 'javascript': ['javascript-typescript-stdio'],
+  " \ 'css': [],
   \ }
   let g:LanguageClient_autoStart = 1
   nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>

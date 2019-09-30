@@ -1,14 +1,14 @@
-[[plugins]]
-repo    = 'Shougo/vimfiler'
-on_cmd  = ['VimFiler', 'VimFilerExplorer']
-depends = ['unite.vim']
-hook_add = '''
-  nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit
-'''
+# [[plugins]]
+# repo    = 'Shougo/vimfiler'
+# on_cmd  = ['VimFiler', 'VimFilerExplorer']
+# depends = ['unite.vim']
+# hook_add = '''
+#   nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit
+# '''
 
-[[plugins]]
-repo = 'Shougo/vimshell'
-on_cmd = ['VimShell']
+# [[plugins]]
+# repo = 'Shougo/vimshell'
+# on_cmd = ['VimShell']
 
 [[plugins]]
 repo = 'Shougo/vinarise'
@@ -36,9 +36,9 @@ repo = 'sjl/gundo.vim'
 on_cmd = ['GundoShow']
 
 
-[[plugins]]
-repo = 'yuratomo/w3m.vim'
-on_cmd = ['W3m', 'W3mTab']
+# [[plugins]]
+# repo = 'yuratomo/w3m.vim'
+# on_cmd = ['W3m', 'W3mTab']
 
 
 [[plugins]]
@@ -103,22 +103,22 @@ hook_add = '''
 
 
 # HASKELL {{{
-[[plugins]]
-repo = 'eagletmt/neco-ghc'
-on_ft = ['haskell']
-hook_add = '''
-  let g:haskellmode_completion_ghc = 0
-  autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-  let g:ycm_semantic_triggers = {'haskell':['.']}
-'''
-
-[[plugins]]
-repo = 'ujihisa/ref-hoogle'
-on_ft = ['haskell']
-
-[[plugins]]
-repo = 'ujihisa/unite-haskellimport'
-on_ft = ['haskell']
+# [[plugins]]
+# repo = 'eagletmt/neco-ghc'
+# on_ft = ['haskell']
+# hook_add = '''
+#   let g:haskellmode_completion_ghc = 0
+#   autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+#   let g:ycm_semantic_triggers = {'haskell':['.']}
+# '''
+#
+# [[plugins]]
+# repo = 'ujihisa/ref-hoogle'
+# on_ft = ['haskell']
+#
+# [[plugins]]
+# repo = 'ujihisa/unite-haskellimport'
+# on_ft = ['haskell']
 # }}} HASKELL
 
 
@@ -214,6 +214,17 @@ hook_add = '''
 # }}}
 
 # Vue.js {{{
+[[plugins]]
 repo = 'posva/vim-vue'
 on_ft = ['vue']
 # }}}
+
+# fzf {{{
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+on_cmd  = ['Files', 'GFiles', 'GFlies?', 'Snippets']
+# }}} fzf

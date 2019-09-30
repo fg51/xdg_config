@@ -119,15 +119,12 @@ endif
 
 
 " ## VIEW {{{
-" if g:is_nvim
-"   let $NVIM_TUI_ENABLE_TRU_COLOR=1 "NOTE: old command
-"   "set termguicolors
-" endif
-if g:is_terminal
-  set t_Co=256
-endif
 
-set cmdheight=3 "set cmdheight=2
+" ### color {{{
+set termguicolors
+" }}} color
+
+set cmdheight=3
 set nocursorline
 set laststatus=2
 
@@ -139,7 +136,6 @@ set number
 set scrolloff=5
 set showcmd
 
-"set textwidth=0 "NOTE: auto by-return
 set title
 set wrap
 set showtabline=2
@@ -148,18 +144,9 @@ set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
 let g:vim_indent_cont = 0
 
 
-" NOTE: simple statuline
-"set statusline=%f%M%R%H%W%q%{&ff=='unix'?'':',['.&ff.']'}%{&fenc=='utf-8'\|\|&fenc==''?'':',['.&fenc.']'}%{GetQuickFixCount()==0?'':'\ [!'.GetQuickFixCount().']'}%=%(\|%3p%%%)
-"set statusline=%f%M%R%H%W%q
-"set statusline+=%{&ff=='unix'?'':',['.&ff.']'}
-"set statusline+=%{&fenc=='utf-8'\|\|&fenc==''?'':',['.&fenc.']'}
-"set statusline+=%{GetQuickFixCount()==0?'':'\ [!'.GetQuickFixCount().']'}
-"set statusline+=%=%(\|%3p%%%)
-"function! GetQuickFixCount() abort
-"  return len(filter(getqflist(), 'v:val.valid != 0'))
-"endfunction
-
-set completeopt-=preview    " what is this ???
+" ### complete {{{
+set completeopt-=preview
+" }}} complet
 
 let g:markdown_fenced_languages = [
 \ 'cpp',
@@ -206,8 +193,6 @@ set nostartofline
 "}}} VIM OPTIONS
 
 
-
-
 " SET FILETYPE {{{
 " autocmd myautocmd BufNewFile,BufRead *.{go} set noexpandtab
 autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*,txt} set filetype=markdown
@@ -222,12 +207,6 @@ set ft=markdown
 " }}}
 
 
-" for HASKELL
-"
-"" let g:haskellmode_completion_ghc = 0
-"" autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-"" let g:ycm_semantic_triggers = {'haskell':['.']}
-
 
 " OTHERS {{{
 
@@ -235,20 +214,4 @@ set ft=markdown
 set title
 set mouse=a
 
-
 " }}} OTHERS
-
-
-set guifont=Ricty\ Diminished\ 13
-
-" imap <C-k> <Plug>(neosnippet_expand_or_jump)
-" smap <C-k> <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k> <Plug>(neosnippet_expand_target)
-
-
-set t_ut=
-
-" for alacritty 24bit color {{{
-" execute "set t_8f=\e[38;2;%lu;%lu;%lum"
-" execute "set t_8b=\e[48;2;%lu;%lu;%lum"
-" }}} for alacritty
