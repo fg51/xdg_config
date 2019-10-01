@@ -8,6 +8,12 @@ endif
 
 augroup myautocmd
   autocmd!
+  autocmd ColorScheme * highlight Normal ctermbg=none guibg=none
+  autocmd ColorScheme * highlight Normal ctermbg=none guibg=none
+  autocmd ColorScheme * highlight NonText ctermbg=none guibg=none
+  autocmd ColorScheme * highlight LineNr ctermbg=none guibg=none
+  autocmd ColorScheme * highlight Folded ctermbg=none guibg=none
+  autocmd ColorScheme * highlight EndOfBuffer ctermbg=none guibg=none
 augroup END
 
 
@@ -122,8 +128,9 @@ endif
 
 " ### color {{{
 set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"  " for tmux
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"  " for tmux
+" set pumblend=30
 " }}} color
 
 set cmdheight=3

@@ -42,12 +42,6 @@ hook_add = '''
 let g:molokai_original = 1
 set background=dark
 colorscheme molokai
-
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
-highlight LineNr ctermbg=none
-highlight Folded ctermbg=none
-highlight EndOfBuffer ctermbg=none
 '''
 # hook_add = '''
 # set background=dark
