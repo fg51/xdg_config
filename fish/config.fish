@@ -72,20 +72,26 @@ complete -c aws -f -a '(begin; set -lx COMP_SHELL fish; set -lx COMP_LINE (comma
 # TODO: as eval "$(anyenv init -)"
 #
 set -gx ANYENV_ROOT $HOME/.anyenv
+set -x PATH "$ANYENV_ROOT/bin" $PATH
+# anyenv init - fish | source
+status --is-interactive; and source (anyenv init -|psub)
 
 
 # as eval "$(pyenv init -)"
 #
 set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
-set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
+#set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
 
+# if test -d $PYENV_ROOT
+#     status --is-interactive; and source (pyenv init -|psub); and source (pyenv virtualenv-init -|psub)
+# end
 if test -d $PYENV_ROOT
-    status --is-interactive; and source (pyenv init -| psub); and source (pyenv virtualenv-init -| psub)
+    status --is-interactive; and source (pyenv virtualenv-init -|psub)
 end
 
-set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
-set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
-set -gx PATH $NDENV_ROOT/shims $PATH
+# set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
+# set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
+# set -gx PATH $NDENV_ROOT/shims $PATH
 
 #
 # GO
@@ -101,10 +107,10 @@ set -gx GO111MODULE on
 # end
 
 # fish-peco_select_ghq_reopsitory
-function fish_user_key_bindings
-  bind \cr 'peco_select_history (commandline -b)'
-  bind \c] peco_select_ghq_repository
-end
+# function fish_user_key_bindings
+#   bind \cr 'peco_select_history (commandline -b)'
+#   bind \c] peco_select_ghq_repository
+# end
 
 set -gx GTAGSLABEL pygments
 
@@ -115,3 +121,13 @@ set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH (rustc --print sysroot)/lib
 # set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src
 set -gx CARGO_ROOT $HOME/.cargo
 set -gx PATH $CARGO_ROOT/bin $PATH
+
+# linuxbrew
+set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew"
+set -gx HOMEBREW_CELLAR "/home/linuxbrew/.linuxbrew/Cellar"
+set -gx HOMEBREW_REPOSITORY "/home/linuxbrew/.linuxbrew/Homebrew"
+set -g PATH "/home/linuxbrew/.linuxbrew/bin" "/home/linuxbrew/.linuxbrew/sbin" $PATH
+set -q MANPATH or set MANPATH ''
+set -gx MANPATH "/home/linuxbrew/.linuxbrew/share/man" $MANPATH
+set -q INFOPATH or set INFOPATH ''
+set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH

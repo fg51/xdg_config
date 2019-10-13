@@ -118,13 +118,13 @@ endif
 
 
 " ## VIEW {{{
-" if g:is_nvim
-"   let $NVIM_TUI_ENABLE_TRU_COLOR=1 "NOTE: old command
-"   "set termguicolors
-" endif
-if g:is_terminal
-  set t_Co=256
+" ### color {{{
+if (has("termguicolors"))
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
+" }}} color
 
 set cmdheight=3 "set cmdheight=2
 set nocursorline
@@ -158,7 +158,9 @@ let g:vim_indent_cont = 0
 "  return len(filter(getqflist(), 'v:val.valid != 0'))
 "endfunction
 
-set completeopt-=preview    " what is this ???
+" ### complete {{{
+set completeopt-=preview
+" }}} complet
 
 let g:markdown_fenced_languages = [
 \ 'cpp',
@@ -215,33 +217,15 @@ autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softta
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
 "autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
 autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
+autocmd myautocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+autocmd myautocmd BufNewFile,BufRead *.{scad} set filetype=scad
 autocmd myautocmd BufNewFile,BufRead *.template.yaml setlocal filetype=cloudformation.yaml
 set ft=markdown
 " }}}
 
 
-" for HASKELL
-"
-"" let g:haskellmode_completion_ghc = 0
-"" autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-"" let g:ycm_semantic_triggers = {'haskell':['.']}
-
-
 " OTHERS {{{
-
 " no scrach(preview)
 set title
 set mouse=a
-
-
 " }}} OTHERS
-
-
-set guifont=Ricty\ Diminished\ 13
-
-" imap <C-k> <Plug>(neosnippet_expand_or_jump)
-" smap <C-k> <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k> <Plug>(neosnippet_expand_target)
-
-
-set t_ut=

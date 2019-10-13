@@ -1,69 +1,108 @@
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
-# View {{{
+# status bar {{{
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {'colorscheme': 'solarized',
-      \ 'mode_map': {'c': 'NORMAL'},
+      " \ 'mode_map': {'c': 'NORMAL'},
+      \ 'active': {
+        \ 'left': [
+          \ ['mode', 'paste' ],
+          \ ['readonly', 'filename', 'modified'] ,
+          \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
+        \ ],
+      \ },
   \}
 '''
-#      \ 'active': {
-#          \ 'left': [['mode', 'paste'], ['fugitive', 'filename', 'ale']]
-#      \ },
 
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+depends = ['lightline.vim', 'ale']
+hook_add = '''
+  let g:lightline.component_expand = {
+  \ 'linter_checking': 'lightline#ale#checking',
+  \ 'linter_warnings': 'lightline#ale#warnings',
+  \ 'linter_errors': 'lightline#ale#errors',
+  \ 'linter_ok': 'lightline#ale#ok',
+  \ }
+  let g:lightline.component_type = {
+  \ 'linter_checking': 'left',
+  \ 'linter_warnings': 'warning',
+  \ 'linter_errors': 'error',
+  \ 'linter_ok': 'left',
+  \ }
+'''
+# }}} status bar
+
+# colorscheme {{{
 [[plugins]]
 repo = 'tomasr/molokai'
 #repo = 'crusoexia/vim-monokai'
-on_event=['VimEnter']
+#on_event=['VimEnter']
 hook_add = '''
 let g:molokai_original = 1
-colorscheme molokai
 '''
-# autocmd myautocmd VimEnter * colorscheme molokai "TODO: transpansy
-# set background=dark
-# }}} View
-# colorscheme monokai
-
-#  # Input {{{
-#  ##[[plugins]]
-#  ##repo = 'Shougo/neocomplete'
-#  ##hook_add = '''
-#  ##  let g:acp_enableAtStartup = 0
-#  ##  let g:neocomplete#enable_at_startup = 1
-#  ##  let g:neocomplete#max_list = 5
-#  ##  let g:neocomplete#auto_completion_start_length = 3
-#  ##  let g:neocomplete#enable_underbar_completion = 0
-#  ##  let g:NeoComplete#EnableAtStartup = 1
-#  ##'''
 
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+repo = 'joshdick/onedark.vim'
+hook_add = '''
+colorscheme onedark
+
+highlight normal guibg=none
+highlight nontext guibg=none
+highlight linenr guibg=none
+highlight folded guibg=none
+highlight endofbuffer guibg=none
+'''
+
+# [[plugins]]
+# repo = 'sickill/vim-monokai'
+# }}} colorscheme
+
+
+#  # Input {{{
+
+# snippets {{{
+## define file {{{
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'honza/vim-snippets'
+## }}} define file
 
+## engine {{{
 [[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
+repo = 'SirVer/ultisnips'
 hook_source = '''
-  let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-  let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
-
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-
+  let g:UltiSnipsExpandTrigger='<c-k>'
 '''
+
+# [[plugins]]
+# repo = 'Shougo/neosnippet'
+# depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
+# hook_source = '''
+#   let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
+#   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
+#   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
+#
+#   imap <C-k> <Plug>(neosnippet_expand_or_jump)
+#   smap <C-k> <Plug>(neosnippet_expand_or_jump)
+#   xmap <C-k> <Plug>(neosnippet_expand_target)
+#
+#   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+#   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+#
+#
+# '''
+
 #  if has('conceal') " For snippet_complete marker.
 #    set conceallevel=2 concealcursor=niv
 #  endif
+## }}} engine
+# }}} snippets
 
 
 [[plugins]]
@@ -73,11 +112,16 @@ repo = 'tpope/vim-surround'
 
 # code check {{{
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'dense-analysis/ale'
 hook_add = '''
   let g:ale_linters = {
-    \ 'python': ['pylint', 'flake8', 'mypy'],
+    \ 'python': ['pylint', 'mypy', 'pycodestyle', 'pyflakes', 'pyls', ],
   \}
+  let g:ale_fixers = {
+    \ 'javascript': ['eslint', ],
+    \ 'typescript': ['eslint', ],
+  \}
+
   let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
   let g:ale_c_gcc_options = '-std=c11 -Wall -Iinc -Iinclude'
 
@@ -98,6 +142,7 @@ hook_add = '''
   let g:ale_echo_msg_error_str = 'E'
   let g:ale_echo_msg_warning_str = 'W'
   let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  let g:ale_statusline_format = ['E%d', 'W%d', 'ok']
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 '''
@@ -124,28 +169,28 @@ on_event = 'InsertcharPre'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
 "    let g:deoplete#max_list = 5
-"    let g:deoplete#auto_complete_start_length = 3
+  let g:deoplete#auto_complete_start_length = 3
 "    "let g:deoplete#enable_camel_case = 0
 "    "let g:deoplete#enable_ignore_case = 0
 "    "let g:deoplete#enable_refresh_always = 0
 "    "let g:deoplete#enable_smart_case = 1
 "    "let g:deoplete#file#enable_buffer_path = 1
 
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-    \  neosnippet#expandable_or_jumpable() ?
-    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+"  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+"    \  neosnippet#expandable_or_jumpable() ?
+"    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 '''
 hook_post_source = '''
   let g:deoplete#omni_patterns = {}
 '''
 
-[[plugins]]
-repo = 'Shougo/neomru.vim'
+# [[plugins]]
+# repo = 'Shougo/neomru.vim'
 
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-if = 'has("nvim")'
-depends = 'neomru.nvim'
+# [[plugins]]
+# repo = 'Shougo/denite.nvim'
+# if = 'has("nvim")'
+# depends = 'neomru.nvim'
 
 # [[plugins]]
 # repo = 'Yggdroot/indentLine'
@@ -180,13 +225,15 @@ build = 'bash install.sh'
 hook_source = '''
   let g:LanguageClient_serverCommands = {
   \ 'python': ['pyls'],
-  \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+  \ 'rust': ['rustup', 'run', 'beta', 'rls'],
   \ 'vue': ['vls'],
   \ 'html': [],
-  \ 'javascript': [],
+  \ 'javascript': ['javascript-typescript-stdio', ],
+  \ 'typescript': ['javascript-typescript-stdio', ],
   \ 'css': [],
   \ }
   let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_diagnosticsEnable = 0
   nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
