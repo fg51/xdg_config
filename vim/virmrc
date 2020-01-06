@@ -1,0 +1,154 @@
+if 0 | endif
+
+" # INITIALIZE {{{
+"
+if &compatible
+  set nocompatible
+endif
+
+augroup myautocmd
+  autocmd!
+augroup END
+
+
+" ## conditions {{{
+"
+let g:is_windows = has('win32') || has('win64')
+let g:is_gui = has('gui_running')
+let g:is_terminal = !g:is_gui
+let g:is_unicode = (&termencoding ==# 'utf-8' || &encoding == 'utf-8')
+    \ && !(exists('g:discard_unicode') && g:discard_unicode != 0)
+" }}} conditions
+
+" must be set with multibyte strings
+scriptencoding utf-8
+" }}} INITIALIZE
+
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+
+" # VIM OPTIONS {{{
+" ## INDENT {{{
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
+set smartindent
+set smarttab
+" }}} INDENT
+
+" ## FOLD {{{
+set foldcolumn=1
+set foldlevel=99
+set foldmethod=marker
+"set nofoldenable
+" }}} FOLD
+
+" ## SEARCH {{{
+set hlsearch
+nohlsearch
+set ignorecase
+set smartcase
+" }}}
+
+" ## BUFFER {{{
+set autoread
+set nohidden
+
+set nowritebackup
+set fileencodings=utf-8,default,ucs-bom,shift-jis,latin1
+
+if g:is_windows
+  set directory=c:/tmp/swap,c:/temp/swap
+  set backupdir=c:/tmp/swap,c:/temp/swap
+  set undodir=c:/tmp/undo,c:/temp/undo
+else
+  set directory=~/.cache/vim/swap
+  set undofile undodir=~/.cache/vim/undo
+endif
+" }}} BUFFER
+
+
+" ## VIEW {{{
+" ### color {{{
+if (has("termguicolors"))
+  set termguicolors
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+" }}} color
+
+set cmdheight=3 "set cmdheight=2
+set nocursorline
+set laststatus=2
+
+set list
+set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
+
+set number
+
+set scrolloff=5
+set showcmd
+
+"set textwidth=0 "NOTE: auto by-return
+set title
+set wrap
+set showtabline=2
+set display=lastline "NOTE: no-@ in long line
+set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
+let g:vim_indent_cont = 0
+
+
+" ### complete {{{
+set completeopt-=preview
+" }}} complet
+" }}} VIEW
+
+
+" ## INPUT {{{
+set backspace=indent,eol,start
+set clipboard=unnamed
+if has('autoselect')
+  set clipboard+=autoselect
+elseif has('unnamedplus') "CAUTION: need xclip
+  set clipboard+=unnamedplus
+else
+  set clipboard+=unnamedplus
+endif
+set clipboard+=unnamedplus
+
+set virtualedit& virtualedit+=block
+" }}} INPUT
+
+" ## COMMAND {{{
+set wildmenu
+set wildmode=longest:full,full
+set history=2000
+set nostartofline
+"}}} COMMAND
+
+"}}} VIM OPTIONS
+
+
+" SET FILETYPE {{{
+" autocmd myautocmd BufNewFile,BufRead *.{go} set noexpandtab
+autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
+autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
+autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
+"autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
+autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
+autocmd myautocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+autocmd myautocmd BufNewFile,BufRead *.{scad} set filetype=scad
+autocmd myautocmd BufNewFile,BufRead *.template.yaml setlocal filetype=cloudformation.yaml
+set ft=markdown
+" }}} SET FILETYPE
+
+
+" OTHERS {{{
+set mouse=a
+" }}} OTHERS
