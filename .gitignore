@@ -67,3 +67,6 @@ timestamps
 Station
 autostart
 blender
+pulse
+ibus
+anyenv

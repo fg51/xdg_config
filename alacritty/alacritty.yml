@@ -86,7 +86,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  # faux_multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -141,7 +141,8 @@ font:
 
   # Point size
   # size: 11.0 # font: NasuM
-  size: 12.0  # font Sarasa Mono J
+  # size: 12.0  # font Sarasa Mono J
+  size: 14.0  # font Sarasa Mono J
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
