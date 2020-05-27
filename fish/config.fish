@@ -116,3 +116,7 @@ set -gx CARGO_ROOT $HOME/.cargo
 set -gx PATH $CARGO_ROOT/bin $PATH
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH (rustc --print sysroot)/lib
 # set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src
+
+# {{{ fzf
+set -U FZF_LEGACY_KEYBINDINGS 0
+# }}} fzf

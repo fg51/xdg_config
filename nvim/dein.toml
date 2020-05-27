@@ -37,11 +37,11 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tomasr/molokai'
-on_event=['VimEnter']
+# on_event=['VimEnter']
 hook_add = '''
 let g:molokai_original = 1
 set background=dark
-colorscheme molokai
+" colorscheme molokai
 '''
 # hook_add = '''
 # set background=dark
@@ -57,9 +57,12 @@ colorscheme molokai
 
 [[plugins]]
 repo = 'joshdick/onedark.vim'
+on_event=['VimEnter']
+hook_add = '''
+set background=dark
+colorscheme onedark
+'''
 
-[[plugins]]
-repo = 'sickill/vim-monokai'
 
 #  # Input {{{
 #  ##[[plugins]]
@@ -114,9 +117,11 @@ hook_add = '''
   let g:ale_linters = {
     " \ 'python': ['pylint', 'flake8', 'mypy'],
     \ 'python': ['pylint', 'mypy', 'pycodestyle','pyflakes', 'pyls', ],
+    " 'python': ['pylint', 'mypy', 'pycodestyle', 'pyls', ],
   \}
   let g:ale_fixers = {
     \ 'javascript': ['eslint', ],
+    \ 'typescript': ['eslint', ],
   \}
 
   let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
@@ -125,7 +130,10 @@ hook_add = '''
   let g:ale_cpp_clang_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
   let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
 
-  let g:ale_python_mypy_options = '-s'
+  " let g:ale_python_mypy_options = '-s'
+  let g:ale_python_mypy_options = '--ignore-missing-imports'
+
+  let g:ale_rust_cargo_check_tests = 1
 
   let g:ale_lint_on_enter = 0
   let g:ale_lint_on_save = 1
@@ -226,6 +234,7 @@ hook_source = '''
   \ 'vue': ['vls'],
   " \ 'html': [],
   \ 'javascript': ['javascript-typescript-stdio'],
+  \ 'typescript': ['javascript-typescript-stdio'],
   " \ 'css': [],
   \ }
   let g:LanguageClient_autoStart = 1

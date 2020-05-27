@@ -77,6 +77,10 @@ on_ft = ['scad']
 [[plugins]]
 repo = 'jparise/vim-graphql'
 on_ft = ['graphql']
+
+[[plugins]]
+repo = 'tikhomirov/vim-glsl'
+on_ft = ['glsl']
 # }}}
 
 

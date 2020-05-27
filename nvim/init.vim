@@ -14,6 +14,31 @@ augroup myautocmd
   autocmd ColorScheme * highlight LineNr ctermbg=none guibg=none
   autocmd ColorScheme * highlight Folded ctermbg=none guibg=none
   autocmd ColorScheme * highlight EndOfBuffer ctermbg=none guibg=none
+
+  " autocmd ColorScheme * highlight Conditional     gui=bold
+  " autocmd ColorScheme * highlight Constant        gui=bold
+  " autocmd ColorScheme * highlight Debug           gui=bold
+  " autocmd ColorScheme * highlight DiffText        gui=italic,bold
+
+  " autocmd ColorScheme * highlight Directory       gui=bold
+  " autocmd ColorScheme * highlight ErrorMsg        gui=bold
+  " autocmd ColorScheme * highlight Exception       gui=bold
+  " autocmd ColorScheme * highlight Keyword         gui=bold
+  " autocmd ColorScheme * highlight MatchParen      gui=bold
+
+  " autocmd ColorScheme * highlight PreCondit       gui=bold
+  " autocmd ColorScheme * highlight Repeat          gui=bold
+  " autocmd ColorScheme * highlight SpecialChar     gui=bold
+  " autocmd ColorScheme * highlight SpecialComment  gui=bold
+  " autocmd ColorScheme * highlight Special         gui=italic
+  " autocmd ColorScheme * highlight Statement       gui=bold
+  " autocmd ColorScheme * highlight StorageClass    gui=italic
+  " autocmd ColorScheme * highlight Tag             gui=italic
+  " autocmd ColorScheme * highlight Todo            gui=bold
+
+  " autocmd ColorScheme * highlight VertSplit       gui=bold
+  " autocmd ColorScheme * highlight WarningMsg      gui=bold
+
 augroup END
 
 
@@ -210,8 +235,9 @@ autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softta
 autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
 "autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
 autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
-autocmd myautocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+autocmd myautocmd BufNewFile,BufRead *.{ts,tsx} setlocal filetype=typescript
 autocmd myautocmd BufNewFile,BufRead *.{scad} set filetype=scad
+autocmd myautocmd BufNewFile,BufRead *.{glsl,frag,vert} set filetype=glsl
 set ft=markdown
 " }}}
 
