@@ -30,12 +30,14 @@ let g:python_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim2/bin/pytho
 let g:python3_host_prog = expand('~/.anyenv/envs/pyenv/versions/neovim3/bin/python3')
 " }}}
 
+
+
 " # DEIN {{{
 "
 let s:config_dir = expand('$HOME/.config/nvim')
-let s:dein_repo_path = $HOME . '.cache/dein'
+let s:dein_repo_path = $HOME . '/.cache/dein'
 
-
+" TODO
 " Required:
 set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 " set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
@@ -44,11 +46,10 @@ set runtimepath+=$GOPATH/src/github.com/nsf/gocode/nvim
 
 
 " Required:
-if dein#load_state(s:dein_repo_path)
-  let g:dein#cache_directory = $HOME . '/.cache/nvim/dein/cache'
+if dein#load_state($HOME . '/.cache/dein')
   call dein#begin($HOME . '/.cache/dein') " repo-path
-  call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+  call dein#add($HOME . '/.cache/dein/repos/github.com/Shougo/dein.vim')
+"   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
   let s:toml = s:config_dir . '/dein.toml'
   call dein#load_toml(s:toml, {'lazy' : 0})
@@ -60,17 +61,16 @@ if dein#load_state(s:dein_repo_path)
   call dein#save_state()
 endif
 
+" Required:
+filetype plugin indent on
+syntax enable
+
 " If you want to install not installed plugins on startup.
 if dein#check_install()
   call dein#install()
 endif
 
 " }}} DEIN
-
-
-" Required:
-filetype plugin indent on
-syntax enable
 
 
 " # VIM OPTIONS {{{

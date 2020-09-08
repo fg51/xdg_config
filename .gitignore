@@ -41,6 +41,7 @@ QuotaManager-journal
 
 dconf/
 fcitx/
+fish/fish_variables
 fish/functions/await.fish
 fish/functions/fnm.fish
 fish/functions/get_file_age.fish
@@ -67,3 +68,6 @@ timestamps
 Station
 autostart
 blender
+
+anyenv/anyenv-install/*
+user-dirs.dirs

@@ -11,8 +11,8 @@
 [push]
 	default = simple
 [ghq]
-	root = ~/.ghq
 	root = ~/.go
+	root = ~/.ghq
 [merge]
 	ff = false
 [pull]

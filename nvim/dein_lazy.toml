@@ -5,35 +5,35 @@
 # hook_add = '''
 #   nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit
 # '''
-#
+
 # [[plugins]]
 # repo = 'Shougo/vimshell'
 # on_cmd = ['VimShell']
 
-[[plugins]]
-repo = 'Shougo/vinarise'
-on_cmd = ['Vinarise']
+# [[plugins]]
+# repo = 'Shougo/vinarise'
+# on_cmd = ['Vinarise']
 
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-on_cmd = ['QuickRun']
-hook_add = '''
-  if !exists("g:quickrun_config")
-    let g:quickrun_config = {}
-  endif
-  let g:quickrun_config = {
-    \  "_" : {
-    \    "outputter/buffer/split" : ":botright 8sp",
-    \    "runner" : "vimproc",
-    \    "runner/vimproc/updatetime" : 40,
-    \  }
-    \}
-'''
+# [[plugins]]
+# repo = 'thinca/vim-quickrun'
+# on_cmd = ['QuickRun']
+# hook_add = '''
+#   if !exists("g:quickrun_config")
+#     let g:quickrun_config = {}
+#   endif
+#   let g:quickrun_config = {
+#     \  "_" : {
+#     \    "outputter/buffer/split" : ":botright 8sp",
+#     \    "runner" : "vimproc",
+#     \    "runner/vimproc/updatetime" : 40,
+#     \  }
+#     \}
+# '''
 
 
-[[plugins]]
-repo = 'sjl/gundo.vim'
-on_cmd = ['GundoShow']
+# [[plugins]]
+# repo = 'sjl/gundo.vim'
+# on_cmd = ['GundoShow']
 
 
 # [[plugins]]
@@ -80,85 +80,65 @@ on_ft = ['graphql']
 # }}} syntax
 
 
-# LANG C {{{
-[[plugins]]
-repo = 'justmao945/vim-clang'
-on_ft = ['c', 'cpp']
-hook_add = '''
-  let g:clang_auto = 0
-  let g:clang_c_completeopt = 'menuone'
-  let g:clang_cpp_completeopt = 'menuone'
-  let g:clang_cpp_options = '-std=c++14 -stdlib=libc++'
-'''
-
-#[[plugins]]
-#repo = 'zchee/deoplete-clang'
-#on_ft = ['c', 'cpp', 'cmake']
-#depends = ['deoplete.nvim']
-#hook_source = '''
-#  let g:deoplete#sources#clang#libclang_path = '/usr/lib/lib/libclang.so.4'
-#  let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
-#'''
-# }}} LANG C
-
-
-# HASKELL {{{
+# # LANG C {{{
 # [[plugins]]
-# repo = 'eagletmt/neco-ghc'
-# on_ft = ['haskell']
+# repo = 'justmao945/vim-clang'
+# on_ft = ['c', 'cpp']
 # hook_add = '''
-#   let g:haskellmode_completion_ghc = 0
-#   autocmd myautocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-#   let g:ycm_semantic_triggers = {'haskell':['.']}
+#   let g:clang_auto = 0
+#   let g:clang_c_completeopt = 'menuone'
+#   let g:clang_cpp_completeopt = 'menuone'
+#   let g:clang_cpp_options = '-std=c++14 -stdlib=libc++'
+# '''
+
+# #[[plugins]]
+# #repo = 'zchee/deoplete-clang'
+# #on_ft = ['c', 'cpp', 'cmake']
+# #depends = ['deoplete.nvim']
+# #hook_source = '''
+# #  let g:deoplete#sources#clang#libclang_path = '/usr/lib/lib/libclang.so.4'
+# #  let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
+# #'''
+# # }}} LANG C
+
+
+# # HTML {{{
+# [[plugins]]
+# repo  = 'mattn/emmet-vim'
+# on_ft = ['css', 'html', 'javascript', 'markdown', 'typescript', ]
+#
+# [[plugins]]
+# repo  = 'hokaccha/vim-html5validator'
+# on_ft = ['html', 'javascript', 'typescript',]
+#
+# [[plugins]]
+# repo = 'nathanaelkane/vim-indent-guides'
+# on_ft = ['html', 'javascript', 'typescript',]
+#
+# [[plugins]]
+# repo = 'jason0x43/vim-js-indent'
+# on_ft = ['html', 'javascript', 'typescript',]
+#
+# [[plugins]]
+# repo = 'othree/javascript-libraries-syntax.vim'
+# on_ft = ['html', 'javascript', 'typescript',]
+#
+# [[plugins]]
+# repo = 'leafgarland/typescript-vim'
+# on_ft = ['typescript']
+# hook_add = '''
+#   let g:js_indent_typescript = 1
 # '''
 #
-# [[plugins]]
-# repo = 'ujihisa/ref-hoogle'
-# on_ft = ['haskell']
+# # [[plugins]]
+# # repo = 'Quramy/tsuquyomi'
+# # on_ft = ['typescript']
 #
-# [[plugins]]
-# repo = 'ujihisa/unite-haskellimport'
-# on_ft = ['haskell']
-# }}} HASKELL
-
-
-# HTML {{{
-[[plugins]]
-repo  = 'mattn/emmet-vim'
-on_ft = ['css', 'html', 'javascript', 'markdown', 'typescript', ]
-
-[[plugins]]
-repo  = 'hokaccha/vim-html5validator'
-on_ft = ['html', 'javascript', 'typescript',]
-
-[[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-on_ft = ['html', 'javascript', 'typescript',]
-
-[[plugins]]
-repo = 'jason0x43/vim-js-indent'
-on_ft = ['html', 'javascript', 'typescript',]
-
-[[plugins]]
-repo = 'othree/javascript-libraries-syntax.vim'
-on_ft = ['html', 'javascript', 'typescript',]
-
-[[plugins]]
-repo = 'leafgarland/typescript-vim'
-on_ft = ['typescript']
-hook_add = '''
-  let g:js_indent_typescript = 1
-'''
-
-# [[plugins]]
-# repo = 'Quramy/tsuquyomi'
-# on_ft = ['typescript']
-
-#[[plugins]]
-#repo  = 'clausreinke/typescript-tools'
-#on_ft = ['typescript']
-
-# }}} HTML
+# #[[plugins]]
+# #repo  = 'clausreinke/typescript-tools'
+# #on_ft = ['typescript']
+#
+# # }}} HTML
 
 
 # others {{{
@@ -167,32 +147,31 @@ repo = 'chrisbra/csv.vim'
 on_ft = ['csv']
 
 
+# ## ##[[plugins]]
+# ## ##repo = 'kevinw/pyflakes-vim'
+# ## ##on_ft = ['python']
 
-## ##[[plugins]]
-## ##repo = 'kevinw/pyflakes-vim'
-## ##on_ft = ['python']
+# ## [[plugins]]
+# ## ##repo = 'majutsushi/tagbar'
+# ## #{'autoload': {'commands': ['Tagbar',]
 
-## [[plugins]]
-## ##repo = 'majutsushi/tagbar'
-## #{'autoload': {'commands': ['Tagbar',]
+# ## [[plugins]]
+# ## repo = 'h1mesuke/unite-outline'
+# ## 'unite_sources': ['outline']
 
-## [[plugins]]
-## repo = 'h1mesuke/unite-outline'
-## 'unite_sources': ['outline']
-
-
-[[plugins]]
-repo = 'jsfaint/gen_tags.vim'
-hook_add = '''
-  let gen_tags#ctags_auto_gen = 1
-  let gen_tags#gtags_auto_gen = 1
-'''
 
 # [[plugins]]
-# repo = 'zchee/deoplete-jedi'
-# if = 'has("nvim")'
-# on_ft = 'python'
-# depends = 'deoplete.vim'
+# repo = 'jsfaint/gen_tags.vim'
+# hook_add = '''
+#   let gen_tags#ctags_auto_gen = 1
+#   let gen_tags#gtags_auto_gen = 1
+# '''
+
+# # [[plugins]]
+# # repo = 'zchee/deoplete-jedi'
+# # if = 'has("nvim")'
+# # on_ft = 'python'
+# # depends = 'deoplete.vim'
 
 
 # Rust {{{
@@ -204,30 +183,30 @@ hook_add = '''
 '''
 # }}} Rust
 
-# Golang {{{
-[[plugins]]
-repo = 'vim-jp/vim-go-extra'
-on_ft = ['go']
-hook_add = '''
-  autocmd FileType go autocmd BufWritePre <buffer> Fmt
-'''
-# }}}
+# # Golang {{{
+# [[plugins]]
+# repo = 'vim-jp/vim-go-extra'
+# on_ft = ['go']
+# hook_add = '''
+#   autocmd FileType go autocmd BufWritePre <buffer> Fmt
+# '''
+# # }}}
 
-# vue {{{
-[[plugins]]
-repo = 'posva/vim-vue'
-on_ft = ['vue']
-hook_add = '''
-"autocmd FileType vue syntax sync fromstart
-'''
-# }}}
+# # vue {{{
+# [[plugins]]
+# repo = 'posva/vim-vue'
+# on_ft = ['vue']
+# hook_add = '''
+# "autocmd FileType vue syntax sync fromstart
+# '''
+# # }}}
 
-# fzf {{{
-[[plugins]]
-repo = 'junegunn/fzf'
-build = './install --all'
+# # fzf {{{
+# [[plugins]]
+# repo = 'junegunn/fzf'
+# build = './install --all'
 
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-on_cmd  = ['Files', 'GFiles', 'GFlies?', 'Snippets']
-# }}} fzf
+# [[plugins]]
+# repo = 'junegunn/fzf.vim'
+# on_cmd  = ['Files', 'GFiles', 'GFlies?', 'Snippets']
+# # }}} fzf
