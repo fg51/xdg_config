@@ -16,7 +16,8 @@ set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 alias image sxiv
 alias view_pdf evince
 alias paraview /opt/paraview/bin/paraview
-
+alias cmd /mnt/c/Windows/System32/cmd.exe
+alias explorer /mnt/c/Windows/explorer.exe
 
 # EDITOR
 #
