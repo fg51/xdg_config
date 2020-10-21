@@ -61,25 +61,25 @@ highlight endofbuffer guibg=none
 # # repo = 'sickill/vim-monokai'
 # # }}} colorscheme
 #
-#
-# #  # Input {{{
-#
-# # snippets {{{
-# ## define file {{{
+
+# Input {{{
+
+# snippets {{{
+# define file {{{
 # # [[plugins]]
 # # repo = 'Shougo/neosnippet-snippets'
-#
-# [[plugins]]
-# repo = 'honza/vim-snippets'
-# ## }}} define file
-#
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+# }}} define file
+
 # ## engine {{{
-# [[plugins]]
-# repo = 'SirVer/ultisnips'
+[[plugins]]
+repo = 'SirVer/ultisnips'
 # hook_source = '''
 #   let g:UltiSnipsExpandTrigger='<c-k>'
 # '''
-#
+
 # # [[plugins]]
 # # repo = 'Shougo/neosnippet'
 # # depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
@@ -117,7 +117,7 @@ hook_add = '''
   let g:ale_linters = {
     " \ 'python': ['pylint', 'mypy', 'pycodestyle', 'pyflakes', 'pyls', ],
     " \ 'python': ['flake8', 'mypy', 'pyls', ],
-    \ 'python': ['mypy', ],
+    \ 'python': ['mypy', 'pyls'],
   \}
   let g:ale_fixers = {
     \ 'javascript': ['eslint', ],
@@ -172,7 +172,7 @@ depends = ['context_filetype']
 if = 'has("nvim")'
 if = 'has("python3")'
 # # on_event = 'InsertEnter'
-on_event = 'InsertcharPre'
+# on_event = 'InsertcharPre'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
 "# "    let g:deoplete#max_list = 5
@@ -231,7 +231,7 @@ depends = ['context_filetype']
 build = 'bash install.sh'
 hook_source = '''
   let g:LanguageClient_serverCommands = {
-"   \ 'python': ['pyls'],
+    \ 'python': ['pyls'],
 "   \ 'rust': ['rustup', 'run', 'beta', 'rls'],
     \ 'rust': ['rust-analyzer'],
 "   \ 'vue': ['vls'],

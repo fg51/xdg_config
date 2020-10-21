@@ -104,7 +104,7 @@ set nohidden
 
 "set noswapfile
 set nowritebackup
-set fileencodings=utf-8,default,ucs-bom,shift-jis,latin1
+set fileencodings=utf-8,default,ucs-bom,euc-jp,cp932,shift-jis,latin1
 
 if g:is_windows
   set directory=c:/tmp/swap,c:/temp/swap
