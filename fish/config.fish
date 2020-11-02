@@ -2,6 +2,7 @@
 set -gx PATH $HOME/.local/bin $PATH
 set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
+set -gx PATH $HOME/.ghq/github.com/petervanderdoes/gitflow-avh $PATH
 # }}}
 
 
@@ -9,6 +10,9 @@ set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 alias image sxiv
 alias pdf evince
 # alias paraview /opt/paraview/bin/paraview
+alias cmd /mnt/c/Windows/System32/cmd.exe
+alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
+alias explorer /mnt/c/Windows/explorer.exe
 # }}}
 
 
@@ -33,27 +37,27 @@ set -gx XDG_DATA_DIR $HOME/.local/sharconfig
 
 # {{{ GIT
 
-# # fish git prompt
-# set __fish_git_prompt_showdirtystate 'yes'
-# set __fish_git_prompt_showstashstate 'yes'
-# set __fish_git_prompt_showupstream 'yes'
-# set __fish_git_prompt_color_branch yellow
-# #
-# # Status Chars
-# set __fish_git_prompt_char_dirtystate '⚡'
-# set __fish_git_prompt_char_stagedstate '→'
-# set __fish_git_prompt_char_stashstate '↩'
-# set __fish_git_prompt_char_upstream_ahead '↑'
-# set __fish_git_prompt_char_upstream_behind '↓'
-# 
-# function fish_prompt
-#     set last_status $status
-#     set_color $fish_color_cwd
-#     printf '%s' (prompt_pwd)
-#     set_color normal
-#     printf '%s ' (__fish_git_prompt)
-#     set_color normal
-# end
+# fish git prompt
+set __fish_git_prompt_showdirtystate 'yes'
+set __fish_git_prompt_showstashstate 'yes'
+set __fish_git_prompt_showupstream 'yes'
+set __fish_git_prompt_color_branch yellow
+
+# Status Chars
+set __fish_git_prompt_char_dirtystate '⚡'
+set __fish_git_prompt_char_stagedstate '→'
+set __fish_git_prompt_char_stashstate '↩'
+set __fish_git_prompt_char_upstream_ahead '↑'
+set __fish_git_prompt_char_upstream_behind '↓'
+
+function fish_prompt
+    set last_status $status
+    set_color $fish_color_cwd
+    printf '%s' (prompt_pwd)
+    set_color normal
+    printf '%s ' (__fish_git_prompt)
+    set_color normal
+end
 # }}}
 
 function git_enable_gpg
@@ -139,4 +143,4 @@ set -gx PATH $CARGO_ROOT/bin $PATH
 # set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH
 # }}}
 
-
+set -U FZF_LEGACY_KEYBINDINGS 0

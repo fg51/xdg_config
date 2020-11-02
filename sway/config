@@ -161,4 +161,9 @@ bar {
 # ----
 # user
 
-exec --no-startup-id fcitx
+# exec --no-startup-id fcitx
+exec --no-startup-id "fcitx -rd"
+
+output X11-1 scale 2
+
+

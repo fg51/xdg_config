@@ -104,7 +104,7 @@ set nohidden
 
 "set noswapfile
 set nowritebackup
-set fileencodings=utf-8,default,ucs-bom,shift-jis,latin1
+set fileencodings=utf-8,default,ucs-bom,cp932,shift-jis,latin1
 
 if g:is_windows
   set directory=c:/tmp/swap,c:/temp/swap
@@ -220,6 +220,9 @@ autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
 autocmd myautocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 autocmd myautocmd BufNewFile,BufRead *.{scad} set filetype=scad
 autocmd myautocmd BufNewFile,BufRead *.template.yaml setlocal filetype=cloudformation.yaml
+" autocmd VimEnter * imap <Nul> <Nop>
+" autocmd VimEnter * map <Nul> <C-Space>
+" autocmd VimEnter * map! <Nul> <C-Space>
 set ft=markdown
 " }}}
 

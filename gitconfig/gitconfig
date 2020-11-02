@@ -15,4 +15,12 @@
 [merge]
 	ff = false
 [pull]
-	rebase = preserve
+	rebase = merges
+[diff]
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = "nvim -R -d -c \"wincmd l\" -d \"$LOCAL\" \"$REMOTE\""
+[mergetool "nvimdiff"]
+	cmd = "nvim -d -c \"4wincmd w | wincmd J\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\""
+[init]
+	defaultBranch = main
