@@ -4,36 +4,52 @@ repo = 'Shougo/context_filetype.vim'
 # status bar {{{
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+depends = ['coc']
 hook_add = '''
-  let g:lightline = {'colorscheme': 'solarized',
-      " \ 'mode_map': {'c': 'NORMAL'},
-      \ 'active': {
-        \ 'left': [
-          \ ['mode', 'paste' ],
-          \ ['readonly', 'filename', 'modified'] ,
-          \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
-        \ ],
-      \ },
-  \}
+  let g:lightline = {
+    \ 'colorscheme': 'onedark',
+    \ 'active': {
+      \ 'left': [
+        \ ['mode', 'paste' ],
+        \ ['readonly', 'filename', 'modified'] ,
+        \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+        \ ['cocstatus'],
+      \ ],
+    \ },
+	  \ 'component_function': {
+	  \   'cocstatus': 'coc#status'
+	  \ },
+  \ }
 '''
+# let g:lightline = {
+#   \ 'colorscheme': 'solarized',
+#     " \ 'mode_map': {'c': 'NORMAL'},
+#     \ 'active': {
+#       \ 'left': [
+#         \ ['mode', 'paste' ],
+#         \ ['readonly', 'filename', 'modified'] ,
+#         \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
+#       \ ],
+#     \ },
+# \ }
 
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
-depends = ['lightline.vim', 'ale']
-hook_add = '''
-  let g:lightline.component_expand = {
-  \ 'linter_checking': 'lightline#ale#checking',
-  \ 'linter_warnings': 'lightline#ale#warnings',
-  \ 'linter_errors': 'lightline#ale#errors',
-  \ 'linter_ok': 'lightline#ale#ok',
-  \ }
-  let g:lightline.component_type = {
-  \ 'linter_checking': 'left',
-  \ 'linter_warnings': 'warning',
-  \ 'linter_errors': 'error',
-  \ 'linter_ok': 'left',
-  \ }
-'''
+# [[plugins]]
+# repo = 'maximbaz/lightline-ale'
+# depends = ['lightline.vim', 'ale']
+# hook_add = '''
+#   let g:lightline.component_expand = {
+#   \ 'linter_checking': 'lightline#ale#checking',
+#   \ 'linter_warnings': 'lightline#ale#warnings',
+#   \ 'linter_errors': 'lightline#ale#errors',
+#   \ 'linter_ok': 'lightline#ale#ok',
+#   \ }
+#   let g:lightline.component_type = {
+#   \ 'linter_checking': 'left',
+#   \ 'linter_warnings': 'warning',
+#   \ 'linter_errors': 'error',
+#   \ 'linter_ok': 'left',
+#   \ }
+# '''
 # }}} status bar
 
 # # colorscheme {{{
@@ -64,11 +80,6 @@ highlight endofbuffer guibg=none
 
 # Input {{{
 
-# snippets {{{
-# define file {{{
-# # [[plugins]]
-# # repo = 'Shougo/neosnippet-snippets'
-
 [[plugins]]
 repo = 'honza/vim-snippets'
 # }}} define file
@@ -80,140 +91,55 @@ repo = 'SirVer/ultisnips'
 #   let g:UltiSnipsExpandTrigger='<c-k>'
 # '''
 
-# # [[plugins]]
-# # repo = 'Shougo/neosnippet'
-# # depends = ['context_filetype.vim', 'neosnippet-snippets', 'vim-snippets']
-# # hook_source = '''
-# #   let g:neosnippet#snippets_directory = ['~/.config/nvim/snippets']
-# #   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets']
-# #   let g:neosnippet#snippets_directory+=['~/.cache/dein/repos/github.com/honza/vim-snippets/snippets']
-# #
-# #   imap <C-k> <Plug>(neosnippet_expand_or_jump)
-# #   smap <C-k> <Plug>(neosnippet_expand_or_jump)
-# #   xmap <C-k> <Plug>(neosnippet_expand_target)
-# #
-# #   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-# #   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-# #
-# #
-# # '''
-#
-# #  if has('conceal') " For snippet_complete marker.
-# #    set conceallevel=2 concealcursor=niv
-# #  endif
-# ## }}} engine
-# # }}} snippets
-
-
 [[plugins]]
 repo = 'tpope/vim-surround'
 # }}} Input
 
 
 # code check {{{
-[[plugins]]
-repo = 'dense-analysis/ale'
-hook_add = '''
-  let g:ale_linters = {
-    " \ 'python': ['pylint', 'mypy', 'pycodestyle', 'pyflakes', 'pyls', ],
-    " \ 'python': ['flake8', 'mypy', 'pyls', ],
-    \ 'python': ['mypy', 'pyls'],
-  \}
-  let g:ale_fixers = {
-    \ 'javascript': ['eslint', ],
-    \ 'python': ['black', 'isort'],
-    \ 'typescript': ['eslint', ],
-  \}
-
-  let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
-  let g:ale_c_gcc_options = '-std=c11 -Wall -Iinc -Iinclude'
-
-  let g:ale_cpp_clang_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
-  let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
-
-  let g:ale_python_mypy_options = '--ignore-missing-imports'
-  " let g:ale_python_isort_options = '-m isort'
-  " let g:ale_python_black_options = '-m black'
-
-  let g:ale_rust_cargo_check_tests = 1
-
-  let g:ale_lint_on_enter = 0
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 0
-  let g:ale_sign_column_always = 1
-  let g:ale_set_loclist = 0
-  let g:ale_set_quickfix = 1    "for quickfix
-  let g:ale_open_list = 1   "for quickfix
-  let g:ale_list_window_size = 5
-  " let g:ale_completion_enabled = 1
-  let g:ale_echo_msg_error_str = 'E'
-  let g:ale_echo_msg_warning_str = 'W'
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  let g:ale_statusline_format = ['E%d', 'W%d', 'ok']
-  nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-  nmap <silent> <C-j> <Plug>(ale_next_wrap)
-'''
-# }}} code check
-
-# #  # [[plugins]]
-# #  # repo = 'fuenor/qfixhowm'
-# #  # hook_add = '''
-# #  #   let QFixHowm_key = 'g'
-# #  #   let howm_dir = '~/Dropbox/memo/howm'
-# #  #   let howm_filename      = '%Y/%m/%Y-%m-%d-%H%M%S.howm'
-# #  #   let howm_fileencoding  = 'utf-8'
-# #  #   let howm_fileformat    = 'unix'
-# #  #   let QFixHowm_DiaryFile = 'diary/%Y/%m/%Y-%m-%d-000000.howm'
-# #  # '''
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['context_filetype']
-if = 'has("nvim")'
-if = 'has("python3")'
-# # on_event = 'InsertEnter'
-# on_event = 'InsertcharPre'
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-"# "    let g:deoplete#max_list = 5
-"#   let g:deoplete#auto_complete_start_length = 3
-"# "    "let g:deoplete#enable_camel_case = 0
-"# "    "let g:deoplete#enable_ignore_case = 0
-"# "    "let g:deoplete#enable_refresh_always = 0
-"# "    "let g:deoplete#enable_smart_case = 1
-"# "    "let g:deoplete#file#enable_buffer_path = 1
-"#
-"# "  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-"# "    \  neosnippet#expandable_or_jumpable() ?
-"# "    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-'''
-# hook_post_source = '''
-#   let g:deoplete#omni_patterns = {}
+# [[plugins]]
+# repo = 'dense-analysis/ale'
+# hook_add = '''
+#   let g:ale_linters = {
+#     " \ 'python': ['pylint', 'mypy', 'pycodestyle', 'pyflakes', 'pyls', ],
+#     " \ 'python': ['flake8', 'mypy', 'pyls', ],
+#     \ 'python': ['mypy', 'pyls'],
+#   \}
+#   let g:ale_fixers = {
+#     \ 'javascript': ['eslint', ],
+#     \ 'python': ['black', 'isort'],
+#     \ 'typescript': ['eslint', ],
+#   \}
+#
+#   let g:ale_c_clang_options = '-std=c11 -Wall -Iinc -Iinclude'
+#   let g:ale_c_gcc_options = '-std=c11 -Wall -Iinc -Iinclude'
+#
+#   let g:ale_cpp_clang_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
+#   let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Iinc -Iinclude -Imockinc'
+#
+#   let g:ale_python_mypy_options = '--ignore-missing-imports'
+#   " let g:ale_python_isort_options = '-m isort'
+#   " let g:ale_python_black_options = '-m black'
+#
+#   let g:ale_rust_cargo_check_tests = 1
+#
+#   let g:ale_lint_on_enter = 0
+#   let g:ale_lint_on_save = 1
+#   let g:ale_lint_on_text_changed = 0
+#   let g:ale_sign_column_always = 1
+#   let g:ale_set_loclist = 0
+#   let g:ale_set_quickfix = 1    "for quickfix
+#   let g:ale_open_list = 1   "for quickfix
+#   let g:ale_list_window_size = 5
+#   " let g:ale_completion_enabled = 1
+#   let g:ale_echo_msg_error_str = 'E'
+#   let g:ale_echo_msg_warning_str = 'W'
+#   let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+#   let g:ale_statusline_format = ['E%d', 'W%d', 'ok']
+#   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+#   nmap <silent> <C-j> <Plug>(ale_next_wrap)
 # '''
-
-# # [[plugins]]
-# # repo = 'Shougo/neomru.vim'
-#
-# # [[plugins]]
-# # repo = 'Shougo/denite.nvim'
-# # if = 'has("nvim")'
-# # depends = 'neomru.nvim'
-#
-# # [[plugins]]
-# # repo = 'Yggdroot/indentLine'
-# # hook_source = '''
-# #   "let g:indentLine_setConceal = 0
-# #   let g:indentLine_color_term = 333
-# #   let g:indentLine_color_gui = '#909090'
-# #   let g:indentLine_setColors = 0
-# #   let g:indentLine_bgcolor_term = 333
-# #   "let g:indentLine_char = '='
-# #   "nmap <silent><Leader>i :<C-u>IndentLinesToggle<CR>
-# # '''
-# #  # let g:indentLine_color_term = 111
-# #  # let g:indentLine_color_gui = '#909090'
-#
-# # }}} others
+# }}} code check
 
 
 [[plugins]]
@@ -224,25 +150,45 @@ repo = 'editorconfig/editorconfig-vim'
 repo = 'vim-scripts/gtags.vim'
 
 
+# [[plugins]]
+# repo = 'autozimu/LanguageClient-neovim'
+# rev = 'next'
+# depends = ['context_filetype']
+# build = 'bash install.sh'
+# hook_source = '''
+#   let g:LanguageClient_serverCommands = {
+#     \ 'python': ['pyls'],
+# "   \ 'rust': ['rustup', 'run', 'beta', 'rls'],
+#     \ 'rust': ['rust-analyzer'],
+# "   \ 'vue': ['vls'],
+# "   \ 'html': [],
+# "   \ 'javascript': ['javascript-typescript-stdio', ],
+# "   \ 'typescript': ['javascript-typescript-stdio', ],
+# "   \ 'css': [],
+#   \ }
+#   let g:LanguageClient_autoStart = 1
+#   let g:LanguageClient_diagnosticsEnable = 0
+# "  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+# "   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+# "   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+# '''
+
+# syntax
 [[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-rev = 'next'
-depends = ['context_filetype']
-build = 'bash install.sh'
-hook_source = '''
-  let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-"   \ 'rust': ['rustup', 'run', 'beta', 'rls'],
-    \ 'rust': ['rust-analyzer'],
-"   \ 'vue': ['vls'],
-"   \ 'html': [],
-"   \ 'javascript': ['javascript-typescript-stdio', ],
-"   \ 'typescript': ['javascript-typescript-stdio', ],
-"   \ 'css': [],
-  \ }
-  let g:LanguageClient_autoStart = 1
-  let g:LanguageClient_diagnosticsEnable = 0
-"  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-"   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-"   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+repo = 'sheerun/vim-polyglot'
+hook_add = '''
+  let g:rustfmt_autosave = 1
+'''
+
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+hook_add = '''
+  set updatetime=300
+  if has("patch-8.1.1564")
+    set signcolumn=number
+  else
+    set signcolumn=yes
+  endif
 '''

@@ -17,7 +17,13 @@ alias image sxiv
 alias view_pdf evince
 alias paraview /opt/paraview/bin/paraview
 alias cmd /mnt/c/Windows/System32/cmd.exe
+alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
 alias explorer /mnt/c/Windows/explorer.exe
+
+# alias pdf /mnt/c/Program\ Files\ \(x86\)/Adobe/Acrobat\ Reader\ DC/Reader/AcroRd32.exe
+# function x86
+#   echo '(x86)'
+# end
 
 # EDITOR
 #
