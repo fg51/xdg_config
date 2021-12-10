@@ -14,8 +14,10 @@
 	root = ~/.go
 	root = ~/.ghq
 [merge]
-	ff = false
+	ff = only
 [pull]
-	rebase = preserve
+	rebase = merges
 [init]
 	defaultBranch = main
+[credential]
+	helper = store

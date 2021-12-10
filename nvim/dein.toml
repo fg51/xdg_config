@@ -63,6 +63,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'joshdick/onedark.vim'
+rev = 'main'
 hook_add = '''
 colorscheme onedark
 
@@ -180,6 +181,8 @@ hook_add = '''
   let g:rustfmt_autosave = 1
 '''
 
+[[plugins]]
+repo = 'ron-rs/ron.vim'
 
 [[plugins]]
 repo = 'neoclide/coc.nvim'
@@ -191,4 +194,14 @@ hook_add = '''
   else
     set signcolumn=yes
   endif
+
+  " Use [g and ]g to navigate diagnostics
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+  " goto code navigation.
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
 '''

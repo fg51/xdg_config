@@ -19,6 +19,7 @@ alias paraview /opt/paraview/bin/paraview
 alias cmd /mnt/c/Windows/System32/cmd.exe
 alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
 alias explorer /mnt/c/Windows/explorer.exe
+alias hx helix
 
 # alias pdf /mnt/c/Program\ Files\ \(x86\)/Adobe/Acrobat\ Reader\ DC/Reader/AcroRd32.exe
 # function x86
@@ -82,15 +83,19 @@ set -gx ANYENV_ROOT $HOME/.anyenv
 set -x PATH "$ANYENV_ROOT/bin" $PATH
 # anyenv init - fish | source
 status --is-interactive; and source (anyenv init -|psub)
+# status --is-interactive; and source (anyenv init - fish |psub)
 
 
 # as eval "$(pyenv init -)"
 #
 set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
-#set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
+# set -x PATH "$PYENV_ROOT/shims" $PATH
 
 # if test -d $PYENV_ROOT
 #     status --is-interactive; and source (pyenv init -|psub); and source (pyenv virtualenv-init -|psub)
+# end
+# if test -d $PYENV_ROOT
+#     status --is-interactive; and source (pyenv init -|psub)
 # end
 if test -d $PYENV_ROOT
     status --is-interactive; and source (pyenv virtualenv-init -|psub)
@@ -138,3 +143,8 @@ set -q MANPATH or set MANPATH ''
 set -gx MANPATH "/home/linuxbrew/.linuxbrew/share/man" $MANPATH
 set -q INFOPATH or set INFOPATH ''
 set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH
+
+# zoxide
+if command -sq zoxide
+    zoxide init fish | source
+end
