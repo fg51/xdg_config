@@ -148,3 +148,5 @@ set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH
 if command -sq zoxide
     zoxide init fish | source
 end
+
+source ~/.asdf/asdf.fish
