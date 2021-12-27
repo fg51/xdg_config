@@ -79,16 +79,16 @@ complete -c aws -f -a '(begin; set -lx COMP_SHELL fish; set -lx COMP_LINE (comma
 
 # TODO: as eval "$(anyenv init -)"
 #
-set -gx ANYENV_ROOT $HOME/.anyenv
-set -x PATH "$ANYENV_ROOT/bin" $PATH
+#set -gx ANYENV_ROOT $HOME/.anyenv
+#set -x PATH "$ANYENV_ROOT/bin" $PATH
 # anyenv init - fish | source
-status --is-interactive; and source (anyenv init -|psub)
+#status --is-interactive; and source (anyenv init -|psub)
 # status --is-interactive; and source (anyenv init - fish |psub)
 
 
 # as eval "$(pyenv init -)"
 #
-set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
+#set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
 # set -x PATH "$PYENV_ROOT/shims" $PATH
 
 # if test -d $PYENV_ROOT
@@ -97,9 +97,9 @@ set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
 # if test -d $PYENV_ROOT
 #     status --is-interactive; and source (pyenv init -|psub)
 # end
-if test -d $PYENV_ROOT
-    status --is-interactive; and source (pyenv virtualenv-init -|psub)
-end
+#if test -d $PYENV_ROOT
+#    status --is-interactive; and source (pyenv virtualenv-init -|psub)
+#end
 
 # set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
 # set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
@@ -108,7 +108,7 @@ end
 #
 # GO
 #
-set -gx GOROOT (go env GOROOT)
+#set -gx GOROOT (go env GOROOT)
 set -gx GOPATH $HOME/.go
 set -gx PATH $HOME/.go/bin $PATH
 set -gx GO111MODULE on

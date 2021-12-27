@@ -16,7 +16,7 @@ local opt = vim.opt
 -- # INITIALIZE {{{
 
 --if &compatible
-cmd "set nocompatible"  --  set nocompatible
+-- cmd "set nocompatible"  --  set nocompatible
 --endif
 
 --augroup myautocmd
@@ -57,9 +57,11 @@ g.loaded_vimballPlugin      = 1
 g.loaded_zip                = 1
 g.loaded_zipPlugin          = 1
 g.skip_loading_mswin        = 1
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
-g.loaded_netrwSettings = 1
+g.loaded_netrw              = 1  -- instead of useing 'nvim-telescope/telescope.nvim'
+g.loaded_netrwPlugin        = 1
+g.loaded_netrwSettings      = 1
+
+g.did_load_filetypes = 1  -- instead of using nathom/filetype.nvim
 -- }}}
 
 -- {{{ neovim provider
@@ -72,6 +74,8 @@ g.loaded_node_provider = 0
 g.loaded_perl_provider = 1
 g.loaded_python_provider = 0
 g.loaded_ruby_provider = 1
+
+
 -- }}}
 
 --" # DEIN {{{
@@ -325,3 +329,9 @@ cmp.setup({
     { name = "buffer" },
   })
 })
+
+o.showmatch = true
+o.matchtime = 1
+cmd "set matchpairs& matchpairs+=<:>"  --  set nocompatible
+
+g.mapleader = ","

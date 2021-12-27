@@ -8,6 +8,15 @@
 	fff = flow feature finish
 	frs = flow release start
 	frf = flow release finish
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	line-numbers = true
+	navigate = true
+[diff]
+	colorMoved = default
 [push]
 	default = simple
 [ghq]
@@ -15,6 +24,7 @@
 	root = ~/.ghq
 [merge]
 	ff = only
+	conflictstyle = diff3
 [pull]
 	rebase = merges
 [init]

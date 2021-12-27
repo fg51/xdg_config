@@ -4,6 +4,57 @@ return require('packer').startup(function()
   -- packer can mange itself
   use 'wbthomason/packer.nvim'
 
+  -- detect filetype faster
+  use {
+    'nathom/filetype.nvim',
+    config = require("filetype").setup({
+      overrides = {
+          extensions = {
+              -- Set the filetype of *.pn files to potion
+              pn = "potion",
+          },
+          literal = {
+              -- Set the filetype of files named "MyBackupFile" to lua
+              MyBackupFile = "lua",
+          },
+          complex = {
+              -- Set the filetype of any full filename matching the regex to gitconfig
+              [".*git/config"] = "gitconfig", -- Included in the plugin
+          },
+
+          -- The same as the ones above except the keys map to functions
+          function_extensions = {
+              ["cpp"] = function()
+                  vim.bo.filetype = "cpp"
+                  -- Remove annoying indent jumping
+                  vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
+              end,
+              ["pdf"] = function()
+                  vim.bo.filetype = "pdf"
+                  -- Open in PDF viewer (Skim.app) automatically
+                  vim.fn.jobstart(
+                      "open -a skim " .. '"' .. vim.fn.expand("%") .. '"'
+                  )
+              end,
+          },
+          function_literal = {
+              Brewfile = function()
+                  vim.cmd("syntax off")
+              end,
+          },
+          function_complex = {
+              ["*.math_notes/%w+"] = function()
+                  vim.cmd("iabbrev $ $$")
+              end,
+          },
+
+          shebang = {
+              -- Set the filetype of files with a dash shebang to sh
+              dash = "sh",
+          },
+      },
+    })
+  }
 
 --use {
 --  'neoclide/coc.nvim',
@@ -166,5 +217,54 @@ return require('packer').startup(function()
 -- formatter/linter {{{
   -- use { "jose-elias-alvarez/null-ls.nvim", requires = { "nvim-lua/plenary.nvim" } }
 -- }}} formatter/linter
+
+-- markdown preview {{{
+-- use {
+--   'kat0h/bufpreview.vim',
+--   requires = {'vim-denops/denops.vim' },
+--   opt = true,
+--   cmd = 'PreviewMarkdown',
+-- }
+-- }}}
+
+-- generate the image of the source code {{{
+--   use {
+  --   'segeljakt/vim-silicon',
+  --   opt = true,
+  --   cmd = 'Silicon',
+  --   config = function()
+  --     vim.g.silicon = {
+  --        theme: 'Dracula',
+  --     }
+  --   end
+  --
+  -- }
+  --
+--   use {
+  --   'skanehira/denops-germanium.vim',
+  -- }
+-- }}}
+
+-- like easyemotion {{{
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v1',
+    opt = true,
+    cmd = { 'HopWord', 'HopPattern', 'HopChar1', 'HopChar2', 'HopLine' },
+    config = function()
+      require'hop'.setup {
+        keys = 'etovxqpdygfblzhckisuran',
+      }
+    end,
+--    -- config = function()
+--    --   require'hop.nvim'.setup { keys = 'etovxqpdygfblzhckisuran' }
+--    -- end,
+--    -- vim.api.nvim_set_keymap('n', '$', "<cmd>lua require'hop.nvim'.hint_words()<cr>", {})
+  }
+-- }}}
+
+-- show keymap {{{
+  -- use 'folke/which-key.nvim'
+-- }}}
 
 end)
