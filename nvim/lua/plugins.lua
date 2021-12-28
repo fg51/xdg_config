@@ -204,6 +204,34 @@ return require('packer').startup(function()
   }
 -- }}} lsp
 
+
+-- skk {{{
+  use {
+    'vim-skk/denops-skkeleton.vim',
+    requires = { 'vim-denops/denops.vim' },
+    config = function()
+        -- vim.api.nvim_set_keymap("i", "<C-j>", "<Plug>(skkeleton-enable)")
+        -- vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(skkeleton-enable)")
+        vim.cmd[[
+          imap <C-j> <Plug>(skkeleton-enable)
+          cmap <C-j> <Plug>(skkeleton-enable)
+        ]]
+      end
+    -- config = require'lualine'.setup {
+    --   options = {
+    --     theme = 'onedark'
+    --   },
+    --   sections = {
+    --     lualine_x = {
+    --       { 'encoding' },
+    --       { 'fileformat', icons_enabled = false, },
+    --       { 'filetype', icons_enabled = false, }
+    --     }
+    --   }
+    -- }
+  }
+-- }}}
+
 -- complete {{{
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -215,7 +243,48 @@ return require('packer').startup(function()
 -- }}} complete
 
 -- formatter/linter {{{
-  -- use { "jose-elias-alvarez/null-ls.nvim", requires = { "nvim-lua/plenary.nvim" } }
+--  use {
+--    "jose-elias-alvarez/null-ls.nvim",
+--    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+--    config = function()
+--      local nulls = require"null-ls"
+--      nulls.config {
+--        sources = {
+--          nulls.builtins.formatting.prettier,
+--          nulls.builtins.formatting.rustfmt,
+--        },
+--      }
+--     require("lspconfig")["null-ls"].setup {}
+--    end
+--  }
+  use {
+    'mhartington/formatter.nvim',
+--    -- opt = true,
+--    cmd = "Format",
+    config = function()
+      require('formatter').setup({
+        logging = false,
+        filetype = {
+          rust = {
+            function()
+              return {
+                exe = "rustfmt",
+                args = {"--emit=stdout"},
+                stdin = true
+              }
+            end
+          }
+        }
+      })
+      vim.api.nvim_exec([[
+        augroup FormatAutogroup
+          autocmd!
+          autocmd BufWritePost *.rs FormatWrite
+        augroup END
+      ]], true)
+    end
+--    -- nnoremap <silent> <leader>f :Format<CR>
+  }
 -- }}} formatter/linter
 
 -- markdown preview {{{
@@ -266,5 +335,6 @@ return require('packer').startup(function()
 -- show keymap {{{
   -- use 'folke/which-key.nvim'
 -- }}}
+
 
 end)
