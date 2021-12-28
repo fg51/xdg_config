@@ -198,7 +198,6 @@ o.scrolloff = 5 --set scrolloff=5
 cmd "set showcmd" --set showcmd
 
 --"set textwidth=0 "NOTE: auto by-return
-cmd "set title"  --set title
 cmd "set wrap"  --set wrap
 cmd "set showtabline=2"  --set showtabline=2
 cmd "set display=lastline"  --set display=lastline "NOTE: no-@ in long line
@@ -217,9 +216,6 @@ cmd "let g:vim_indent_cont = 0" --let g:vim_indent_cont = 0
 --"  return len(filter(getqflist(), 'v:val.valid != 0'))
 --"endfunction
 
--- ### complete {{{
-cmd "set completeopt-=preview" --set completeopt-=preview
--- }}} complet
 
 --let g:markdown_fenced_languages = [
 --\ 'cpp',
@@ -268,10 +264,11 @@ opt.virtualedit:append({"block"}) --set virtualedit& virtualedit+=block
 -- }}} INPUT
 
 -- ## COMMAND {{{
-opt.wildmenu = true  --cmd "set wildmenu" --set wildmenu
+opt.wildmenu = true  --cmd "set wildmenu" --set wildmenu  -- complete in the commandline mode.
 opt.wildmode = {"longest", "full"}  --set wildmode=longest:full,full
 o.history = 2000 -- cmd "set history=2000" --set history=2000
-cmd "set nostartofline" --set nostartofline
+-- cmd "set nostartofline" --set nostartofline
+opt.startofline = false
 --}}} COMMAND
 
 --}}} VIM OPTIONS
@@ -295,18 +292,29 @@ vim.cmd[[autocmd BufWritePost plugins.lua PackerCompile]]
 
 -- OTHERS {{{
 --" no scrach(preview)
-cmd "set title"  --set title
+opt.title = true -- cmd "set title"  --set title
 cmd "set mouse=a"  --set mouse=a
 -- }}} OTHERS
 
 o.synmaxcol = 200
 
+o.updatetime = 300  -- any [msec] until creating the swap file
 o.timeout = true  -- set timeout -- for mappings
 o.timeoutlen = 1000  -- set timeoutlen=1000 -- default value
 o.ttimeout = true  -- set ttimeout -- for key codes
 o.ttimeoutlen = 10 -- set ttimeoutlen=10 -- unnoticeable small value
 
-opt.completeopt = "menu,menuone,noselect"
+-- ### complete {{{
+-- opt.completeopt = "menu,menuone,noselect"
+-- cmd "set completeopt-=preview" --set completeopt-=preview
+-- }}} complet
+-- opt.completeopt = ""
+-- opt.completeopt = "preview"
+-- opt.completeopt = "menuone,noinsert,noselect"
+-- * menuone: display menu at one
+-- * noinsert: disable insert with displaying menu
+cmd "set completeopt-=preview"
+cmd "set shortmess+=c"
 
 --local cmp = require"cmp"
 --cmp.setup({
