@@ -102,9 +102,9 @@ return require('packer').startup(function()
       ensure_installed = 'maintained',
     }
   }
---    --use {
---    --  'sheerun/vim-polyglot', config = function() vim.cmd "let g:rustfmt_autosave = 1" end
---    --}
+  --use {
+  --  'sheerun/vim-polyglot', config = function() vim.cmd "let g:rustfmt_autosave = 1" end
+  --}
 
 -- filetype {{{
   use { 'sirtaj/vim-openscad' } -- , ft = 'scad' }
@@ -121,10 +121,9 @@ return require('packer').startup(function()
 
 -- use { 'sainnhe/sonokai',  cmd "let g:edge_style = ''" }
 -- use { 'sainnhe/edge', cmd "let g:edge_style = ''" }
--- }}}
+-- }}} theme
 
   use 'editorconfig/editorconfig-vim'
-
 
   -- use 'vim-scripts/gtags.vim'
 
@@ -146,12 +145,12 @@ return require('packer').startup(function()
 
   use { 'mattn/emmet-vim', ft = {'css', 'html', 'javascript', 'markdown', 'typescript',  } }
 
--- -- status line {{{
---   -- use {
---   --  'glepnir/galaxyline.nvim',
---   --  branch = 'main',
---   --  requires = {'kyazdani42/nvim-web-devicons', opt = true },
---   --}
+-- status line {{{
+   -- use {
+   --  'glepnir/galaxyline.nvim',
+   --  branch = 'main',
+   --  requires = {'kyazdani42/nvim-web-devicons', opt = true },
+   --}
    use {
      'nvim-lualine/lualine.nvim',
      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -181,49 +180,10 @@ return require('packer').startup(function()
     requires = "neovim/nvim-lspconfig",
   }
 
---  --  use {
---  --    "neovim/nvim-lspconfig",
---  --    requires = {'hrsh7th/cmp-nvim-lsp', opt = true },
---  --    config = function()
---  --      local on_attach = function(client, bufnr)
---  --        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
---  --
---  --        local opts = { noremap=true, silent=true }
---  --        buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
---  --        buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
---  --        buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
---  --        buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
---  --        buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
---  --        buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
---  --        buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
---  --        buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
---  --        buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
---  --        buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
---  --        buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
---  --        buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
---  --        buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
---  --        buf_set_keymap("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
---  --        buf_set_keymap("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
---  --        buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
---  --        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
---  --      end
---  --
---  --      local lsp_installer = require("nvim-lsp-installer")
---  --      lsp_installer.on_server_ready(function(server)
---  --          local opts = {}
---  --          opts.on_attach = on_attach
---  --          -- for nvim-cmp {{{
---  --          opts.capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
---  --          -- }}} end nvim-cmp
---  --
---  --          server:setup(opts)
---  --          vim.cmd [[ do User LspAttachBuffers ]]
---  --      end)
---  --    end
---  --  }
-
   use {
     "neovim/nvim-lspconfig",
+    -- requires = {'hrsh7th/cmp-nvim-lsp', opt = true },
+    requires = { "williamboman/nvim-lsp-installer" },
     opt = true,
     event = 'BufEnter',
     config = function()
@@ -254,6 +214,9 @@ return require('packer').startup(function()
       lsp_installer.on_server_ready(function(server)
           local opts = {}
           opts.on_attach = on_attach
+          -- for nvim-cmp {{{
+          -- opts.capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+          -- }}} end nvim-cmp
           server:setup(opts)
           vim.cmd [[ do User LspAttachBuffers ]]
       end)
@@ -278,13 +241,8 @@ return require('packer').startup(function()
   }
 -- }}} skk
 
---  -- complete {{{
---  --  use 'hrsh7th/nvim-cmp'
---  --  use 'hrsh7th/cmp-nvim-lsp'
---  --  use 'hrsh7th/cmp-vsnip'
---  --  use 'hrsh7th/cmp-buffer'
---  --  use 'hrsh7th/vim-vsnip'
 
+-- complete and snippet {{{
   use {
     'Shougo/ddc.vim',
     requires = {
@@ -303,18 +261,15 @@ return require('packer').startup(function()
     -- event = 'InsertEnter',
     config = function()
       -- enable pum
-      -- vim.cmd[[ call ddc#custom#patch_global('completionMenu', 'pum.vim') ]]
       vim.fn["ddc#custom#patch_global"]('completionMenu', 'pum.vim')
-      -- vim.fn["pum#set_option"]('setline_insert', false)
-      -- vim.cmd[[ autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item) ]]
 
---      -- vim.cmd[[ call ddc#custom#patch_global('sources', ['around', 'file']) ]]
+      -- vim.cmd[[ call ddc#custom#patch_global('sources', ['around',]) ]] -- default
       vim.fn["ddc#custom#patch_global"]('sources', {'nvim-lsp', 'skkeleton', 'around', 'vsnip', 'file', })
 
       vim.fn["ddc#custom#patch_global"]('sourceOptions', {
         ['_'] = {
-          -- ['matchers'] = {'matcher_head'},
-          -- ['sortes'] = {'sorter_rank'},
+          -- ['matchers'] = {'matcher_head'},  -- default
+          -- ['sortes'] = {'sorter_rank'},  -- default
           -- ['converters'] = {'converter_remove_overlap'},
           -- ['converters'] = {'converter_remove_overlap', 'converter_truncate', 'converter_fuzzy'},
           ['matchers'] = {'matcher_fuzzy' },
@@ -369,47 +324,10 @@ return require('packer').startup(function()
       ]]
 
 
-      -- enable coplete command-line with pum
-
-----      vim.cmd[[ call ddc#custom#patch_global('autoCompleteEvents', [
-----        \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
-----        \ 'CmdlineEnter', 'CmdlineChanged',
-----        \ ])
-----      \ ]]
-
---      -- change ddc's setting with inputting at ':'
---      -- vim.cmd[[ nnoremap :       <Cmd>call CommandlinePre()<CR>: ]]
---
----- function! CommandlinePre() abort
-----   " Note: It disables default command line completion!
-----   cnoremap <expr> <Tab>
-----   \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-----   \ ddc#manual_complete()
-----   cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-----   cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-----   cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-----
-----   " Overwrite sources
-----   let s:prev_buffer_config = ddc#custom#get_buffer()
-----   call ddc#custom#patch_buffer('sources',
-----           \ ['cmdline', 'cmdline-history', 'around'])
-----
-----   autocmd User DDCCmdlineLeave ++once call CommandlinePost()
-----
-----   " Enable command line completion
-----   call ddc#enable_cmdline_completion()
-----   call ddc#enable()
----- endfunction
---
----- function! CommandlinePost() abort
-----   " Restore sources
-----   call ddc#custom#set_buffer(s:prev_buffer_config)
-----   cunmap <Tab>
----- endfunction
---
+      -- enable coplete command-line with pum {{{
+      -- }}} enable coplete command-line with pum
 
       -- enable ddc
-
       vim.fn["ddc#enable"]()
 
 --      -- vim.cmd[[ inoremap <silent><expr> <TAB> pum#visible() ?
@@ -420,11 +338,6 @@ return require('packer').startup(function()
 --      -- vim.cmd[[ inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR> ]]
 
       -- <TAB>: completion.
-      -- vim.cmd[[ inoremap <silent><expr> <TAB> ddc#map#pum_visible() ? '<C-n>' : (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ? '<TAB>' : ddc#map#manual_complete() ]]
-      --vim.cmd[[ inoremap <silent><expr> <TAB> ddc#map#pum_visible() ? '<C-n>' :
-      --  \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-      --  \ '<TAB>' : ddc#map#manual_complete()
-      --\ ]]
 --      vim.cmd[[ inoremap <silent><expr> <TAB>
 --        \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
 --        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
@@ -437,8 +350,6 @@ return require('packer').startup(function()
       --   { noremap = true, silent = true, expr = true }
       --   )
       -- <S-TAB>: completion back
-      -- vim.cmd[[ inoremap <expr><S-Tab>call pum#map#insert_relative(-1)<CR> ]]
-      -- vim.cmd[[ inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR> ]]
       vim.api.nvim_set_keymap('i', '<S-Tab>', '<Cmd>call pum#map#select_relative(-1)<CR>', {noremap = true})
 
       -- vim.cmd[[ inoremap <C-n> <Cmd>call pum#map#select_relative(+1)<CR> ]]
@@ -454,24 +365,72 @@ return require('packer').startup(function()
     end
   }
 
---    use {
---      'matsui54/denops-popup-preview.vim',
---      requires = {
---        'vim-denops/denops.vim',
---        'Shougo/ddc.vim',
---        'Shougo/pum.vim',  -- popup
---       -- 'Shougo/ddc-nvim-lsp',  -- lsp
---      }
---      -- use textEdit with pum.vim
---      -- autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
+
+  use {
+    'matsui54/denops-popup-preview.vim',
+    requires = { 'vim-denops/denops.vim' },
+    config = function()
+
+      -- use snippets
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+      -- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
+
+      vim.g.popup_preview_config = { ['delay'] = 30, ['maxWidth'] = 100, ['winblend'] = 0, }
+      vim.fn["popup_preview#enable"]()
+
+    end
+  }
+
+
+  use {
+    'hrsh7th/vim-vsnip-integ',
+    requires = { 'hrsh7th/vim-vsnip' }
+  }
+  use {
+    'hrsh7th/vim-vsnip',
+    config = function()
+      -- Expand
+      vim.cmd[[ imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
+      vim.cmd[[ smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
+
+      -- Expand or jump
+-- imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+-- smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+      -- Jump forward or backward
+      vim.cmd[[ imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>' ]]
+      vim.cmd[[ smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>' ]]
+      vim.cmd[[ imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>' ]]
+      vim.cmd[[ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>' ]]
+
+-- " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+-- " See https://github.com/hrsh7th/vim-vsnip/pull/50
+-- nmap        s   <Plug>(vsnip-select-text)
+-- xmap        s   <Plug>(vsnip-select-text)
+-- nmap        S   <Plug>(vsnip-cut-text)
+-- xmap        S   <Plug>(vsnip-cut-text)
 --
-        -- use snippets
---      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
---      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
---      -- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
---    }
---
---  -- }}} complete
+-- " If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
+-- let g:vsnip_filetypes = {}
+-- let g:vsnip_filetypes.javascriptreact = ['javascript']
+-- let g:vsnip_filetypes.typescriptreact = ['typescript']
+
+    end
+  }
+
+  use {
+    'ray-x/lsp_signature.nvim',
+    requires = 'nvim-lspconfig'
+  }
+
+  use { 'rafamadriz/friendly-snippets' }
+
+  use { 'tani/ddc-fuzzy' }
+
+
+
+-- }}} complete
 
 -- formatter/linter {{{
 --  use {
@@ -585,62 +544,5 @@ return require('packer').startup(function()
  -- show keymap {{{
    -- use 'folke/which-key.nvim'
  -- }}}
-
-  use {
-    'matsui54/denops-popup-preview.vim',
-    requires = { 'vim-denops/denops.vim' },
-    config = function()
-      -- autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
-
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
-      -- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
-      vim.cmd[[ let g:popup_preview_config = { 'delay':30, 'maxWidth': 100, 'winblend': 0, } ]]
-      vim.fn["popup_preview#enable"]()
-    end
-  }
-
-
-  use {
-    'hrsh7th/vim-vsnip-integ',
-    requires = { 'hrsh7th/vim-vsnip' }
-  }
-  use {
-    'hrsh7th/vim-vsnip',
-    config = function()
-      -- Expand
-      vim.cmd[[ imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
-      vim.cmd[[ smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
-
-      -- Expand or jump
--- imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
--- smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-
-      -- Jump forward or backward
-      vim.cmd[[ imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>' ]]
-      vim.cmd[[ smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>' ]]
-      vim.cmd[[ imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>' ]]
-      vim.cmd[[ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>' ]]
-
--- " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
--- " See https://github.com/hrsh7th/vim-vsnip/pull/50
--- nmap        s   <Plug>(vsnip-select-text)
--- xmap        s   <Plug>(vsnip-select-text)
--- nmap        S   <Plug>(vsnip-cut-text)
--- xmap        S   <Plug>(vsnip-cut-text)
---
--- " If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
--- let g:vsnip_filetypes = {}
--- let g:vsnip_filetypes.javascriptreact = ['javascript']
--- let g:vsnip_filetypes.typescriptreact = ['typescript']
-
-    end
-  }
-  use {
-    'ray-x/lsp_signature.nvim',
-    requires = 'nvim-lspconfig'
-  }
-  use { 'rafamadriz/friendly-snippets' }
-  use { 'tani/ddc-fuzzy' }
 
 end)
