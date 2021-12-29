@@ -176,7 +176,11 @@ return require('packer').startup(function()
 -- }}} finder
 
 -- lsp {{{
-  use "williamboman/nvim-lsp-installer"
+  use {
+    "williamboman/nvim-lsp-installer",
+    requires = "neovim/nvim-lspconfig",
+  }
+
 --  --  use {
 --  --    "neovim/nvim-lspconfig",
 --  --    requires = {'hrsh7th/cmp-nvim-lsp', opt = true },
@@ -289,9 +293,11 @@ return require('packer').startup(function()
       'Shougo/ddc-around',  -- complete-source around the word
       'LumaKernel/ddc-file',  -- complete-source the file-name
       'Shougo/ddc-matcher_head',  -- fileter
+      'tani/ddc-fuzzy',  -- fuzzy-filter
       'Shougo/ddc-sorter_rank',  -- sort
       'Shougo/ddc-converter_remove_overlap', -- protect double complete
-      -- 'Shougo/ddc-nvim-lsp',  -- lsp
+      'Shougo/ddc-nvim-lsp',  -- with lsp
+      'hrsh7th/vim-vsnip-integ',
     },
     -- opt = true,
     -- event = 'InsertEnter',
@@ -303,33 +309,64 @@ return require('packer').startup(function()
       -- vim.cmd[[ autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item) ]]
 
 --      -- vim.cmd[[ call ddc#custom#patch_global('sources', ['around', 'file']) ]]
-      vim.fn["ddc#custom#patch_global"]('sources', {'around', 'file'})
+      vim.fn["ddc#custom#patch_global"]('sources', {'nvim-lsp', 'skkeleton', 'around', 'vsnip', 'file', })
 
-      vim.fn["ddc#custom#patch_global"]('sourcesOptions', {
-        _ = {
-          matchers = {'matcher_head'},
-          sortes = {'sorter_rank'},
-          converters = {'converter_remove_overlap'},
+      vim.fn["ddc#custom#patch_global"]('sourceOptions', {
+        ['_'] = {
+          -- ['matchers'] = {'matcher_head'},
+          -- ['sortes'] = {'sorter_rank'},
+          -- ['converters'] = {'converter_remove_overlap'},
+          -- ['converters'] = {'converter_remove_overlap', 'converter_truncate', 'converter_fuzzy'},
+          ['matchers'] = {'matcher_fuzzy' },
+          ['sortes'] = {'sorter_fuzzy'},
+          ['converters'] = {'converter_remove_overlap', 'converter_fuzzy'},
+          ['ignoreCase'] = true,
         },
-        around = {mark = 'Around' },
-        file = {
-          mark = 'F',
-          isVolatile = true,
-          forceCompletionPattern = '\\S/\\S*',  -- '\S/\S*'
+        ['vsnip'] = {['mark'] = 'vsnip' },  -- ['dup'] = true ?
+        ['nvim-lsp'] = { ['mark'] = 'lsp', ['forceCompletionPattern'] = '\\.\\w*|:\\w*|->\\w*' },
+        ['around'] = {['mark'] = 'Around' },
+        -- ['cmdline'] = { ['mark'] = 'cmd' }
+        -- ['cmdline-history'] = { ['mark'] = 'hist', ['maxCandidates'] = 3 }
+        ['skkeleton'] = {
+          ['mark'] = 'skk',
+          ['matchers'] = {'skkeleton'},
+          ['sorters'] = {},
+          ['minAutoCompleteLength'] = 2,
+        },
+        ['file'] = {
+          ['mark'] = 'F',
+          ['isVolatile'] = true,
+          ['forceCompletionPattern'] = '\\S/\\S*',  -- '\S/\S*'
         }
+      })
+      vim.fn["ddc#custom#patch_global"]('sourceParams', {
+        ['around'] = { ['maxSize'] = 500 },
+        ['nvim-lsp'] = { ['kindLabels'] = { ['Class'] = 'c' } }
+      })
+      vim.fn["ddc#custom#patch_global"]('filterParams', {
+        ['converter_truncate'] = { ['maxAbbrWidth'] = 60, ['maxInfo'] = 500, ['ellipsis'] = '...'},
+        ['converter_fuzzy'] = { ['hlGroup'] = 'Title' }
       })
       vim.fn["ddc#custom#patch_filetype"](
         {'ps1', 'dosbatch', 'autohotkey', 'registry'},
         {
-          sourceOptions = {
-            file = { forceCompletionPattern = '\\S\\\\\\S*',  },  -- '\S\\\S*'
+          ['sourceOptions'] = {
+            ['file'] = { ['forceCompletionPattern'] = '\\S\\\\\\S*',  },  -- '\S\\\S*'
           },
-          sourceParams = {
-            file = { mode = 'win32', },
+          ['sourceParams'] = {
+            ['file'] = { ['mode'] = 'win32', },
           }
         }
       )
 
+      -- unknown {{{
+      vim.fn["pum#set_option"]('setline_insert', false)
+      -- }}} unknown
+
+      -- enable textEdit with pum.vim
+      vim.cmd[[
+        autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
+      ]]
 
 
       -- enable coplete command-line with pum
@@ -388,11 +425,11 @@ return require('packer').startup(function()
       --  \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
       --  \ '<TAB>' : ddc#map#manual_complete()
       --\ ]]
-      vim.cmd[[ inoremap <silent><expr> <TAB>
-        \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-        \ '<TAB>' : ddc#manual_complete()
-      \ ]]
+--      vim.cmd[[ inoremap <silent><expr> <TAB>
+--        \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+--        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+--        \ '<TAB>' : ddc#manual_complete()
+--      \ ]]
       --vim.api.nvim_set_keymap('i', '<TAB>',
       --   vim.fn["pum#visible"]() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
       --   (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
@@ -425,8 +462,10 @@ return require('packer').startup(function()
 --        'Shougo/pum.vim',  -- popup
 --       -- 'Shougo/ddc-nvim-lsp',  -- lsp
 --      }
+--      -- use textEdit with pum.vim
 --      -- autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
 --
+        -- use snippets
 --      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 --      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 --      -- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
@@ -547,5 +586,61 @@ return require('packer').startup(function()
    -- use 'folke/which-key.nvim'
  -- }}}
 
+  use {
+    'matsui54/denops-popup-preview.vim',
+    requires = { 'vim-denops/denops.vim' },
+    config = function()
+      -- autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
+
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+      -- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
+      vim.cmd[[ let g:popup_preview_config = { 'delay':30, 'maxWidth': 100, 'winblend': 0, } ]]
+      vim.fn["popup_preview#enable"]()
+    end
+  }
+
+
+  use {
+    'hrsh7th/vim-vsnip-integ',
+    requires = { 'hrsh7th/vim-vsnip' }
+  }
+  use {
+    'hrsh7th/vim-vsnip',
+    config = function()
+      -- Expand
+      vim.cmd[[ imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
+      vim.cmd[[ smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
+
+      -- Expand or jump
+-- imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+-- smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+      -- Jump forward or backward
+      vim.cmd[[ imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>' ]]
+      vim.cmd[[ smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>' ]]
+      vim.cmd[[ imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>' ]]
+      vim.cmd[[ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>' ]]
+
+-- " Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+-- " See https://github.com/hrsh7th/vim-vsnip/pull/50
+-- nmap        s   <Plug>(vsnip-select-text)
+-- xmap        s   <Plug>(vsnip-select-text)
+-- nmap        S   <Plug>(vsnip-cut-text)
+-- xmap        S   <Plug>(vsnip-cut-text)
+--
+-- " If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
+-- let g:vsnip_filetypes = {}
+-- let g:vsnip_filetypes.javascriptreact = ['javascript']
+-- let g:vsnip_filetypes.typescriptreact = ['typescript']
+
+    end
+  }
+  use {
+    'ray-x/lsp_signature.nvim',
+    requires = 'nvim-lspconfig'
+  }
+  use { 'rafamadriz/friendly-snippets' }
+  use { 'tani/ddc-fuzzy' }
 
 end)
