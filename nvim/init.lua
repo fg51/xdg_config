@@ -32,6 +32,10 @@ local opt = vim.opt
 --let g:is_unicode = (&termencoding ==# 'utf-8' || &encoding == 'utf-8')
 --    \ && !(exists('g:discard_unicode') && g:discard_unicode != 0)
 -- }}} conditions
+--  o.is_windows = false
+-- if os.execute('uname -a | grep microsoft') ~= '' then
+--  o.is_windows = true
+-- end
 
 -- must be set with multibyte strings
 --scriptencoding utf-8
@@ -259,6 +263,12 @@ opt.clipboard:append({"unnamedplus"}) --set clipboard=unnamed
 --  set clipboard+=unnamedplus
 --endif
 --set clipboard+=unnamedplus
+-- if os.execute('uname -a | grep microsoft') ~= '' then
+--   cmd('augroup wsl_clip')
+--   cmd('autocmd!')
+--   cmd("autocmd TextYankPost * :call system('clip.exe', @\")")
+--   cmd('augroup END')
+-- end
 
 opt.virtualedit:append({"block"}) --set virtualedit& virtualedit+=block
 -- }}} INPUT

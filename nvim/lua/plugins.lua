@@ -187,10 +187,18 @@ return require('packer').startup(function()
     opt = true,
     event = 'BufEnter',
     config = function()
+      require'lspconfig'.rust_analyzer.setup{}
+
       local on_attach = function(client, bufnr)
         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
+        -- Enable completion triggered by <c-x><c-o>
+        -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+        -- Mappings
         local opts = { noremap=true, silent=true }
+
         buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
         buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
         buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -203,13 +211,24 @@ return require('packer').startup(function()
         buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
         buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
         buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-        buf_set_keymap("n", "<space>e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", opts)
-        buf_set_keymap("n", "[g", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-        buf_set_keymap("n", "]g", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
-        buf_set_keymap("n", "<space>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", opts)
+        buf_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+        buf_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+        buf_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+        buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
         buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
       end
 
+      -- Use a loop to conveniently call 'setup' on multiple servers and
+      -- map buffer local keybindings when the language server attaches
+      local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+      for _, lsp in ipairs(servers) do
+         require('lspconfig')[lsp].setup {
+           on_attach = on_attach,
+           flags = {
+             debounce_text_changes = 150,
+           }
+         }
+      end
       local lsp_installer = require("nvim-lsp-installer")
       lsp_installer.on_server_ready(function(server)
           local opts = {}
@@ -220,6 +239,9 @@ return require('packer').startup(function()
           server:setup(opts)
           vim.cmd [[ do User LspAttachBuffers ]]
       end)
+
+      -- format on save
+      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
     end
   }
 -- }}} lsp
@@ -376,7 +398,7 @@ return require('packer').startup(function()
       -- capabilities.textDocument.completion.completionItem.snippetSupport = true
       -- require'lspconfig'.clangd.setup{on_attach = on_attach, capabilities = capabilities}
 
-      vim.g.popup_preview_config = { ['delay'] = 30, ['maxWidth'] = 100, ['winblend'] = 0, }
+      vim.g.popup_preview_config = { ['delay'] = 30, ['maxWidth'] = 100, ['winblend'] = 10, }
       vim.fn["popup_preview#enable"]()
 
     end
@@ -447,53 +469,53 @@ return require('packer').startup(function()
 --     require("lspconfig")["null-ls"].setup {}
 --    end
 --  }
-  use {
-    'mhartington/formatter.nvim',
---    -- opt = true,
---    cmd = "Format",
-    config = function()
-      require('formatter').setup({
-        logging = false,
-        filetype = {
-          c = {
-            function()
-              return {
-                exe = "clang-format",
-                args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-                stdin = true,
-                cwd = vim.fn.expand('%:p:h')
-              }
-            end
-          },
-          python = {
-            function()
-              return {
-                exe = "black",
-                args = { '-' },
-                stdin = true
-              }
-            end
-          },
-          rust = {
-            function()
-              return {
-                exe = "rustfmt",
-                args = {"--emit=stdout"},
-                stdin = true
-              }
-            end
-          }
-        }
-      })
-      vim.api.nvim_exec([[
-        augroup FormatAutogroup
-          autocmd!
-          autocmd BufWritePost *.rs FormatWrite
-        augroup END
-      ]], true)
-    end
---    -- nnoremap <silent> <leader>f :Format<CR>
-  }
+--  use {
+--    'mhartington/formatter.nvim',
+----    -- opt = true,
+----    cmd = "Format",
+--    config = function()
+--      require('formatter').setup({
+--        logging = false,
+--        filetype = {
+--          c = {
+--            function()
+--              return {
+--                exe = "clang-format",
+--                args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
+--                stdin = true,
+--                cwd = vim.fn.expand('%:p:h')
+--              }
+--            end
+--          },
+--          python = {
+--            function()
+--              return {
+--                exe = "black",
+--                args = { '-' },
+--                stdin = true
+--              }
+--            end
+--          },
+--          rust = {
+--            function()
+--              return {
+--                exe = "rustfmt",
+--                args = {"--emit=stdout"},
+--                stdin = true
+--              }
+--            end
+--          }
+--        }
+--      })
+--      vim.api.nvim_exec([[
+--        augroup FormatAutogroup
+--          autocmd!
+--          autocmd BufWritePost *.rs FormatWrite
+--        augroup END
+--      ]], true)
+--    end
+----    -- nnoremap <silent> <leader>f :Format<CR>
+--  }
 -- }}} formatter/linter
 
  -- markdown preview {{{
@@ -524,21 +546,21 @@ return require('packer').startup(function()
  -- }}}
 
  -- like easyemotion {{{
---    use {
---      'phaazon/hop.nvim',
---      branch = 'v1',
---      opt = true,
---      cmd = { 'HopWord', 'HopPattern', 'HopChar1', 'HopChar2', 'HopLine' },
---      config = function()
---        require'hop'.setup {
---          keys = 'etovxqpdygfblzhckisuran',
---        }
---      end,
---   --    -- config = function()
---   --    --   require'hop.nvim'.setup { keys = 'etovxqpdygfblzhckisuran' }
---   --    -- end,
---   --    -- vim.api.nvim_set_keymap('n', '$', "<cmd>lua require'hop.nvim'.hint_words()<cr>", {})
---    }
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v1',
+    opt = true,
+    cmd = { 'HopWord', 'HopPattern', 'HopChar1', 'HopChar2', 'HopLine' },
+    config = function()
+      require'hop'.setup {
+        keys = 'etovxqpdygfblzhckisuran',
+      }
+    end,
+  --    -- config = function()
+  --    --   require'hop.nvim'.setup { keys = 'etovxqpdygfblzhckisuran' }
+  --    -- end,
+  --    -- vim.api.nvim_set_keymap('n', '$', "<cmd>lua require'hop.nvim'.hint_words()<cr>", {})
+   }
  -- }}}
 
  -- show keymap {{{
