@@ -141,7 +141,12 @@ return require('packer').startup(function()
 --  --# GIT {{{
 --  --[[plugins]]
 --  --repo = 'tpope/vim-fugitive'
---  --on_cmd=['Gstatus', 'Gwrite', 'Gread', 'Gcommit', 'Gdiff', 'Gvdiff']
+--  --on_cmd=['Git', 'Gwrite', 'Gread', 'Gcommit', 'Gdiff', 'Gvdiff']
+  use {
+    'tpope/vim-fugitive',
+    opt = true,
+    cmd = {'Git', 'Gwrite', 'Gread', 'Gcommit', 'Ggrep'},
+  }
 
   use {
     'airblade/vim-gitgutter',
