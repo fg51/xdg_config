@@ -116,7 +116,13 @@ return require('packer').startup(function()
   use { 'navarasu/onedark.nvim',
     -- requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
     --config = function() vim.cmd "colorscheme onedark" end
-    config = require('onedark').setup()
+    config = function()
+      onedark = require('onedark')
+      onedark.setup({
+        transparent = true,
+      })
+      onedark.load()
+    end
   }
 
 -- use { 'sainnhe/sonokai',  cmd "let g:edge_style = ''" }
@@ -137,9 +143,11 @@ return require('packer').startup(function()
 --  --repo = 'tpope/vim-fugitive'
 --  --on_cmd=['Gstatus', 'Gwrite', 'Gread', 'Gcommit', 'Gdiff', 'Gvdiff']
 
---  --[[plugins]]
---  --repo = 'airblade/vim-gitgutter'
---  --on_event=['VimEnter']
+  use {
+    'airblade/vim-gitgutter',
+    opt = true,
+    event = 'VimEnter',
+  }
 --  --# }}} GIT
 
 
@@ -249,16 +257,18 @@ return require('packer').startup(function()
 
 -- skk {{{
   use {
-    'vim-skk/denops-skkeleton.vim',
+    -- 'vim-skk/denops-skkeleton.vim',
+    'vim-skk/skkeleton',
     requires = { 'vim-denops/denops.vim' },
     config = function()
-        -- vim.api.nvim_set_keymap("i", "<C-j>", "<Plug>(skkeleton-enable)")
-        -- vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(skkeleton-enable)")
-        vim.cmd[[
-          imap <C-j> <Plug>(skkeleton-enable)
-          cmap <C-j> <Plug>(skkeleton-enable)
-        ]]
-      end
+      vim.api.nvim_set_keymap("i", "<C-j>", "<Plug>(skkeleton-enable)", {noremap = false})
+      vim.api.nvim_set_keymap("c", "<C-j>", "<Plug>(skkeleton-enable)", {noremap = false})
+      --vim.cmd[[
+      --  imap <C-j> <Plug>(skkeleton-enable)
+      --  cmap <C-j> <Plug>(skkeleton-enable)
+      --]]
+      vim.cmd[[ call skkeleton#config({ 'eggLikeNewline':  v:true }) ]]
+    end
   }
 -- }}} skk
 
