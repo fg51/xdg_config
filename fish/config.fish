@@ -20,6 +20,7 @@ alias cmd /mnt/c/Windows/System32/cmd.exe
 alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
 alias explorer /mnt/c/Windows/explorer.exe
 alias hx helix
+alias ls exa
 
 # alias pdf /mnt/c/Program\ Files\ \(x86\)/Adobe/Acrobat\ Reader\ DC/Reader/AcroRd32.exe
 # function x86
@@ -148,6 +149,8 @@ set -gx INFOPATH "/home/linuxbrew/.linuxbrew/share/info" $INFOPATH
 if command -sq zoxide
     zoxide init fish | source
 end
+
+eval (dircolors -c $HOME/.config/dir_colors)
 
 source ~/.asdf/asdf.fish
 starship init fish | source
