@@ -190,7 +190,7 @@ return require('packer').startup(function()
 -- lsp {{{
   use {
     "williamboman/nvim-lsp-installer",
-    requires = "neovim/nvim-lspconfig",
+    requires = { "neovim/nvim-lspconfig", }
   }
 
   use {
@@ -232,7 +232,7 @@ return require('packer').startup(function()
 
       -- Use a loop to conveniently call 'setup' on multiple servers and
       -- map buffer local keybindings when the language server attaches
-      local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+      local servers = { 'pyright', 'tsserver' }
       for _, lsp in ipairs(servers) do
          require('lspconfig')[lsp].setup {
            on_attach = on_attach,
@@ -241,15 +241,41 @@ return require('packer').startup(function()
            }
          }
       end
+      require('lspconfig')['rust_analyzer'].setup {
+        on_attach = on_attach,
+        flags = {
+          debounce_text_changes = 150,
+        },
+        settings = {
+          ["rust-analyzer"] = {
+            assist = {
+              importGranularity = "module",
+              importPrefix = "by_self",
+            },
+            cargo = {
+              loadOutDirFromCheck = true
+            },
+            procMacro = {
+              enable = true
+            },
+            checkOnSave = {
+             command = "clippy"
+            },
+          }
+        }
+      }
       local lsp_installer = require("nvim-lsp-installer")
       lsp_installer.on_server_ready(function(server)
-          local opts = {}
-          opts.on_attach = on_attach
-          -- for nvim-cmp {{{
-          -- opts.capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-          -- }}} end nvim-cmp
-          server:setup(opts)
-          vim.cmd [[ do User LspAttachBuffers ]]
+        local opts = {}
+        opts.on_attach = on_attach
+        -- for nvim-cmp {{{
+        -- opts.capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+        -- }}} end nvim-cmp
+        -- server:setup(opts)
+
+
+        server:setup(opts)
+        vim.cmd [[ do User LspAttachBuffers ]]
       end)
 
       -- format on save
@@ -580,5 +606,38 @@ return require('packer').startup(function()
  -- show keymap {{{
    -- use 'folke/which-key.nvim'
  -- }}}
+
+-- rust {{{
+--  use {
+--    'simrat39/rust-tools.nvim',
+--    requires = 'nvim-lspconfig',
+--    opt = true,
+--    config = function()
+--      require('rust-tools').setup({
+--        tools = {  -- rust-tools options
+--          autoSetHints = true,
+--          hover_with_actions = true,
+--          inlay_hints = {
+--            show_parameter_hints = false,
+--            parameter_hints_prefix = "",
+--            other_hints_prefix = "",
+--          },
+--        },
+--        -- all the opts to send to nvim-lspconfig
+--        -- these override the defaults set by rust-tools.nvim
+--        server = {
+--          -- on_attach = on_attach,
+--          settings = {
+--            ["rust-analyzer"] = {
+--              checkOnSave = {
+--                command = "clippy",
+--              },
+--            },
+--          },
+--        }
+--      })
+--    end,
+--  }
+-- }}} rust
 
 end)
