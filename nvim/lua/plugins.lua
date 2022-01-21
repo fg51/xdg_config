@@ -133,7 +133,8 @@ return require('packer').startup(function()
 
   -- use 'vim-scripts/gtags.vim'
 
-  use 'tpope/vim-surround'
+  -- use 'tpope/vim-surround'
+  use 'machakann/vim-sandwich'
 
   use { 'h1mesuke/vim-alignta', opt = true, cmd = 'Alignta' }
 
@@ -142,10 +143,15 @@ return require('packer').startup(function()
 --  --[[plugins]]
 --  --repo = 'tpope/vim-fugitive'
 --  --on_cmd=['Git', 'Gwrite', 'Gread', 'Gcommit', 'Gdiff', 'Gvdiff']
+--  use {
+--    'tpope/vim-fugitive',
+--    opt = true,
+--    cmd = {'Git', 'Gwrite', 'Gread', 'Gcommit', 'Ggrep'},
+--  }
   use {
-    'tpope/vim-fugitive',
+    'lambdalisue/gina.vim',
     opt = true,
-    cmd = {'Git', 'Gwrite', 'Gread', 'Gcommit', 'Ggrep'},
+    cmd = {'Gina'},
   }
 
   use {
