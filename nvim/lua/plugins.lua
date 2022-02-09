@@ -601,11 +601,13 @@ return require('packer').startup(function()
       require'hop'.setup {
         keys = 'etovxqpdygfblzhckisuran',
       }
+      vim.api.nvim_set_keymap('n', '<leader>hf', "<cmd>lua require'hop'.hint_char2()<cr>", {noremap=true, silent=false})
     end,
   --    -- config = function()
   --    --   require'hop.nvim'.setup { keys = 'etovxqpdygfblzhckisuran' }
   --    -- end,
   --    -- vim.api.nvim_set_keymap('n', '$', "<cmd>lua require'hop.nvim'.hint_words()<cr>", {})
+  --    -- vim.api.nvim_set_keymap('n', '<leader>hf', "<cmd>lua require'hop.nvim'.hint_char2({ direction = require'hop.hint'AFTER_CURSOR, current_line_only = false, inclusive_jump=true})<cr>", {noremap=true, silent=true})
    }
  -- }}}
 
@@ -645,5 +647,13 @@ return require('packer').startup(function()
 --    end,
 --  }
 -- }}} rust
+
+-- filer {
+  use {
+    'lambdalisue/fern.vim',
+    opt = true,
+    cmd = 'Fern',
+  }
+-- }
 
 end)
