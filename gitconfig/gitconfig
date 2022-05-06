@@ -23,7 +23,7 @@
 	root = ~/.go
 	root = ~/.ghq
 [merge]
-	ff = only
+	ff = false
 	conflictstyle = diff3
 [pull]
 	rebase = merges
@@ -31,3 +31,5 @@
 	defaultBranch = main
 [credential]
 	helper = store
+[safe]
+	directory = *

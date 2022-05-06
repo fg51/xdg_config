@@ -173,17 +173,17 @@ return require('packer').startup(function()
    use {
      'nvim-lualine/lualine.nvim',
      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-     config = require'lualine'.setup {
-       options = {
-         theme = 'onedark'
-       },
+     config = require('lualine').setup {
+       -- options = {
+       --   theme = 'onedark'
+       -- },
        sections = {
-         lualine_x = {
-           { 'encoding' },
-           { 'fileformat', icons_enabled = false, },
-           { 'filetype', icons_enabled = false, }
-         }
-       }
+          lualine_x = {
+            { 'encoding' },
+            { 'fileformat', icons_enabled = false, },
+            { 'filetype', icons_enabled = false, }
+          }
+        }
      }
    }
 
@@ -247,6 +247,25 @@ return require('packer').startup(function()
            }
          }
       end
+
+      -- local virtual_env_path = vim.trim(vim.fn.system('poetry config virtualenvs.path'))
+      -- local virtual_env_directory = vim.trim(vim.fn.system('poetry env list'))
+      -- local python_path = 'python'
+      -- if #vim.split(virtual_env_directory, '\n') == 1 then
+      --   python_path = string.format("%s/%s/bin/python", virtual_env_path, virtual_env_directory)
+      -- end
+      -- require('lspconfig')['pyright'].setup {
+      --   on_attach = on_attach,
+      --   flags = {
+      --     debounce_text_changes = 150,
+      --   },
+      --   settings = {
+      --     python = {
+      --       pythonPath = python_path;
+      --     }
+      --   }
+      -- }
+
       require('lspconfig')['rust_analyzer'].setup {
         on_attach = on_attach,
         flags = {
