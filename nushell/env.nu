@@ -1,9 +1,13 @@
 # Nushell Environment Config File
 
-def create_left_prompt [] {
-    let path_segment = ($env.PWD)
+# def create_left_prompt [] {
+#     let path_segment = ($env.PWD)
+#     $path_segment
+# }
 
-    $path_segment
+# for starship
+def create_left_prompt [] {
+    starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)'
 }
 
 def create_right_prompt [] {
@@ -14,13 +18,18 @@ def create_right_prompt [] {
     $time_segment
 }
 
+let-env STARSHIP_SHELL = "nu"
+
+
 # Use nushell functions to define your right and left prompt
 let-env PROMPT_COMMAND = { create_left_prompt }
-let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
+#let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
+let-env PROMPT_COMMAND_RIGHT = ""  # for starship
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
-let-env PROMPT_INDICATOR = { "〉" }
+#let-env PROMPT_INDICATOR = { "〉" }
+let-env PROMPT_INDICATOR = ""  # for starship
 let-env PROMPT_INDICATOR_VI_INSERT = { ": " }
 let-env PROMPT_INDICATOR_VI_NORMAL = { "〉" }
 let-env PROMPT_MULTILINE_INDICATOR = { "::: " }
@@ -56,3 +65,4 @@ let-env NU_PLUGIN_DIRS = [
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # let-env PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
+#let-env PATH = ($env.PATH | split row (char esep) | prepend '~/.bin' | prepend '~/.local/bin')
