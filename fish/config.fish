@@ -90,8 +90,8 @@ complete -c aws -f -a '(begin; set -lx COMP_SHELL fish; set -lx COMP_LINE (comma
 # {{{ TODO: as eval "$(anyenv init -)"
 
 set -gx ANYENV_ROOT $HOME/.anyenv
-set -x PATH "$ANYENV_ROOT/bin" $PATH
-status --is-interactive; and source (anyenv init -|psub)
+#set -x PATH "$ANYENV_ROOT/bin" $PATH
+#status --is-interactive; and source (anyenv init -|psub)
 
 set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
 #set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
@@ -99,9 +99,9 @@ set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
 # if test -d $PYENV_ROOT
 #   status --is-interactive; and source (pyenv init -|psub); and source (pyenv virtualenv-init -|psub)
 # end
-if test -d $PYENV_ROOT/plugins/pyenv-virtualenv
-  status --is-interactive; and source (pyenv virtualenv-init -|psub)
-end
+#if test -d $PYENV_ROOT/plugins/pyenv-virtualenv
+#  status --is-interactive; and source (pyenv virtualenv-init -|psub)
+#end
 
 set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
 # set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
@@ -144,3 +144,6 @@ set -gx PATH $CARGO_ROOT/bin $PATH
 # }}}
 
 set -U FZF_LEGACY_KEYBINDINGS 0
+
+# TODO: change to git
+source /opt/asdf-vm/asdf.fish
