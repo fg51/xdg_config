@@ -66,3 +66,9 @@ let-env NU_PLUGIN_DIRS = [
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # let-env PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 #let-env PATH = ($env.PATH | split row (char esep) | prepend '~/.bin' | prepend '~/.local/bin')
+
+zoxide init nushell --hook prompt | save ~/.zoxide.nu
+
+let-env PATH = ($env.PATH | split row (char esep) | prepend ($env.HOME | path join '.local' | path join 'bin'))
+
+let-env RUST_ROOT = ($env.HOME | path join '.rustup/toolchains/beta-x86_64-unknown-linux-gnu')

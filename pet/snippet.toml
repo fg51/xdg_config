@@ -1,0 +1,4 @@
+[[snippets]]
+  description = "mount C-drive in wsl"
+  command = "sudo mount -t drvfs -o metadata '\\\\C:' /mnt/c/"
+  output = ""

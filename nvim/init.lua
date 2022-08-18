@@ -72,7 +72,7 @@ g.did_load_filetypes = 1  -- instead of using nathom/filetype.nvim
 -- {{{ python3, python2
 g.python_host_prog = '~/.anyenv/envs/pyenv/versions/neovim2/bin/python2'
 --g.python3_host_prog = '~/.anyenv/envs/pyenv/versions/neovim3/bin/python3'
-g.python3_host_prog = '~/.local/share/nvim_python3_host/.venv/bin/python3'
+g.python3_host_prog = vim.env.HOME.. '/.local/share/nvim_python3_host/.venv/bin/python3'
 -- }}}
 
 g.loaded_node_provider = 0

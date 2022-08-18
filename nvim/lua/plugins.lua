@@ -84,22 +84,29 @@ return require('packer').startup(function()
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = require'nvim-treesitter.configs'.setup {
+      -- ensure_installed = 'maintained',
+      -- ensure_installed = {"c", "lua", "rust" },
+      -- install parsers synchronously (only applied to `ensure_installed`)
+      sync_install = false,
+
+      -- List of parsers to ignore installing (for "all")
+      ignore_install = {"javascript" },
+
       highlight = { enable = true },
-      refactor = {
-        highlight_definitions = {
-          enable = true
-        },
-        smart_rename = {
-          enable = true,
-          smart_rename = 'grr',
-        },
-        navigation = {
-          enable = true,
-          goto_definition = 'gnd',
-          list_definitions = 'gnD'
-        }
-      },
-      ensure_installed = 'maintained',
+      -- refactor = {
+      --   highlight_definitions = {
+      --     enable = true
+      --   },
+      --   smart_rename = {
+      --     enable = true,
+      --     smart_rename = 'grr',
+      --   },
+      --   navigation = {
+      --     enable = true,
+      --     goto_definition = 'gnd',
+      --     list_definitions = 'gnD'
+      --   }
+      -- },
     }
   }
   --use {
@@ -110,6 +117,14 @@ return require('packer').startup(function()
   use { 'sirtaj/vim-openscad' } -- , ft = 'scad' }
 
   use { 'ron-rs/ron.vim' } --, ft = 'ron' }
+
+  --use {
+  --  --, ft = 'nu', nushell
+  --  'LhKipp/nvim-nu',
+  --  config = function()
+  --    require('nu').setup{}
+  --  end
+  --}
 -- }}} filetype
 
 -- theme {{{
@@ -119,9 +134,20 @@ return require('packer').startup(function()
     config = function()
       onedark = require('onedark')
       onedark.setup({
-        transparent = true,
+        transparent = false,
       })
       onedark.load()
+    end
+  }
+
+  use { 'EdenEast/nightfox.nvim',
+    config = function()
+      require('nightfox').setup({
+        options = {
+          transparent = true
+        }
+      })
+      -- vim.cmd("colorscheme duskfox")
     end
   }
 
@@ -172,7 +198,11 @@ return require('packer').startup(function()
    --}
    use {
      'nvim-lualine/lualine.nvim',
-     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+     requires = {
+       'kyazdani42/nvim-web-devicons',
+       -- 'EdenEast/nightfox.nvim',
+       opt = true
+     },
      config = require('lualine').setup {
        -- options = {
        --   theme = 'onedark'
@@ -238,7 +268,8 @@ return require('packer').startup(function()
 
       -- Use a loop to conveniently call 'setup' on multiple servers and
       -- map buffer local keybindings when the language server attaches
-      local servers = { 'pyright', 'tsserver' }
+      -- local servers = { 'pyright', 'tsserver' }
+      local servers = { 'tsserver' }
       for _, lsp in ipairs(servers) do
          require('lspconfig')[lsp].setup {
            on_attach = on_attach,
@@ -254,17 +285,21 @@ return require('packer').startup(function()
       -- if #vim.split(virtual_env_directory, '\n') == 1 then
       --   python_path = string.format("%s/%s/bin/python", virtual_env_path, virtual_env_directory)
       -- end
-      -- require('lspconfig')['pyright'].setup {
-      --   on_attach = on_attach,
-      --   flags = {
-      --     debounce_text_changes = 150,
-      --   },
+       require('lspconfig')['pyright'].setup {
+         on_attach = on_attach,
+         flags = {
+           debounce_text_changes = 150,
+         },
+      -- root_dir = require.util.root_pattern('pyproject.toml')
+      -- root_dir = function()
+        -- return vim.fn.getcwd()
+        -- end
       --   settings = {
       --     python = {
       --       pythonPath = python_path;
       --     }
       --   }
-      -- }
+       }
 
       require('lspconfig')['rust_analyzer'].setup {
         on_attach = on_attach,
@@ -273,12 +308,21 @@ return require('packer').startup(function()
         },
         settings = {
           ["rust-analyzer"] = {
-            assist = {
-              importGranularity = "module",
-              importPrefix = "by_self",
+            -- assist = {
+            --   importGranularity = "module",
+            --   importPrefix = "by_self",
+            -- },
+            imports = {
+              granularity = {
+                group = "module",
+              },
+              prefix = "self",
             },
             cargo = {
-              loadOutDirFromCheck = true
+              --  loadOutDirFromCheck = true
+              buildScripts = {
+                enable = true,
+              },
             },
             procMacro = {
               enable = true
@@ -590,6 +634,15 @@ return require('packer').startup(function()
  --   opt = true,
  --   cmd = 'PreviewMarkdown',
  -- }
+ -- use {
+ --   'previm/previm',
+ --   opt = true,
+ --   cmd = 'PrevimOpen',
+ --   config = function()
+ --     vim.cmd [[let g:previm_open_cmd = '/mnt/c/Program\ Files\ \(x86\)/Microsoft/Edge/Application/msedge.exe']]
+ --     vim.cmd "let g:previm_wsl_mode = 1"
+ --   end
+ -- }
  -- }}}
 
  -- generate the image of the source code {{{
@@ -675,4 +728,15 @@ return require('packer').startup(function()
   }
 -- }
 
+-- zettelkasten {
+  -- use {
+  --   'renerocksai/telekasten.nvim',
+  --   requires = {
+  --     'nvim-telescope/telescope.nvim'
+  --   },
+  --   -- opt = true,
+  --   -- run = ':lua require("telekasten")',
+  -- }
+-- }
+--
 end)

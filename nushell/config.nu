@@ -385,3 +385,8 @@ let-env config = {
     }
   ]
 }
+
+source ~/.zoxide.nu
+
+alias ls = exa
+alias la = exa -la
