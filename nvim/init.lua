@@ -61,18 +61,18 @@ g.loaded_vimballPlugin      = 1
 g.loaded_zip                = 1
 g.loaded_zipPlugin          = 1
 g.skip_loading_mswin        = 1
-g.loaded_netrw              = 1  -- instead of useing 'nvim-telescope/telescope.nvim'
+g.loaded_netrw              = 1 -- instead of useing 'nvim-telescope/telescope.nvim'
 g.loaded_netrwPlugin        = 1
 g.loaded_netrwSettings      = 1
 
-g.did_load_filetypes = 1  -- instead of using nathom/filetype.nvim
+g.did_load_filetypes = 1 -- instead of using nathom/filetype.nvim
 -- }}}
 
 -- {{{ neovim provider
 -- {{{ python3, python2
 g.python_host_prog = '~/.anyenv/envs/pyenv/versions/neovim2/bin/python2'
 --g.python3_host_prog = '~/.anyenv/envs/pyenv/versions/neovim3/bin/python3'
-g.python3_host_prog = vim.env.HOME.. '/.local/share/nvim_python3_host/.venv/bin/python3'
+g.python3_host_prog = vim.env.HOME .. '/.local/share/nvim_python3_host/.venv/bin/python3'
 -- }}}
 
 g.loaded_node_provider = 0
@@ -114,9 +114,9 @@ g.loaded_ruby_provider = 1
 
 require 'plugins'
 
--- Required:
-cmd "filetype plugin indent on" --filetype plugin indent on
-cmd "syntax enable" --syntax enable
+-- Required: no required in neovim
+-- cmd "filetype plugin indent on" --filetype plugin indent on
+-- cmd "syntax enable" --syntax enable
 
 --" If you want to install not installed plugins on startup.
 --if dein#check_install()
@@ -139,8 +139,8 @@ o.smarttab = true --set smarttab
 
 -- ## FOLD {{{
 cmd "set foldcolumn=1" --set foldcolumn=1
-cmd "set foldlevel=99" --set foldlevel=99
-cmd "set foldmethod=marker" --set foldmethod=marker
+opt.foldlevel = 99 -- cmd "set foldlevel=99" --set foldlevel=99
+opt.foldmethod = 'marker' -- cmd "set foldmethod=marker" --set foldmethod=marker
 --"set nofoldenable
 -- }}} FOLD
 
@@ -151,8 +151,8 @@ o.smartcase = true --set smartcase
 -- }}}
 
 --" ## BUFFER {{{
-opt.autoread = true  -- cmd "set autoread" --set autoread
-o.hidden = false  -- set nohidden -- disable unsaved file.
+opt.autoread = true -- cmd "set autoread" --set autoread
+o.hidden = false -- set nohidden -- disable unsaved file.
 
 --"set noswapfile
 opt.writebackup = false -- cmd "set nowritebackup" --set nowritebackup
@@ -179,14 +179,14 @@ o.termguicolors = true --  set termguicolors
 --endif
 -- }}} color
 
-cmd "set cmdheight=3" --set cmdheight=3
+opt.cmdheight = 3 --cmd "set cmdheight=3" --set cmdheight=3
 wo.cursorline = false -- cmd "set nocursorline" --set nocursorline
-cmd "set laststatus=2" --set laststatus=2
-cmd "set nocursorcolumn"
+opt.laststatus = 2 -- cmd "set laststatus=2" --set laststatus=2
+opt.cursorcolumn = false -- cmd "set nocursorcolumn"
 wo.relativenumber = false -- cmd "set norelativenumber"
 wo.signcolumn = 'yes'
 
-o.list = true  -- cmd "set list" --set list -- show invisible chars
+o.list = true -- cmd "set list" --set list -- show invisible chars
 cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
 --set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
 -- o.listchars = {
@@ -200,12 +200,12 @@ cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
 wo.number = true --set number  -- show line-number
 
 o.scrolloff = 5 --set scrolloff=5
-cmd "set showcmd" --set showcmd
+opt.showcmd = true -- cmd "set showcmd" --set showcmd
 
 --"set textwidth=0 "NOTE: auto by-return
-cmd "set wrap"  --set wrap
-cmd "set showtabline=2"  --set showtabline=2
-cmd "set display=lastline"  --set display=lastline "NOTE: no-@ in long line
+opt.wrap = true -- cmd "set wrap" --set wrap
+opt.showtabline = 2 -- cmd "set showtabline=2" --set showtabline=2
+opt.display = 'lastline' -- cmd "set display=lastline" --set display=lastline "NOTE: no-@ in long line
 cmd "set fillchars=stl:\\ ,stlnc:\\ ,vert:\\|,fold:-,diff:-" -- set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
 cmd "let g:vim_indent_cont = 0" --let g:vim_indent_cont = 0
 
@@ -255,7 +255,7 @@ cmd [[ let g:markdown_fenced_languages = [
 
 -- ## INPUT {{{
 cmd "set backspace=indent,eol,start" --set backspace=indent,eol,start
-opt.clipboard:append({"unnamedplus"}) --set clipboard=unnamed
+opt.clipboard:append({ "unnamedplus" }) --set clipboard=unnamed
 --if has('autoselect')
 --  set clipboard+=autoselect
 --elseif has('unnamedplus') "CAUTION: need xclip
@@ -271,12 +271,13 @@ opt.clipboard:append({"unnamedplus"}) --set clipboard=unnamed
 --   cmd('augroup END')
 -- end
 
-opt.virtualedit:append({"block"}) --set virtualedit& virtualedit+=block
+opt.virtualedit:append({ "block" }) --set virtualedit& virtualedit+=block
 -- }}} INPUT
 
 -- ## COMMAND {{{
-opt.wildmenu = true  --cmd "set wildmenu" --set wildmenu  -- complete in the commandline mode.
-opt.wildmode = {"longest", "full"}  --set wildmode=longest:full,full
+opt.wildmenu = true --cmd "set wildmenu" --set wildmenu  -- complete in the commandline mode.
+opt.wildmode = { "longest", "full" } --set wildmode=longest:full,full
+opt.wildignore = { '*.o', '*.a', '*.pyc', '__pycache__', 'node_modules' }
 o.history = 2000 -- cmd "set history=2000" --set history=2000
 -- cmd "set nostartofline" --set nostartofline
 opt.startofline = false
@@ -299,20 +300,21 @@ opt.startofline = false
 --set ft=markdown
 -- }}}
 
-vim.cmd[[autocmd BufWritePost plugins.lua PackerCompile]]
+vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
+-- vim.api.nvim_create_autocmd({'BufWritePost'})
 
 -- OTHERS {{{
 --" no scrach(preview)
 opt.title = true -- cmd "set title"  --set title
-cmd "set mouse=a"  --set mouse=a
+opt.mouse = 'a' -- cmd "set mouse=a" --set mouse=a
 -- }}} OTHERS
 
 o.synmaxcol = 200
 
-o.updatetime = 300  -- any [msec] until creating the swap file
-o.timeout = true  -- set timeout -- for mappings
-o.timeoutlen = 1000  -- set timeoutlen=1000 -- default value
-o.ttimeout = true  -- set ttimeout -- for key codes
+o.updatetime = 300 -- any [msec] until creating the swap file
+o.timeout = true -- set timeout -- for mappings
+o.timeoutlen = 1000 -- set timeoutlen=1000 -- default value
+o.ttimeout = true -- set ttimeout -- for key codes
 o.ttimeoutlen = 10 -- set ttimeoutlen=10 -- unnoticeable small value
 
 -- ### complete {{{
@@ -325,7 +327,7 @@ o.ttimeoutlen = 10 -- set ttimeoutlen=10 -- unnoticeable small value
 -- * menuone: display menu at one
 -- * noinsert: disable insert with displaying menu
 cmd "set completeopt-=preview"
-vim.opt.shortmess:append('c')  --cmd "set shortmess+=c"
+opt.shortmess:append('c') --cmd "set shortmess+=c"
 
 --local cmp = require"cmp"
 --cmp.setup({
@@ -351,11 +353,11 @@ vim.opt.shortmess:append('c')  --cmd "set shortmess+=c"
 
 o.showmatch = true
 o.matchtime = 1
-cmd "set matchpairs& matchpairs+=<:>"  --  set nocompatible
+cmd "set matchpairs& matchpairs+=<:>" --  set nocompatible
 
 g.mapleader = ","
 
-vim.cmd[[ inoremap <silent> jj <ESC>]]
+vim.cmd [[ inoremap <silent> jj <ESC>]]
 
 -- Don't auto commenting new lines
 vim.api.nvim_create_autocmd('BufEnter', {
@@ -365,11 +367,11 @@ vim.api.nvim_create_autocmd('BufEnter', {
 
 -- Restore cursor location when file is opened
 vim.api.nvim_create_autocmd('BufReadPost', {
-  pattern = {'*'},
+  pattern = { '*' },
   callback = function()
     vim.api.nvim_exec('silent! normal! g`"zv', false)
   end,
 })
 
 -- insert ',' with space.
-vim.api.nvim_set_keymap('i', ',', ',<Space>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('i', ',', ',<Space>', { noremap = true, silent = true })
