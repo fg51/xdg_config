@@ -1,6 +1,5 @@
 vim.cmd[[packadd packer.nvim]]
 
-
 return require('packer').startup(function()
   -- packer can mange itself
   use 'wbthomason/packer.nvim'
@@ -136,7 +135,7 @@ return require('packer').startup(function()
       onedark.setup({
         transparent = false,
       })
-      onedark.load()
+      -- onedark.load()
     end
   }
 
@@ -145,9 +144,9 @@ return require('packer').startup(function()
       require('nightfox').setup({
         options = {
           transparent = true
-        }
+        },
+        on_attach = vim.cmd("colorscheme duskfox"),
       })
-      -- vim.cmd("colorscheme duskfox")
     end
   }
 
@@ -225,132 +224,95 @@ return require('packer').startup(function()
 
 -- lsp {{{
   use {
-    "williamboman/nvim-lsp-installer",
-    requires = { "neovim/nvim-lspconfig", }
+    'williamboman/mason.nvim',
+    -- cmd = {'Mason', 'MasonInstall', 'Mason*'},
+    -- config = function()
+    --   require('mason').setup()
+    -- end
   }
+
+  -- use { "neovim/nvim-lspconfig", }
 
   use {
-    "neovim/nvim-lspconfig",
-    -- requires = {'hrsh7th/cmp-nvim-lsp', opt = true },
-    requires = { "williamboman/nvim-lsp-installer" },
-    opt = true,
-    event = 'BufEnter',
+    'williamboman/mason-lspconfig.nvim',
+    requires = {'williamboman/mason.nvim', 'neovim/nvim-lspconfig'},
+    -- opt = true,
+    --event = 'BufEnter',
     config = function()
+      require('mason').setup()
+      require('mason-lspconfig').setup()
+      require('mason-lspconfig').setup_handlers({ function(server)
+  --       local opt = {
+  --       -- -- Function executed when the LSP server startup
+  --       -- on_attach = function(client, bufnr)
+  --       --   local opts = { noremap=true, silent=true }
+  --       --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  --       --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
+  --       -- end,
+  --       -- capabilities = require('cmp_nvim_lsp').update_capabilities(
+  --       --   vim.lsp.protocol.make_client_capabilities()
+  --       -- )
+  --       }
+  --     require('lspconfig')[server].setup(opt)
 
-      local on_attach = function(client, bufnr)
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+        local opt = {
+          -- Function executed when the LSP server startup
+          on_attach = function(client, bufnr)
+            local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+            local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-        -- Enable completion triggered by <c-x><c-o>
-        -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+            -- Enable completion triggered by <c-x><c-o>
+            -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-        -- Mappings
-        local opts = { noremap=true, silent=true }
+            -- Mappings
+            local mopts = { noremap=true, silent=true }
 
-        buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-        buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-        buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-        buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-        buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-        buf_set_keymap("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-        buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-        buf_set_keymap("n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
-        buf_set_keymap("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-        buf_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-        buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-        buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-        buf_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-        buf_set_keymap("n", "]g", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-        buf_set_keymap("n", "[g", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-        buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-        buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-      end
+            buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', mopts)
+            buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', mopts)
+            buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', mopts)
+            buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', mopts)
+            buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', mopts)
+            buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', mopts)
+            buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', mopts)
+            buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', mopts)
+            buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', mopts)
+            buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', mopts)
+            buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', mopts)
+            buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', mopts)
+            buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', mopts)
+            buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', mopts)
+            buf_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', mopts)
+            buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', mopts)
+            buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', mopts)
 
-      -- Use a loop to conveniently call 'setup' on multiple servers and
-      -- map buffer local keybindings when the language server attaches
-      -- local servers = { 'pyright', 'tsserver' }
-      local servers = { 'tsserver' }
-      for _, lsp in ipairs(servers) do
-         require('lspconfig')[lsp].setup {
-           on_attach = on_attach,
-           flags = {
-             debounce_text_changes = 150,
-           }
-         }
-      end
+            --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
+            -- format on save
+            vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync() ]]
 
-      -- local virtual_env_path = vim.trim(vim.fn.system('poetry config virtualenvs.path'))
-      -- local virtual_env_directory = vim.trim(vim.fn.system('poetry env list'))
-      -- local python_path = 'python'
-      -- if #vim.split(virtual_env_directory, '\n') == 1 then
-      --   python_path = string.format("%s/%s/bin/python", virtual_env_path, virtual_env_directory)
-      -- end
-       require('lspconfig')['pyright'].setup {
-         on_attach = on_attach,
-         flags = {
-           debounce_text_changes = 150,
-         },
-      -- root_dir = require.util.root_pattern('pyproject.toml')
-      -- root_dir = function()
-        -- return vim.fn.getcwd()
-        -- end
-      --   settings = {
-      --     python = {
-      --       pythonPath = python_path;
-      --     }
-      --   }
-       }
+            -- Reference highlight
+            -- vim.cmd [[
+            --   set updatetime=500
+            --   highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+            --   highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+            --   highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+            --   augroup lsp_document_highlight
+            --     autocmd!
+            --     autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
+            --     autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
+            --   augroup END
+            -- ]]
 
-      require('lspconfig')['rust_analyzer'].setup {
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        },
-        settings = {
-          ["rust-analyzer"] = {
-            -- assist = {
-            --   importGranularity = "module",
-            --   importPrefix = "by_self",
-            -- },
-            imports = {
-              granularity = {
-                group = "module",
-              },
-              prefix = "self",
-            },
-            cargo = {
-              --  loadOutDirFromCheck = true
-              buildScripts = {
-                enable = true,
-              },
-            },
-            procMacro = {
-              enable = true
-            },
-            checkOnSave = {
-             command = "clippy"
-            },
-          }
+          end
         }
-      }
-      local lsp_installer = require("nvim-lsp-installer")
-      lsp_installer.on_server_ready(function(server)
-        local opts = {}
-        opts.on_attach = on_attach
-        -- for nvim-cmp {{{
-        -- opts.capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-        -- }}} end nvim-cmp
-        -- server:setup(opts)
+        require('lspconfig')[server].setup(opt)
+      end})
 
 
-        server:setup(opts)
-        vim.cmd [[ do User LspAttachBuffers ]]
-      end)
+  --   end
 
-      -- format on save
-      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
     end
   }
+
 -- }}} lsp
 
   use 'vim-denops/denops.vim'
@@ -520,6 +482,7 @@ return require('packer').startup(function()
   }
   use {
     'hrsh7th/vim-vsnip',
+    requires = { 'rafamadriz/friendly-snippets' },
     config = function()
       -- Expand
       vim.cmd[[ imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>' ]]
@@ -555,9 +518,7 @@ return require('packer').startup(function()
     requires = 'nvim-lspconfig'
   }
 
-  use { 'rafamadriz/friendly-snippets' }
-
-  use { 'tani/ddc-fuzzy' }
+  -- use { 'tani/ddc-fuzzy' }
 
 
 
@@ -666,9 +627,9 @@ return require('packer').startup(function()
  -- like easyemotion {{{
   use {
     'phaazon/hop.nvim',
-    branch = 'v1',
+    branch = 'v2',
     opt = true,
-    cmd = { 'HopWord', 'HopPattern', 'HopChar1', 'HopChar2', 'HopLine' },
+    cmd = { 'Hop*' },
     config = function()
       require'hop'.setup {
         keys = 'etovxqpdygfblzhckisuran',
@@ -739,4 +700,5 @@ return require('packer').startup(function()
   -- }
 -- }
 --
+
 end)

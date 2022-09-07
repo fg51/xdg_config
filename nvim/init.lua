@@ -354,3 +354,5 @@ o.matchtime = 1
 cmd "set matchpairs& matchpairs+=<:>"  --  set nocompatible
 
 g.mapleader = ","
+
+vim.cmd[[ inoremap <silent> jj <ESC>]]
