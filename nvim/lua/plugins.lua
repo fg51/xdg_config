@@ -88,6 +88,8 @@ return require('packer').startup(function()
       -- install parsers synchronously (only applied to `ensure_installed`)
       sync_install = false,
 
+      auto_install = true,
+
       -- List of parsers to ignore installing (for "all")
       ignore_install = { "javascript" },
 
@@ -106,6 +108,8 @@ return require('packer').startup(function()
       --     list_definitions = 'gnD'
       --   }
       -- },
+      indent = { enable = true, },
+      autotag = { enable = true, },
     }
   }
   --use {
@@ -138,11 +142,12 @@ return require('packer').startup(function()
         },
         on_attach = vim.cmd("colorscheme duskfox"),
       })
-    end
+    end,
+    --setup = function()
+    --  vim.cmd("colorscheme duskfox")
+    --end
   }
 
-  -- use { 'sainnhe/sonokai',  cmd "let g:edge_style = ''" }
-  -- use { 'sainnhe/edge', cmd "let g:edge_style = ''" }
   -- }}} theme
 
   use 'editorconfig/editorconfig-vim'
@@ -194,9 +199,9 @@ return require('packer').startup(function()
       opt = true
     },
     config = require('lualine').setup {
-      -- options = {
-      --   theme = 'onedark'
-      -- },
+      options = {
+        theme = 'nord',
+      },
       sections = {
         lualine_x = {
           { 'encoding' },
@@ -281,12 +286,6 @@ return require('packer').startup(function()
             --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
             -- format on save
             -- vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync() ]]
-            --vim.api.nvim_create_autocmd({'BufWritePost'}, {
-            --  pattern = {'<buffer>'},
-            --  callback = function()
-            --    vim.lsp.buf.formatting_sync()
-            --  end,
-            --})
             if client.server_capabilities.documentFormattingProvider then
               vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
                 group = vim.api.nvim_create_augroup('Format', { clear = true }),
@@ -351,16 +350,17 @@ return require('packer').startup(function()
   use {
     'Shougo/ddc.vim',
     requires = {
-      'vim-denops/denops.vim',
+      'LumaKernel/ddc-file', -- complete-source the file-name
+      'nvim-treesitter/nvim-treesitter',
+      'hrsh7th/vim-vsnip-integ',
       'Shougo/pum.vim', -- popup
       'Shougo/ddc-around', -- complete-source around the word
-      'LumaKernel/ddc-file', -- complete-source the file-name
-      'Shougo/ddc-matcher_head', -- fileter
-      'tani/ddc-fuzzy', -- fuzzy-filter
+      'Shougo/ddc-matcher_head', -- filter
       'Shougo/ddc-sorter_rank', -- sort
       'Shougo/ddc-converter_remove_overlap', -- protect double complete
       'Shougo/ddc-nvim-lsp', -- with lsp
-      'hrsh7th/vim-vsnip-integ',
+      'tani/ddc-fuzzy', -- fuzzy-filter
+      'vim-denops/denops.vim',
     },
     -- opt = true,
     -- event = 'InsertEnter',
@@ -370,7 +370,7 @@ return require('packer').startup(function()
 
       -- vim.cmd[[ call ddc#custom#patch_global('sources', ['around',]) ]] -- default
       -- vim.fn["ddc#custom#patch_global"]('sources', {'nvim-lsp', 'skkeleton', 'around', 'vsnip', 'file', })
-      vim.fn["ddc#custom#patch_global"]('sources', { 'nvim-lsp', 'around', 'vsnip', 'file', })
+      vim.fn["ddc#custom#patch_global"]('sources', { 'vsnip', 'nvim-lsp', 'around', 'file', })
 
       vim.fn["ddc#custom#patch_global"]('sourceOptions', {
         ['_'] = {
@@ -383,7 +383,7 @@ return require('packer').startup(function()
           ['converters'] = { 'converter_remove_overlap', 'converter_fuzzy' },
           ['ignoreCase'] = true,
         },
-        ['vsnip'] = { ['mark'] = 'vsnip' }, -- ['dup'] = true ?
+        ['vsnip'] = { ['mark'] = 'vsnip', ['dup'] = true }, -- ['dup'] = true ?
         ['nvim-lsp'] = { ['mark'] = 'lsp', ['forceCompletionPattern'] = '\\.\\w*|:\\w*|->\\w*' },
         ['around'] = { ['mark'] = 'Around' },
         -- ['cmdline'] = { ['mark'] = 'cmd' }
@@ -425,9 +425,16 @@ return require('packer').startup(function()
       -- }}} unknown
 
       -- enable textEdit with pum.vim
-      vim.cmd [[
-        autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
-      ]]
+      --vim.cmd [[
+      --  autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
+      --]]
+      vim.api.nvim_create_autocmd({ 'User' }, {
+        pattern = 'PumCompleteDone',
+        callback = function()
+          vim.fn['vsnip_integ#on_complete_done'](vim.g['pum#completed_item'])
+        end
+      })
+
 
 
       -- enable coplete command-line with pum {{{
@@ -456,18 +463,12 @@ return require('packer').startup(function()
       --   { noremap = true, silent = true, expr = true }
       --   )
       -- <S-TAB>: completion back
-      vim.api.nvim_set_keymap('i', '<S-Tab>', '<Cmd>call pum#map#select_relative(-1)<CR>', { noremap = true })
+      vim.keymap.set('i', '<S-Tab>', '<Cmd>call pum#map#select_relative(-1)<CR>')
 
-      -- vim.cmd[[ inoremap <C-n> <Cmd>call pum#map#select_relative(+1)<CR> ]]
-      vim.api.nvim_set_keymap('i', '<C-n>', '<Cmd>call pum#map#select_relative(+1)<CR>', { noremap = true })
-      -- vim.cmd[[ inoremap <C-p> <Cmd>call pum#map#select_relative(-1)<CR> ]]
-      vim.api.nvim_set_keymap('i', '<C-p>', '<Cmd>call pum#map#select_relative(-1)<CR>', { noremap = true })
-      -- vim.cmd[[ inoremap <C-y> <Cmd>call pum#map#confirm()<CR> ]]
-      vim.api.nvim_set_keymap('i', '<C-y>', '<Cmd>call pum#map#confirm()<CR>', { noremap = true })
-      -- vim.cmd[[ inoremap <C-e> <Cmd>call pum#map#cancel()<CR> ]]
-      vim.api.nvim_set_keymap('i', '<C-e>', '<Cmd>call pum#map#cancel()<CR>', { noremap = true })
-
-
+      vim.keymap.set('i', '<C-n>', '<Cmd>call pum#map#select_relative(+1)<CR>')
+      vim.keymap.set('i', '<C-p>', '<Cmd>call pum#map#select_relative(-1)<CR>')
+      vim.keymap.set('i', '<C-y>', '<Cmd>call pum#map#confirm()<CR>')
+      vim.keymap.set('i', '<C-e>', '<Cmd>call pum#map#cancel()<CR>')
     end
   }
 
@@ -493,6 +494,7 @@ return require('packer').startup(function()
     'hrsh7th/vim-vsnip-integ',
     requires = { 'hrsh7th/vim-vsnip' }
   }
+
   use {
     'hrsh7th/vim-vsnip',
     requires = { 'rafamadriz/friendly-snippets' },
@@ -530,9 +532,6 @@ return require('packer').startup(function()
     'ray-x/lsp_signature.nvim',
     requires = 'nvim-lspconfig'
   }
-
-  -- use { 'tani/ddc-fuzzy' }
-
 
 
   -- }}} complete
@@ -694,6 +693,59 @@ return require('packer').startup(function()
   --    end,
   --  }
   -- }}} rust
+
+  -- dap {{{
+  use {
+    'rcarriga/nvim-dap-ui',
+    requires = {
+      'mfussenegger/nvim-dap',
+      'nvim-treesitter/nvim-treesitter',
+      'mfussenegger/nvim-dap-python',
+    },
+    config = function()
+      vim.fn.sign_define('DapBreakpoint', { text = '⛔', texthl = '', linehl = '', numhl = '' })
+      vim.fn.sign_define('DapStopped', { text = '👉', texthl = '', linehl = '', numhl = '' })
+      require('dapui').setup({
+        layouts = {
+          {
+            elements = {
+              { id = 'watches', size = 0.20 },
+              { id = 'stacks', size = 0.20 },
+              { id = 'breakpoints', size = 0.20 },
+              { id = 'scopes', size = 0.20 },
+            },
+            size = 64,
+            position = 'left',
+          },
+          {
+            elements = {
+              'repl',
+              'console',
+            },
+            size = 0.20,
+            position = 'bottom',
+          },
+        }
+      })
+      require('dap.ext.vscode').load_launchjs()
+
+      -- vim.keymap.set('n', '<F5>', ':DapContinue<CR>', { silent = true })
+      -- vim.keymap.set('n', '<F10>', ':DapStepOver<CR>', { silent = true })
+      -- vim.keymap.set('n', '<F11>', ':DapStepInto<CR>', { silent = true })
+      -- vim.keymap.set('n', '<F12>', ':DapStepOut<CR>', { silent = true })
+      -- vim.keymap.set('n', '<leader>b', ':DapToggleBreakpoint<CR>', { silent = true })
+      -- vim.keymap.set('n', '<leader>B',
+      --   ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Breakpoint condition: "))<CR>', { silent = true })
+      -- vim.keymap.set('n', '<leader>lp',
+      --   ':lua require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { silent = true })
+      -- vim.keymap.set('n', '<leader>dr', ':lua require("dap").repl.open()<CR>', { silent = true })
+      -- vim.keymap.set('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { silent = true })
+
+      -- vim.keymap.set('n', '<leader>d', ':lua require("dapui").toggle()<CR>')
+    end,
+  }
+
+  --}}}
 
   -- zettelkasten {{{
   -- use {
