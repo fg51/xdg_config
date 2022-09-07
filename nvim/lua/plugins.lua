@@ -113,31 +113,22 @@ return require('packer').startup(function()
   --}
 
 -- filetype {{{
-  use { 'sirtaj/vim-openscad' } -- , ft = 'scad' }
-
-  use { 'ron-rs/ron.vim' } --, ft = 'ron' }
-
-  --use {
-  --  --, ft = 'nu', nushell
-  --  'LhKipp/nvim-nu',
-  --  config = function()
-  --    require('nu').setup{}
-  --  end
-  --}
+  use { 'sirtaj/vim-openscad', ft = 'scad' }
+  use { 'ron-rs/ron.vim', ft = 'ron' }
 -- }}} filetype
 
 -- theme {{{
-  use { 'navarasu/onedark.nvim',
-    -- requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
-    --config = function() vim.cmd "colorscheme onedark" end
-    config = function()
-      onedark = require('onedark')
-      onedark.setup({
-        transparent = false,
-      })
-      -- onedark.load()
-    end
-  }
+  --use { 'navarasu/onedark.nvim',
+  --  -- requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
+  --  --config = function() vim.cmd "colorscheme onedark" end
+  --  config = function()
+  --    onedark = require('onedark')
+  --    onedark.setup({
+  --      transparent = false,
+  --    })
+  --    -- onedark.load()
+  --  end
+  --}
 
   use { 'EdenEast/nightfox.nvim',
     config = function()
@@ -336,6 +327,10 @@ return require('packer').startup(function()
 
 
 -- complete and snippet {{{
+  use {
+    'cohama/lexima.vim',
+  }
+
   use {
     'Shougo/ddc.vim',
     requires = {
@@ -681,15 +676,7 @@ return require('packer').startup(function()
 --  }
 -- }}} rust
 
--- filer {
-  use {
-    'lambdalisue/fern.vim',
-    opt = true,
-    cmd = 'Fern',
-  }
--- }
-
--- zettelkasten {
+-- zettelkasten {{{
   -- use {
   --   'renerocksai/telekasten.nvim',
   --   requires = {
@@ -698,7 +685,57 @@ return require('packer').startup(function()
   --   -- opt = true,
   --   -- run = ':lua require("telekasten")',
   -- }
--- }
+-- }}} zettelkasten
+
+
+-- filer {{{
+  use {
+    'lambdalisue/fern.vim',
+    opt = true,
+    cmd = 'Fern',
+  }
+
+--  use {
+--    'Shougo/ddu.vim',
+--    requires = {
+--      'vim-denops/denops.vim',
+--    },
+--  }
 --
+--  use {
+--    'Shougo/ddu-ui-filer',
+--    requires = {
+--      'Shougo/ddu.vim',
+--      'Shougo/ddu-source-file',
+--      'Shougo/ddu-kind-file',
+--      'Shougo/ddu-column-filename',
+--    },
+--    config = function()
+--      vim.fn["ddu#custom#patch_local"]('filer', {
+--        ['ui'] = {'filer'},
+--        ['sources'] = [[
+--          {
+--            ['name'] = 'file',
+--            ['params'] = {},
+--          }
+--        ]],
+--        ['sourceOptions'] = { ['_'] = {['columns'] = [['filename']] }, },
+--        ['kindOptions'] = { ['file'] = {['defaultAction'] = 'open' }, },
+--        ['uiParams'] = { ['filer'] = {
+--          ['winWidth'] = 40,
+--          ['split'] = 'vertical',
+--          ['splitDirection'] = 'topleft',
+--        }, },
+--      })
+--
+--    --  --vim.cmd[[
+--    --  --  autocmd TabEnter,CursorHold,FocusGained <buffer> call ddu#ui#filer#do_action('checkItems')
+--    --  --]]
+--    end
+--
+--  -- run = ':lua require("telekasten")',
+--  -- }
+--  }
+-- }}} filer
 
 end)
