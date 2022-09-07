@@ -325,7 +325,7 @@ o.ttimeoutlen = 10 -- set ttimeoutlen=10 -- unnoticeable small value
 -- * menuone: display menu at one
 -- * noinsert: disable insert with displaying menu
 cmd "set completeopt-=preview"
-cmd "set shortmess+=c"
+vim.opt.shortmess:append('c')  --cmd "set shortmess+=c"
 
 --local cmp = require"cmp"
 --cmp.setup({
@@ -356,3 +356,20 @@ cmd "set matchpairs& matchpairs+=<:>"  --  set nocompatible
 g.mapleader = ","
 
 vim.cmd[[ inoremap <silent> jj <ESC>]]
+
+-- Don't auto commenting new lines
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  command = 'set fo-=c fo-=r fo-=o',
+})
+
+-- Restore cursor location when file is opened
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = {'*'},
+  callback = function()
+    vim.api.nvim_exec('silent! normal! g`"zv', false)
+  end,
+})
+
+-- insert ',' with space.
+vim.api.nvim_set_keymap('i', ',', ',<Space>', {noremap = true, silent = true})

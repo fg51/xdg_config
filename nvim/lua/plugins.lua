@@ -278,7 +278,22 @@ return require('packer').startup(function()
 
             --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
             -- format on save
-            vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync() ]]
+            -- vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync() ]]
+            --vim.api.nvim_create_autocmd({'BufWritePost'}, {
+            --  pattern = {'<buffer>'},
+            --  callback = function()
+            --    vim.lsp.buf.formatting_sync()
+            --  end,
+            --})
+            if client.server_capabilities.documentFormattingProvider then
+              vim.api.nvim_create_autocmd({'BufWritePre'}, {
+                group = vim.api.nvim_create_augroup('Format', {clear = true}),
+                buffer = bufnr,
+                callback = function()
+                  vim.lsp.buf.formatting_seq_sync()
+                end,
+              })
+            end
 
             -- Reference highlight
             -- vim.cmd [[
