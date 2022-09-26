@@ -1,5 +1,9 @@
 vim.cmd [[packadd packer.nvim]]
 
+-- requires: loading the required plugins before loading the plugin
+-- setup: run code before loading the plugin
+-- config: run code after loading the plugin
+
 return require('packer').startup(function()
   -- packer can mange itself
   use 'wbthomason/packer.nvim'
@@ -641,11 +645,13 @@ return require('packer').startup(function()
     'phaazon/hop.nvim',
     branch = 'v2',
     opt = true,
-    cmd = { 'Hop*' },
+    --cmd = { 'HopChar1', 'HopChar2', 'Hop*' },
+    keys = { { 'n', 'f' }, },
     config = function()
       require 'hop'.setup {
         keys = 'etovxqpdygfblzhckisuran',
       }
+      vim.api.nvim_set_keymap('', 'f', "<cmd>lua require'hop'.hint_char1()<cr>", {})
       vim.api.nvim_set_keymap('n', '<leader>hf', "<cmd>lua require'hop'.hint_char2()<cr>",
         { noremap = true, silent = false })
     end,
@@ -696,6 +702,10 @@ return require('packer').startup(function()
 
   -- dap {{{
   use {
+    'mfussenegger/nvim-dap',
+  }
+
+  use {
     'rcarriga/nvim-dap-ui',
     requires = {
       'mfussenegger/nvim-dap',
@@ -703,8 +713,13 @@ return require('packer').startup(function()
       'mfussenegger/nvim-dap-python',
     },
     config = function()
+      local cwd = vim.fn.getcwd()
+      local command = cwd .. '/.venv/bin/python'
+      require('dap-python').setup(command)
+
       vim.fn.sign_define('DapBreakpoint', { text = '⛔', texthl = '', linehl = '', numhl = '' })
       vim.fn.sign_define('DapStopped', { text = '👉', texthl = '', linehl = '', numhl = '' })
+
       require('dapui').setup({
         layouts = {
           {
@@ -712,7 +727,7 @@ return require('packer').startup(function()
               { id = 'watches', size = 0.20 },
               { id = 'stacks', size = 0.20 },
               { id = 'breakpoints', size = 0.20 },
-              { id = 'scopes', size = 0.20 },
+              { id = 'scopes', size = 0.40 },
             },
             size = 64,
             position = 'left',
@@ -729,7 +744,8 @@ return require('packer').startup(function()
       })
       require('dap.ext.vscode').load_launchjs()
 
-      -- vim.keymap.set('n', '<F5>', ':DapContinue<CR>', { silent = true })
+
+      vim.keymap.set('n', '<F5>', ':DapContinue<CR>', { silent = true })
       -- vim.keymap.set('n', '<F10>', ':DapStepOver<CR>', { silent = true })
       -- vim.keymap.set('n', '<F11>', ':DapStepInto<CR>', { silent = true })
       -- vim.keymap.set('n', '<F12>', ':DapStepOut<CR>', { silent = true })
@@ -741,10 +757,18 @@ return require('packer').startup(function()
       -- vim.keymap.set('n', '<leader>dr', ':lua require("dap").repl.open()<CR>', { silent = true })
       -- vim.keymap.set('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { silent = true })
 
-      -- vim.keymap.set('n', '<leader>d', ':lua require("dapui").toggle()<CR>')
+      vim.keymap.set('n', '<leader>d', ':lua require("dapui").toggle()<CR>')
+      --vim.cmd [[command! -range DapUI :lua requjire("dapui").toggle()<CR>]]
     end,
   }
 
+  use {
+    'mfussenegger/nvim-dap-python',
+    config = function()
+      local command = './.venv/bin/python'
+      require('dap-python').setup(command)
+    end,
+  }
   --}}}
 
   -- zettelkasten {{{
