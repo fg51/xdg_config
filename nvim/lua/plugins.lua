@@ -239,88 +239,40 @@ return require('packer').startup(function()
     -- opt = true,
     --event = 'BufEnter',
     config = function()
+      local on_attach = function(client, bufnr)
+        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+        vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+        vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+        vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+        vim.keymap.set('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+        vim.keymap.set('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+        -- vim.keymap.set('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+
+        vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+        vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+        vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+        vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+        vim.keymap.set('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+        vim.keymap.set('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+        vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
+        vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting(async=false)<CR>')
+      end
+
+      --local capabilities = require('cmp_nvim_lsp').update_capabilities(
+      --  vim.lsp.protocol.make_client_capabilities()
+      --)
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
       require('mason').setup()
       require('mason-lspconfig').setup()
       require('mason-lspconfig').setup_handlers({ function(server)
-        --       local opt = {
-        --       -- -- Function executed when the LSP server startup
-        --       -- on_attach = function(client, bufnr)
-        --       --   local opts = { noremap=true, silent=true }
-        --       --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        --       --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-        --       -- end,
-        --       -- capabilities = require('cmp_nvim_lsp').update_capabilities(
-        --       --   vim.lsp.protocol.make_client_capabilities()
-        --       -- )
-        --       }
-        --     require('lspconfig')[server].setup(opt)
-
-        local opt = {
-          -- Function executed when the LSP server startup
-          on_attach = function(client, bufnr)
-            local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
-            local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-            -- Enable completion triggered by <c-x><c-o>
-            -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-            -- Mappings
-            local mopts = { noremap = true, silent = true }
-
-            buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', mopts)
-            buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', mopts)
-            buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', mopts)
-            buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', mopts)
-            buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', mopts)
-            buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', mopts)
-            buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', mopts)
-            buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-              mopts)
-            buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', mopts)
-            buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', mopts)
-            buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', mopts)
-            buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', mopts)
-            buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', mopts)
-            buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', mopts)
-            buf_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', mopts)
-            buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', mopts)
-            buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', mopts)
-
-            --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-            -- format on save
-            -- vim.cmd [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync() ]]
-            if client.server_capabilities.documentFormattingProvider then
-              vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-                group = vim.api.nvim_create_augroup('Format', { clear = true }),
-                buffer = bufnr,
-                callback = function()
-                  vim.lsp.buf.formatting_seq_sync()
-                end,
-              })
-            end
-
-            -- Reference highlight
-            -- vim.cmd [[
-            --   set updatetime=500
-            --   highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
-            --   highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
-            --   highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
-            --   augroup lsp_document_highlight
-            --     autocmd!
-            --     autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
-            --     autocmd CursorMoved,CursorMovedI * lua vim.lsp.buf.clear_references()
-            --   augroup END
-            -- ]]
-
-          end
+        require('lspconfig')[server].setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
         }
-        require('lspconfig')[server].setup(opt)
       end })
-
-
-      --   end
-
     end
   }
 
@@ -351,130 +303,137 @@ return require('packer').startup(function()
     'cohama/lexima.vim',
   }
 
-  use {
-    'Shougo/ddc.vim',
-    requires = {
-      'LumaKernel/ddc-file', -- complete-source the file-name
-      'nvim-treesitter/nvim-treesitter',
-      'hrsh7th/vim-vsnip-integ',
-      'Shougo/pum.vim', -- popup
-      'Shougo/ddc-around', -- complete-source around the word
-      'Shougo/ddc-matcher_head', -- filter
-      'Shougo/ddc-sorter_rank', -- sort
-      'Shougo/ddc-converter_remove_overlap', -- protect double complete
-      'Shougo/ddc-nvim-lsp', -- with lsp
-      'tani/ddc-fuzzy', -- fuzzy-filter
-      'vim-denops/denops.vim',
-    },
-    -- opt = true,
-    -- event = 'InsertEnter',
-    config = function()
-      -- enable pum
-      vim.fn["ddc#custom#patch_global"]('completionMenu', 'pum.vim')
-
-      -- vim.cmd[[ call ddc#custom#patch_global('sources', ['around',]) ]] -- default
-      -- vim.fn["ddc#custom#patch_global"]('sources', {'nvim-lsp', 'skkeleton', 'around', 'vsnip', 'file', })
-      vim.fn["ddc#custom#patch_global"]('sources', { 'vsnip', 'nvim-lsp', 'around', 'file', })
-
-      vim.fn["ddc#custom#patch_global"]('sourceOptions', {
-        ['_'] = {
-          -- ['matchers'] = {'matcher_head'},  -- default
-          -- ['sortes'] = {'sorter_rank'},  -- default
-          -- ['converters'] = {'converter_remove_overlap'},
-          -- ['converters'] = {'converter_remove_overlap', 'converter_truncate', 'converter_fuzzy'},
-          ['matchers'] = { 'matcher_fuzzy' },
-          ['sortes'] = { 'sorter_fuzzy' },
-          ['converters'] = { 'converter_remove_overlap', 'converter_fuzzy' },
-          ['ignoreCase'] = true,
-        },
-        ['vsnip'] = { ['mark'] = 'vsnip', ['dup'] = true }, -- ['dup'] = true ?
-        ['nvim-lsp'] = { ['mark'] = 'lsp', ['forceCompletionPattern'] = '\\.\\w*|:\\w*|->\\w*' },
-        ['around'] = { ['mark'] = 'Around' },
-        -- ['cmdline'] = { ['mark'] = 'cmd' }
-        -- ['cmdline-history'] = { ['mark'] = 'hist', ['maxCandidates'] = 3 }
-        ['skkeleton'] = {
-          ['mark'] = 'skk',
-          ['matchers'] = { 'skkeleton' },
-          ['sorters'] = {},
-          ['minAutoCompleteLength'] = 2,
-        },
-        ['file'] = {
-          ['mark'] = 'F',
-          ['isVolatile'] = true,
-          ['forceCompletionPattern'] = '\\S/\\S*', -- '\S/\S*'
-        }
-      })
-      vim.fn["ddc#custom#patch_global"]('sourceParams', {
-        ['around'] = { ['maxSize'] = 500 },
-        ['nvim-lsp'] = { ['kindLabels'] = { ['Class'] = 'c' } }
-      })
-      vim.fn["ddc#custom#patch_global"]('filterParams', {
-        ['converter_truncate'] = { ['maxAbbrWidth'] = 60, ['maxInfo'] = 500, ['ellipsis'] = '...' },
-        ['converter_fuzzy'] = { ['hlGroup'] = 'Title' }
-      })
-      vim.fn["ddc#custom#patch_filetype"](
-        { 'ps1', 'dosbatch', 'autohotkey', 'registry' },
-        {
-          ['sourceOptions'] = {
-            ['file'] = { ['forceCompletionPattern'] = '\\S\\\\\\S*', }, -- '\S\\\S*'
-          },
-          ['sourceParams'] = {
-            ['file'] = { ['mode'] = 'win32', },
-          }
-        }
-      )
-
-      -- unknown {{{
-      vim.fn["pum#set_option"]('setline_insert', false)
-      -- }}} unknown
-
-      -- enable textEdit with pum.vim
-      --vim.cmd [[
-      --  autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
-      --]]
-      vim.api.nvim_create_autocmd({ 'User' }, {
-        pattern = 'PumCompleteDone',
-        callback = function()
-          vim.fn['vsnip_integ#on_complete_done'](vim.g['pum#completed_item'])
-        end
-      })
-
-
-
-      -- enable coplete command-line with pum {{{
-      -- }}} enable coplete command-line with pum
-
-      -- enable ddc
-      vim.fn["ddc#enable"]()
-
-      --      -- vim.cmd[[ inoremap <silent><expr> <TAB> pum#visible() ?
-      --      --   \ '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-      --      --   \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-      --      --   \ '<TAB>' : ddc#manual_complete()
-      --      -- \ ]]
-      --      -- vim.cmd[[ inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR> ]]
-
-      -- <TAB>: completion.
-      --      vim.cmd[[ inoremap <silent><expr> <TAB>
-      --        \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-      --        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-      --        \ '<TAB>' : ddc#manual_complete()
-      --      \ ]]
-      --vim.api.nvim_set_keymap('i', '<TAB>',
-      --   vim.fn["pum#visible"]() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-      --   (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-      --   '<TAB>' : vim.fn["ddc#manual_complete"]()
-      --   { noremap = true, silent = true, expr = true }
-      --   )
-      -- <S-TAB>: completion back
-      vim.keymap.set('i', '<S-Tab>', '<Cmd>call pum#map#select_relative(-1)<CR>')
-
-      vim.keymap.set('i', '<C-n>', '<Cmd>call pum#map#select_relative(+1)<CR>')
-      vim.keymap.set('i', '<C-p>', '<Cmd>call pum#map#select_relative(-1)<CR>')
-      vim.keymap.set('i', '<C-y>', '<Cmd>call pum#map#confirm()<CR>')
-      vim.keymap.set('i', '<C-e>', '<Cmd>call pum#map#cancel()<CR>')
-    end
-  }
+  --  use {
+  --    'Shougo/ddc.vim',
+  --    requires = {
+  --      -- 'LumaKernel/ddc-file', -- complete-source the file-name
+  --      -- 'nvim-treesitter/nvim-treesitter',
+  --      'hrsh7th/vim-vsnip-integ',
+  --      'Shougo/pum.vim', -- popup
+  --      -- 'Shougo/ddc-around', -- complete-source around the word
+  --      'Shougo/ddc-source-around', -- complete-source around the word
+  --      'Shougo/ddc-matcher_head', -- filter
+  --      'Shougo/ddc-sorter_rank', -- sort
+  --      'Shougo/ddc-converter_remove_overlap', -- protect double complete
+  --      'Shougo/ddc-nvim-lsp', -- with lsp
+  --      'Shougo/ddc-ui-native',
+  --      --'tani/ddc-fuzzy', -- fuzzy-filter
+  --      'vim-denops/denops.vim',
+  --    },
+  --    -- opt = true,
+  --    -- event = 'InsertEnter',
+  --    config = function()
+  --      vim.fn["ddc#custom#patch_global"]('ui', 'native')
+  --
+  --      -- enable pum
+  --      vim.fn["ddc#custom#patch_global"]('completionMenu', 'pum.vim')
+  --
+  --      -- use around source.
+  --      -- vim.cmd [[ call ddc#custom#patch_global('sources', ['around',]) ]] -- default
+  --      -- vim.fn["ddc#custom#patch_global"]('sources', {'nvim-lsp', 'skkeleton', 'around', 'vsnip', 'file', })
+  --      -- vim.fn["ddc#custom#patch_global"]('sources', { 'vsnip', 'nvim-lsp', 'around', 'file', })
+  --      vim.fn["ddc#custom#patch_global"]('sources', { 'vsnip', 'nvim-lsp', 'around', })
+  --
+  --      -- change source options.
+  --      -- vim.fn["ddc#custom#patch_global"]('sourceOptions', {
+  --      --   ['_'] = {
+  --      --     -- ['matchers'] = {'matcher_head'},  -- default
+  --      --     -- ['sortes'] = {'sorter_rank'},  -- default
+  --      --     -- ['converters'] = {'converter_remove_overlap'},
+  --      --     -- ['converters'] = {'converter_remove_overlap', 'converter_truncate', 'converter_fuzzy'},
+  --      --     ['matchers'] = { 'matcher_fuzzy' },
+  --      --     ['sortes'] = { 'sorter_fuzzy' },
+  --      --     ['converters'] = { 'converter_remove_overlap', 'converter_fuzzy' },
+  --      --     ['ignoreCase'] = true,
+  --      --   },
+  --      --   ['vsnip'] = { ['mark'] = 'vsnip', ['dup'] = true }, -- ['dup'] = true ?
+  --      --   ['nvim-lsp'] = { ['mark'] = 'lsp', ['forceCompletionPattern'] = '\\.\\w*|:\\w*|->\\w*' },
+  --      --   ['around'] = { ['mark'] = 'Around' },
+  --      --   -- ['cmdline'] = { ['mark'] = 'cmd' }
+  --      --   -- ['cmdline-history'] = { ['mark'] = 'hist', ['maxCandidates'] = 3 }
+  --      --   ['skkeleton'] = {
+  --      --     ['mark'] = 'skk',
+  --      --     ['matchers'] = { 'skkeleton' },
+  --      --     ['sorters'] = {},
+  --      --     ['minAutoCompleteLength'] = 2,
+  --      --   },
+  --      --   ['file'] = {
+  --      --     ['mark'] = 'F',
+  --      --     ['isVolatile'] = true,
+  --      --     ['forceCompletionPattern'] = '\\S/\\S*', -- '\S/\S*'
+  --      --   }
+  --      -- })
+  --      -- vim.fn["ddc#custom#patch_global"]('sourceParams', {
+  --      --   ['around'] = { ['maxSize'] = 500 },
+  --      --   ['nvim-lsp'] = { ['kindLabels'] = { ['Class'] = 'c' } }
+  --      -- })
+  --      -- vim.fn["ddc#custom#patch_global"]('filterParams', {
+  --      --   ['converter_truncate'] = { ['maxAbbrWidth'] = 60, ['maxInfo'] = 500, ['ellipsis'] = '...' },
+  --      --   ['converter_fuzzy'] = { ['hlGroup'] = 'Title' }
+  --      -- })
+  --      -- vim.fn["ddc#custom#patch_filetype"](
+  --      --   { 'ps1', 'dosbatch', 'autohotkey', 'registry' },
+  --      --   {
+  --      --     ['sourceOptions'] = {
+  --      --       ['file'] = { ['forceCompletionPattern'] = '\\S\\\\\\S*', }, -- '\S\\\S*'
+  --      --     },
+  --      --     ['sourceParams'] = {
+  --      --       ['file'] = { ['mode'] = 'win32', },
+  --      --     }
+  --      --   }
+  --      -- )
+  --
+  --      -- -- unknown {{{
+  --      -- vim.fn["pum#set_option"]('setline_insert', false)
+  --      -- -- }}} unknown
+  --
+  --      -- -- enable textEdit with pum.vim
+  --      -- --vim.cmd [[
+  --      -- --  autocmd User PumCompleteDone call vsnip_integ#on_complete_done(g:pum#completed_item)
+  --      -- --]]
+  --      -- vim.api.nvim_create_autocmd({ 'User' }, {
+  --      --   pattern = 'PumCompleteDone',
+  --      --   callback = function()
+  --      --     vim.fn['vsnip_integ#on_complete_done'](vim.g['pum#completed_item'])
+  --      --   end
+  --      -- })
+  --
+  --
+  --
+  --      -- enable coplete command-line with pum {{{
+  --      -- }}} enable coplete command-line with pum
+  --
+  --      -- enable ddc
+  --      vim.fn["ddc#enable"]()
+  --
+  --      --      -- vim.cmd[[ inoremap <silent><expr> <TAB> pum#visible() ?
+  --      --      --   \ '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+  --      --      --   \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+  --      --      --   \ '<TAB>' : ddc#manual_complete()
+  --      --      -- \ ]]
+  --      --      -- vim.cmd[[ inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR> ]]
+  --
+  --      -- <TAB>: completion.
+  --      --      vim.cmd[[ inoremap <silent><expr> <TAB>
+  --      --        \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+  --      --        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+  --      --        \ '<TAB>' : ddc#manual_complete()
+  --      --      \ ]]
+  --      --vim.api.nvim_set_keymap('i', '<TAB>',
+  --      --   vim.fn["pum#visible"]() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+  --      --   (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+  --      --   '<TAB>' : vim.fn["ddc#manual_complete"]()
+  --      --   { noremap = true, silent = true, expr = true }
+  --      --   )
+  --      -- <S-TAB>: completion back
+  --      vim.keymap.set('i', '<S-Tab>', '<Cmd>call pum#map#select_relative(-1)<CR>')
+  --
+  --      vim.keymap.set('i', '<C-n>', '<Cmd>call pum#map#select_relative(+1)<CR>')
+  --      vim.keymap.set('i', '<C-p>', '<Cmd>call pum#map#select_relative(-1)<CR>')
+  --      vim.keymap.set('i', '<C-y>', '<Cmd>call pum#map#confirm()<CR>')
+  --      vim.keymap.set('i', '<C-e>', '<Cmd>call pum#map#cancel()<CR>')
+  --    end
+  --  }
 
 
   use {
@@ -493,6 +452,61 @@ return require('packer').startup(function()
     end
   }
 
+  use {
+    'hrsh7th/nvim-cmp',
+    config = function()
+      local cmp = require("cmp")
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
+        sources = {
+          { name = "nvim_lsp" },
+          { name = "vsnip" },
+          { name = "buffer" },
+          { name = "path" },
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<C-l>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        }),
+        experimental = {
+          ghost_text = false,
+        },
+        formatting = {
+          format = require("lspkind").cmp_format({
+            mode = "symbol",
+            maxwidth = 50,
+            ellipsis_char = '...',
+          })
+        }
+      })
+
+      cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'path' }
+        }
+      })
+    end
+  }
+
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-vsnip'
+  use 'onsails/lspkind.nvim'
 
   use {
     'hrsh7th/vim-vsnip-integ',
