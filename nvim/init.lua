@@ -11,17 +11,7 @@ local opt = vim.opt
 -- local window = {o, wo}
 
 
---if 0 | endif
-
 -- # INITIALIZE {{{
-
---if &compatible
--- cmd "set nocompatible"  --  set nocompatible
---endif
-
---augroup myautocmd
---  autocmd!
---augroup END
 
 
 -- ## conditions {{{
@@ -83,80 +73,64 @@ g.loaded_ruby_provider = 1
 
 -- }}}
 
---" # DEIN {{{
+-- opt.fileencoding
+cmd "set fileencodings=utf-8,default,ucs-bom,euc-jp,cp932,shift-jis,latin1"
+cmd "set foldcolumn=1" -- fold
 
---let s:config_dir = expand('$HOME/.config/nvim')
---let s:dein_repo_path = $HOME . '/.cache/dein'
+opt.autoindent = true -- indent
+opt.autoread = true -- buffer -- cmd "set autoread"
+opt.clipboard:append({ "unnamedplus" }) -- input --set clipboard=unnamed
+opt.cmdheight = 3 -- view --cmd "set cmdheight=3" --set cmdheight=3
+opt.cursorcolumn = false -- view -- cmd "set nocursorcolumn"
+opt.display = 'lastline' -- view -- cmd "set display=lastline" --set display=lastline "NOTE: no-@ in long line
+opt.expandtab = true -- indent
+opt.foldlevel = 99 -- fold
+opt.foldmethod = 'marker' -- fold
+opt.hidden = false -- buufer -- disable unsaved file. -- set nohidden
+opt.hlsearch = true -- search
+opt.ignorecase = true -- search
+opt.laststatus = 2 -- view -- cmd "set laststatus=2" --set laststatus=2
+opt.list = true -- view -- show invisible chars cmd "set list" --set list
+opt.mouse = 'a' -- cmd "set mouse=a" --set mouse=a
+opt.scrolloff = 5 -- view set scrolloff=5
+opt.shiftwidth = 2  -- indent
+opt.showcmd = true -- view cmd "set showcmd" --set showcmd
+opt.showtabline = 2 -- view -- cmd "set showtabline=2" --set showtabline=2
+opt.smartcase = true -- search
+opt.smartindent = true -- indent
+opt.smarttab = true -- indent
+opt.softtabstop = 2 -- indent --bo.softtabstop = 2
+opt.tabstop = 2  -- indent
+opt.termguicolors = true --  set termguicolors
+opt.title = true -- cmd "set title"  --set title
+opt.virtualedit:append({ "block" }) -- input -- set virtualedit& virtualedit+=block
+opt.wrap = true -- view -- cmd "set wrap" --set wrap
+opt.writebackup = false -- buffer --set nowritebackup
 
---" TODO
---" Required:
---set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
---" set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
---set runtimepath+=$GOPATH/src/github.com/golang/lint/misc/vim
---set runtimepath+=$GOPATH/src/github.com/nsf/gocode/nvim
+wo.cursorline = false -- view -- cmd "set nocursorline" --set nocursorline
+wo.number = true -- view -- show line-number
+wo.relativenumber = false -- view -- cmd "set norelativenumber"
+wo.signcolumn = 'yes'  -- view
 
+cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
+-- o.listchars = {
+--   tab = '»-',
+--   trail = '-',
+--   extends = '»',
+--   precedes = '«',
+--   nbsp = '%',
+-- }
 
--- Required:
---if dein#load_state($HOME . '/.cache/dein')
---  call dein#begin($HOME . '/.cache/dein') " repo-path
---  call dein#add($HOME . '/.cache/dein/repos/github.com/Shougo/dein.vim')
---"   call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-
---  let s:toml = s:config_dir . '/dein.toml'
---  call dein#load_toml(s:toml, {'lazy' : 0})
---  let s:lazy_toml = s:config_dir . '/dein_lazy.toml'
---  call dein#load_toml(s:lazy_toml, {'lazy' : 1})
-
---  " Required:
---  call dein#end()
---  call dein#save_state()
---endif
+cmd "set fillchars=stl:\\ ,stlnc:\\ ,vert:\\|,fold:-,diff:-" -- set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
+cmd "let g:vim_indent_cont = 0" --let g:vim_indent_cont = 0
+cmd "set backspace=indent,eol,start" -- input -- set backspace=indent,eol,start
 
 require 'plugins'
 
--- Required: no required in neovim
--- cmd "filetype plugin indent on" --filetype plugin indent on
--- cmd "syntax enable" --syntax enable
-
---" If you want to install not installed plugins on startup.
---if dein#check_install()
---  call dein#install()
---endif
-
--- }}} DEIN
-
-
--- # VIM OPTIONS {{{
--- ## INDENT {{{
-bo.tabstop = 2
-bo.softtabstop = 2
-bo.shiftwidth = 2
-bo.expandtab = true --set expandtab
-bo.autoindent = true --set autoindent
-bo.smartindent = true --set smartindent
-o.smarttab = true --set smarttab
--- }}} INDENT
-
--- ## FOLD {{{
-cmd "set foldcolumn=1" --set foldcolumn=1
-opt.foldlevel = 99 -- cmd "set foldlevel=99" --set foldlevel=99
-opt.foldmethod = 'marker' -- cmd "set foldmethod=marker" --set foldmethod=marker
---"set nofoldenable
--- }}} FOLD
-
--- ## SEARCH {{{
-o.hlsearch = true --set hlsearch
-o.ignorecase = true --set ignorecase
-o.smartcase = true --set smartcase
--- }}}
 
 --" ## BUFFER {{{
-opt.autoread = true -- cmd "set autoread" --set autoread
-o.hidden = false -- set nohidden -- disable unsaved file.
 
 --"set noswapfile
-opt.writebackup = false -- cmd "set nowritebackup" --set nowritebackup
-cmd "set fileencodings=utf-8,default,ucs-bom,euc-jp,cp932,shift-jis,latin1"
 --set fileencodings=utf-8,default,ucs-bom,euc-jp,cp932,shift-jis,latin1
 
 --if g:is_windows
@@ -171,43 +145,8 @@ cmd "set undofile undodir=~/.cache/vim/undo" --  set undofile undodir=~/.cache/v
 
 
 -- ## VIEW {{{
--- ### color {{{
---if (has("termguicolors"))
-o.termguicolors = true --  set termguicolors
---  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
---  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
---endif
--- }}} color
-
-opt.cmdheight = 3 --cmd "set cmdheight=3" --set cmdheight=3
-wo.cursorline = false -- cmd "set nocursorline" --set nocursorline
-opt.laststatus = 2 -- cmd "set laststatus=2" --set laststatus=2
-opt.cursorcolumn = false -- cmd "set nocursorcolumn"
-wo.relativenumber = false -- cmd "set norelativenumber"
-wo.signcolumn = 'yes'
-
-o.list = true -- cmd "set list" --set list -- show invisible chars
-cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
---set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%
--- o.listchars = {
---   tab = '»-',
---   trail = '-',
---   extends = '»',
---   precedes = '«',
---   nbsp = '%',
--- }
-
-wo.number = true --set number  -- show line-number
-
-o.scrolloff = 5 --set scrolloff=5
-opt.showcmd = true -- cmd "set showcmd" --set showcmd
 
 --"set textwidth=0 "NOTE: auto by-return
-opt.wrap = true -- cmd "set wrap" --set wrap
-opt.showtabline = 2 -- cmd "set showtabline=2" --set showtabline=2
-opt.display = 'lastline' -- cmd "set display=lastline" --set display=lastline "NOTE: no-@ in long line
-cmd "set fillchars=stl:\\ ,stlnc:\\ ,vert:\\|,fold:-,diff:-" -- set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
-cmd "let g:vim_indent_cont = 0" --let g:vim_indent_cont = 0
 
 
 -- NOTE: simple statuline
@@ -253,27 +192,6 @@ cmd [[ let g:markdown_fenced_languages = [
 -- }}} VIEW
 
 
--- ## INPUT {{{
-cmd "set backspace=indent,eol,start" --set backspace=indent,eol,start
-opt.clipboard:append({ "unnamedplus" }) --set clipboard=unnamed
---if has('autoselect')
---  set clipboard+=autoselect
---elseif has('unnamedplus') "CAUTION: need xclip
---  set clipboard+=unnamedplus
---else
---  set clipboard+=unnamedplus
---endif
---set clipboard+=unnamedplus
--- if os.execute('uname -a | grep microsoft') ~= '' then
---   cmd('augroup wsl_clip')
---   cmd('autocmd!')
---   cmd("autocmd TextYankPost * :call system('clip.exe', @\")")
---   cmd('augroup END')
--- end
-
-opt.virtualedit:append({ "block" }) --set virtualedit& virtualedit+=block
--- }}} INPUT
-
 -- ## COMMAND {{{
 opt.wildmenu = true --cmd "set wildmenu" --set wildmenu  -- complete in the commandline mode.
 opt.wildmode = { "longest", "full" } --set wildmode=longest:full,full
@@ -305,8 +223,6 @@ vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 
 -- OTHERS {{{
 --" no scrach(preview)
-opt.title = true -- cmd "set title"  --set title
-opt.mouse = 'a' -- cmd "set mouse=a" --set mouse=a
 -- }}} OTHERS
 
 o.synmaxcol = 200

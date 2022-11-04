@@ -183,28 +183,40 @@ return require('packer').startup(function()
     config = function()
       local on_attach = function(client, bufnr)
         vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+        -- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+        vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
         vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
         vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-        vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+        -- vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+        vim.keymap.set('n', '<C-k>', '<cmd>Lspsaga signature_help<CR>', { silent = true })
         vim.keymap.set('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
         vim.keymap.set('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
         -- vim.keymap.set('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
 
         vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-        vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-        vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+        -- vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+        vim.keymap.set('n', '<space>rn', '<cmd>Lspsaga rename<CR>', { silent = true })
+        -- vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+        vim.keymap.set({'n', 'v'}, '<space>ca', "<cmd>Lspsaga code_action<CR>", { silent = true })
         vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-        vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
-        vim.keymap.set('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-        vim.keymap.set('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+        -- vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+        vim.keymap.set('n', "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+        vim.keymap.set('n', "<space>e", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+        -- vim.keymap.set('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+        --vim.keymap.set('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+        vim.keymap.set("n", "]g", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+        vim.keymap.set('n', "[g", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
         vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
         vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+
+
+        vim.keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+        -- vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', { silent = true })
+        -- vim.keymap.set('n', 'gd', '<Cmd>Lspsaga lsp_finder<CR>', { silent = true })
+        -- vim.keymap.set('n', 'gd', '<Cmd>Lspsaga preview_definition<CR>', { silent = true })
       end
 
-      --local capabilities = require('cmp_nvim_lsp').update_capabilities(
-      --  vim.lsp.protocol.make_client_capabilities()
-      --)
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       require('mason').setup()
@@ -215,6 +227,29 @@ return require('packer').startup(function()
           capabilities = capabilities,
         }
       end })
+
+      -- Diagnostic symbols in the sign column
+      local signs = { Error = " ", Warn = ">>", Hint = ">", Info = ">" }
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+      end
+      -- Diagnostic Settings
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        update_in_insert = false,
+        virtual_text = false,
+        severity_sort = true,
+      })
+      vim.diagnostic.config({
+        underline = true,
+        virtual_text = false,
+        update_in_insert = false,
+        float = {
+          source = "always", -- Or "if_many"
+        },
+      })
     end
   }
 
@@ -231,6 +266,98 @@ return require('packer').startup(function()
     config = function()
       local saga = require"lspsaga"
       saga.init_lsp_saga({
+        -- Options with default value
+        -- "single" | "double" | "rounded" | "bold" | "plus"
+        border_style = "single",
+        --the range of 0 for fully opaque window (disabled) to 100 for fully
+        --transparent background. Values between 0-30 are typically most useful.
+        saga_winblend = 5,
+        -- when cursor in saga window you config these to move
+        move_in_saga = { prev = '<C-p>',next = '<C-n>'},
+        diagnostic_header = { " ", " ", " ", "ﴞ " },
+        -- preview lines of lsp_finder and definition preview
+        max_preview_lines = 10,
+        -- use emoji lightbulb in default
+        code_action_icon = "◆",
+        -- if true can press number to execute the codeaction in codeaction window
+        code_action_num_shortcut = true,
+        -- same as nvim-lightbulb but async
+        code_action_lightbulb = {
+            enable = false,
+            enable_in_insert = false,
+            cache_code_action = false,
+            sign = true,
+            update_time = 150,
+            sign_priority = 20,
+            virtual_text = true,
+        },
+        -- finder icons
+        finder_icons = {
+          def = '  ',
+          ref = '諭 ',
+          link = '  ',
+        },
+        -- finder do lsp request timeout
+        -- if your project big enough or your server very slow
+        -- you may need to increase this value
+        finder_request_timeout = 1500,
+        finder_action_keys = {
+            open = "o",
+            vsplit = "s",
+            split = "i",
+            tabe = "t",
+            quit = "q",
+        },
+        code_action_keys = {
+            quit = "q",
+            exec = "<CR>",
+        },
+        definition_action_keys = {
+          edit = '<C-c>o',
+          vsplit = '<C-c>v',
+          split = '<C-c>i',
+          tabe = '<C-c>t',
+          quit = 'q',
+        },
+        rename_action_quit = "<C-c>",
+        rename_in_select = true,
+        -- show symbols in winbar must nightly
+        -- in_custom mean use lspsaga api to get symbols
+        -- and set it to your custom winbar or some winbar plugins.
+        -- if in_cusomt = true you must set in_enable to false
+        symbol_in_winbar = {
+            in_custom = false,
+            enable = false,
+            separator = ' ',
+            show_file = true,
+            -- define how to customize filename, eg: %:., %
+            -- if not set, use default value `%:t`
+            -- more information see `vim.fn.expand` or `expand`
+            -- ## only valid after set `show_file = true`
+            file_formatter = "",
+            click_support = false,
+        },
+        -- show outline
+        show_outline = {
+          win_position = 'right',
+          --set special filetype win that outline window split.like NvimTree neotree
+          -- defx, db_ui
+          win_with = '',
+          win_width = 30,
+          auto_enter = true,
+          auto_preview = true,
+          virt_text = '┃',
+          jump_key = 'o',
+          -- auto refresh when change buffer
+          auto_refresh = true,
+        },
+        -- custom lsp kind
+        -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
+        custom_kind = {},
+        -- if you don't use nvim-lspconfig you must pass your server name and
+        -- the related filetypes into this table
+        -- like server_filetype_map = { metals = { "sbt", "scala" } }
+        server_filetype_map = {},
 
       })
     end
@@ -466,6 +593,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'onsails/lspkind.nvim'
 
   use {
@@ -506,10 +634,10 @@ return require('packer').startup(function()
     end
   }
 
-  use {
-    'ray-x/lsp_signature.nvim',
-    requires = 'nvim-lspconfig'
-  }
+  -- use {
+  --   'ray-x/lsp_signature.nvim',
+  --   requires = 'nvim-lspconfig'
+  -- }
 
 
   -- }}} complete
