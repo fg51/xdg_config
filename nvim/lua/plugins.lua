@@ -8,58 +8,6 @@ return require('packer').startup(function()
   -- packer can mange itself
   use 'wbthomason/packer.nvim'
 
-  -- detect filetype faster
-  use {
-    'nathom/filetype.nvim',
-    config = require("filetype").setup({
-      overrides = {
-        extensions = {
-          -- Set the filetype of *.pn files to potion
-          pn = "potion",
-        },
-        literal = {
-          -- Set the filetype of files named "MyBackupFile" to lua
-          MyBackupFile = "lua",
-        },
-        complex = {
-          -- Set the filetype of any full filename matching the regex to gitconfig
-          [".*git/config"] = "gitconfig", -- Included in the plugin
-        },
-
-        -- The same as the ones above except the keys map to functions
-        function_extensions = {
-          ["cpp"] = function()
-            vim.bo.filetype = "cpp"
-            -- Remove annoying indent jumping
-            vim.bo.cinoptions = vim.bo.cinoptions .. "L0"
-          end,
-          ["pdf"] = function()
-            vim.bo.filetype = "pdf"
-            -- Open in PDF viewer (Skim.app) automatically
-            vim.fn.jobstart(
-              "open -a skim " .. '"' .. vim.fn.expand("%") .. '"'
-            )
-          end,
-        },
-        function_literal = {
-          Brewfile = function()
-            vim.cmd("syntax off")
-          end,
-        },
-        function_complex = {
-          ["*.math_notes/%w+"] = function()
-            vim.cmd("iabbrev $ $$")
-          end,
-        },
-
-        shebang = {
-          -- Set the filetype of files with a dash shebang to sh
-          dash = "sh",
-        },
-      },
-    })
-  }
-
 
   --use {
   --  'neoclide/coc.nvim',
@@ -223,13 +171,7 @@ return require('packer').startup(function()
   -- }}} finder
 
   -- lsp {{{
-  use {
-    'williamboman/mason.nvim',
-    -- cmd = {'Mason', 'MasonInstall', 'Mason*'},
-    -- config = function()
-    --   require('mason').setup()
-    -- end
-  }
+  use 'williamboman/mason.nvim'
 
   -- use { "neovim/nvim-lspconfig", }
 
@@ -257,7 +199,7 @@ return require('packer').startup(function()
         vim.keymap.set('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>')
         vim.keymap.set('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
         vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
-        vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting(async=false)<CR>')
+        vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>')
       end
 
       --local capabilities = require('cmp_nvim_lsp').update_capabilities(
@@ -273,6 +215,24 @@ return require('packer').startup(function()
           capabilities = capabilities,
         }
       end })
+    end
+  }
+
+  use {
+    'j-hui/fidget.nvim',
+    config = function()
+      require"fidget".setup{}
+    end
+  }
+
+  use {
+    'glepnir/lspsaga.nvim',
+    branch = 'main',
+    config = function()
+      local saga = require"lspsaga"
+      saga.init_lsp_saga({
+
+      })
     end
   }
 

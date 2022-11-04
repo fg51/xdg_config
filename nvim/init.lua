@@ -65,7 +65,7 @@ g.loaded_netrw              = 1 -- instead of useing 'nvim-telescope/telescope.n
 g.loaded_netrwPlugin        = 1
 g.loaded_netrwSettings      = 1
 
-g.did_load_filetypes = 1 -- instead of using nathom/filetype.nvim
+-- g.did_load_filetypes = 1 -- instead of using nathom/filetype.nvim
 -- }}}
 
 -- {{{ neovim provider
