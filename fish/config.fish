@@ -1,3 +1,5 @@
+set fish_greeting ""
+
 if status is-interactive
   # Commands to run in interactive sessions can go here
   alias image sxiv
@@ -28,8 +30,8 @@ set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 
 
 # EDITOR
-set -gx EDITOR vim
-set -gx SUDO_EDITOR vim
+set -gx EDITOR nvim
+set -gx SUDO_EDITOR nvim
 
 
 # fix java for xmonad wmname
@@ -58,3 +60,12 @@ set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH (rustc --print sysroot)/lib
 
 # fzf
 set -U FZF_LEGACY_KEYBINDINGS 0
+
+# switch (uname)
+#   # case Darwin
+#   #   source (dirname (status --current-filename))/config-osx.fish
+#   case Linux
+#     source (dirname (status --current-filename))/config-linux.fish
+#   case '*'
+#     source (dirname (status --current-filename))/config-windows.fish
+# end
