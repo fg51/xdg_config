@@ -1,10 +1,16 @@
+local status, packer = pcall(require, "packer")
+if (not status) then
+  print("Packer is not installed")
+  return
+end
+
 vim.cmd [[packadd packer.nvim]]
 
 -- requires: loading the required plugins before loading the plugin
 -- setup: run code before loading the plugin
 -- config: run code after loading the plugin
 
-return require('packer').startup(function()
+return packer.startup(function()
   -- packer can mange itself
   use 'wbthomason/packer.nvim'
 
@@ -34,73 +40,25 @@ return require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-    config = require 'nvim-treesitter.configs'.setup {
-      -- ensure_installed = 'maintained',
-      -- ensure_installed = {"c", "lua", "rust" },
-      -- install parsers synchronously (only applied to `ensure_installed`)
-      sync_install = false,
-
-      auto_install = true,
-
-      -- List of parsers to ignore installing (for "all")
-      ignore_install = { "javascript" },
-
-      highlight = { enable = true },
-      -- refactor = {
-      --   highlight_definitions = {
-      --     enable = true
-      --   },
-      --   smart_rename = {
-      --     enable = true,
-      --     smart_rename = 'grr',
-      --   },
-      --   navigation = {
-      --     enable = true,
-      --     goto_definition = 'gnd',
-      --     list_definitions = 'gnD'
-      --   }
-      -- },
-      indent = { enable = true, },
-      autotag = { enable = true, },
-    }
   }
-  --use {
-  --  'sheerun/vim-polyglot', config = function() vim.cmd "let g:rustfmt_autosave = 1" end
-  --}
 
-  -- filetype {{{
-  use { 'sirtaj/vim-openscad', ft = 'scad' }
-  use { 'ron-rs/ron.vim', ft = 'ron' }
-  -- }}} filetype
+  use { 'sirtaj/vim-openscad', ft = 'scad' } -- filetype
+  use { 'ron-rs/ron.vim', ft = 'ron' } -- filetype
 
-  -- theme {{{
-  --use { 'navarasu/onedark.nvim',
-  --  -- requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
-  --  --config = function() vim.cmd "colorscheme onedark" end
+  use 'EdenEast/nightfox.nvim'  -- theme
+  --use { 'EdenEast/nightfox.nvim',
   --  config = function()
-  --    onedark = require('onedark')
-  --    onedark.setup({
-  --      transparent = false,
+  --    require('nightfox').setup({
+  --      options = {
+  --        transparent = true
+  --      },
+  --      on_attach = vim.cmd("colorscheme duskfox"),
   --    })
-  --    -- onedark.load()
-  --  end
+  --  end,
+  --  --setup = function()
+  --  --  vim.cmd("colorscheme duskfox")
+  --  --end
   --}
-
-  use { 'EdenEast/nightfox.nvim',
-    config = function()
-      require('nightfox').setup({
-        options = {
-          transparent = true
-        },
-        on_attach = vim.cmd("colorscheme duskfox"),
-      })
-    end,
-    --setup = function()
-    --  vim.cmd("colorscheme duskfox")
-    --end
-  }
-
-  -- }}} theme
 
   use 'editorconfig/editorconfig-vim'
 
@@ -137,38 +95,22 @@ return require('packer').startup(function()
 
   use { 'mattn/emmet-vim', ft = { 'css', 'html', 'javascript', 'markdown', 'typescript', } }
 
-  -- status line {{{
-  -- use {
-  --  'glepnir/galaxyline.nvim',
-  --  branch = 'main',
-  --  requires = {'kyazdani42/nvim-web-devicons', opt = true },
-  --}
   use {
-    'nvim-lualine/lualine.nvim',
+    'nvim-lualine/lualine.nvim', -- statusline
     requires = {
-      'kyazdani42/nvim-web-devicons',
-      -- 'EdenEast/nightfox.nvim',
+      'kyazdani42/nvim-web-devicons',  -- file icons
       opt = true
     },
-    config = require('lualine').setup {
-      options = {
-        theme = 'nord',
-      },
-      sections = {
-        lualine_x = {
-          { 'encoding' },
-          { 'fileformat', icons_enabled = false, },
-          { 'filetype', icons_enabled = false, }
-        }
-      }
-    }
   }
 
-  -- }}} statusline
 
-  -- finder {{{
-  use { 'nvim-telescope/telescope.nvim', opt = true, cmd = 'Telescope', requires = { { 'nvim-lua/plenary.nvim' } } }
-  -- }}} finder
+  use {
+    'nvim-telescope/telescope.nvim', -- finder
+    opt = true,
+    cmd = 'Telescope',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
+  use 'nvim-telescope/telescope-file-browser.nvim'
 
   -- lsp {{{
   use 'williamboman/mason.nvim'
@@ -872,17 +814,6 @@ vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
     end,
   }
   --}}}
-
-  -- zettelkasten {{{
-  -- use {
-  --   'renerocksai/telekasten.nvim',
-  --   requires = {
-  --     'nvim-telescope/telescope.nvim'
-  --   },
-  --   -- opt = true,
-  --   -- run = ':lua require("telekasten")',
-  -- }
-  -- }}} zettelkasten
 
 
   -- filer {{{
