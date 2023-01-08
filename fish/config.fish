@@ -1,18 +1,33 @@
-# {{{ my bin path
-set -gx PATH $HOME/.local/bin $PATH
-set -gx PATH $HOME/.bin $HOME/.local/bin $PATH
-set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
-set -gx PATH $HOME/.ghq/github.com/petervanderdoes/gitflow-avh $PATH
-# }}}
-
+if status is-interactive
+  # Commands to run in interactive sessions can go here
 
 # {{{ alias
-alias image sxiv
-alias pdf evince
-# alias paraview /opt/paraview/bin/paraview
-alias cmd /mnt/c/Windows/System32/cmd.exe
-alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
-alias explorer /mnt/c/Windows/explorer.exe
+  alias image sxiv
+  alias view_pdf evince
+  alias paraview /opt/paraview/bin/paraview
+  alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
+  alias explorer /mnt/c/Windows/explorer.exe
+  alias hx helix
+  alias ls exa
+  alias la 'exa -la'
+# }}}
+
+  eval (dircolors -c $HOME/.config/dir_colors)
+
+  # zoxide
+  if command -sq zoxide
+      zoxide init fish | source
+  end
+
+  starship init fish | source
+end
+
+source /opt/asdf-vm/asdf.fish
+
+# {{{ my bin path
+fish_add_path $HOME/.local/bin
+fish_add_path $HOME/.bin
+set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 # }}}
 
 
@@ -34,30 +49,31 @@ set -gx UNZIPOPT -OCP932
 set -gx XDG_CONFIG_DIR $HOME/.config
 set -gx XDG_DATA_DIR $HOME/.local/sharconfig
 
+set -gx GTAGSLABEL pygments
 
 # {{{ GIT
 
 # fish git prompt
-set __fish_git_prompt_showdirtystate 'yes'
-set __fish_git_prompt_showstashstate 'yes'
-set __fish_git_prompt_showupstream 'yes'
-set __fish_git_prompt_color_branch yellow
+#set __fish_git_prompt_showdirtystate 'yes'
+#set __fish_git_prompt_showstashstate 'yes'
+#set __fish_git_prompt_showupstream 'yes'
+#set __fish_git_prompt_color_branch yellow
 
 # Status Chars
-set __fish_git_prompt_char_dirtystate '⚡'
-set __fish_git_prompt_char_stagedstate '→'
-set __fish_git_prompt_char_stashstate '↩'
-set __fish_git_prompt_char_upstream_ahead '↑'
-set __fish_git_prompt_char_upstream_behind '↓'
+#set __fish_git_prompt_char_dirtystate '⚡'
+#set __fish_git_prompt_char_stagedstate '→'
+#set __fish_git_prompt_char_stashstate '↩'
+#set __fish_git_prompt_char_upstream_ahead '↑'
+#set __fish_git_prompt_char_upstream_behind '↓'
 
-function fish_prompt
-    set last_status $status
-    set_color $fish_color_cwd
-    printf '%s' (prompt_pwd)
-    set_color normal
-    printf '%s ' (__fish_git_prompt)
-    set_color normal
-end
+#function fish_prompt
+#    set last_status $status
+#    set_color $fish_color_cwd
+#    printf '%s' (prompt_pwd)
+#    set_color normal
+#    printf '%s ' (__fish_git_prompt)
+#    set_color normal
+#end
 # }}}
 
 function git_enable_gpg
@@ -89,11 +105,11 @@ complete -c aws -f -a '(begin; set -lx COMP_SHELL fish; set -lx COMP_LINE (comma
 
 # {{{ TODO: as eval "$(anyenv init -)"
 
-set -gx ANYENV_ROOT $HOME/.anyenv
+#set -gx ANYENV_ROOT $HOME/.anyenv
 #set -x PATH "$ANYENV_ROOT/bin" $PATH
 #status --is-interactive; and source (anyenv init -|psub)
 
-set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
+#set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
 #set -x PATH "$PYENV_ROOT/shims" "$PYENV_ROOT/bin" $PATH
 
 # if test -d $PYENV_ROOT
@@ -103,7 +119,7 @@ set -gx PYENV_ROOT "$ANYENV_ROOT/envs/pyenv"
 #  status --is-interactive; and source (pyenv virtualenv-init -|psub)
 #end
 
-set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
+#set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
 # set -gx PATH $ANYENV_ROOT/envs/ndenv/bin $PATH
 # set -gx PATH $NDENV_ROOT/shims $PATH
 # }}}
@@ -115,7 +131,6 @@ set -gx NDENV_ROOT $ANYENV_ROOT/envs/ndenv
 # set -gx GO111MODULE on
 # }}}
 
-set -gx GTAGSLABEL pygments
 
 # {{{ RUST
 set -gx RUST_ROOT $HOME/.rustup/toolchains/beta-x86_64-unknown-linux-gnu
@@ -129,7 +144,7 @@ end
 
 # # set -gx RUST_SRC_PATH (rustc --print sysroot)/lib/rustlib/src/rust/src
 set -gx CARGO_ROOT $HOME/.cargo
-set -gx PATH $CARGO_ROOT/bin $PATH
+fish_add_path $CARGO_ROOT/bin
 # }}}
 
 # {{{ linuxbrew
@@ -144,6 +159,3 @@ set -gx PATH $CARGO_ROOT/bin $PATH
 # }}}
 
 set -U FZF_LEGACY_KEYBINDINGS 0
-
-# TODO: change to git
-source /opt/asdf-vm/asdf.fish
