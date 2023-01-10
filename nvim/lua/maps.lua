@@ -1,4 +1,3 @@
-vim.g.mapleader = ","
 
 vim.cmd [[ inoremap <silent> jj <ESC>]]
 

@@ -1,32 +1,58 @@
-local status, ts = pcall(require, "nvim-treesitter.configs")
-if (not status) then
-  return
-end
-
-ts.setup {
-  highlight = {
-    enable = true,
-    disable = {},
-  },
-  indent = {
-    enable = true,
-    disable = {},
-  },
-  ensure_installed = {
-    "tsx",
-    "toml",
-    "fish",
-    "php",
-    "json",
-    "yaml",
-    "css",
-    "html",
-    "lua"
-  },
-  autotag = {
-    enable = true,
-  },
-}
-
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
+-- local status, ts = pcall(require, "nvim-treesitter.configs")
+-- if (not status) then
+--   return
+-- end
+--
+-- ts.setup {
+--   auto_install = false,
+--   sync_install = false,
+--   highlight = {
+--     enable = true,
+--     disable = {},
+--   },
+--   indent = {
+--     enable = true,
+--     disable = {},
+--   },
+--   ensure_installed = {
+--     "bash",
+--     "c",
+--     "cmake",
+--     "cpp",
+--     "diff",
+--     "fish",
+--     "gitignore",
+--     "go",
+--     "graphql",
+--     "help",
+--     "http",
+--     "javascript",
+--     "jsdoc",
+--     "json",
+--     "jsonc",
+--     "latex",
+--     "lua",
+--     "markdown",
+--     "markdown_inline",
+--     "ninja",
+--     "php",
+--     "python",
+--     "regex",
+--     "rust",
+--     "scss",
+--     "sql",
+--     "svelte",
+--     "toml",
+--     "tsx",
+--     "typescript",
+--     "vim",
+--     "vue",
+--     "yaml",
+--   },
+--   autotag = {
+--     enable = true,
+--   },
+-- }
+--
+-- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+-- parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }

@@ -1,9 +1,5 @@
 vim.cmd("autocmd!")
 
-vim.scriptencoding = 'utf-8'
-vim.opt.encoding = 'utf-8'
-vim.opt.fileencoding = 'utf-8'
-vim.opt.fileencodings = { 'utf-8', 'default', 'ucs-bom', 'euc-jp', 'cp932', 'shift-jis', 'latin1' }
 
 local g = vim.g
 local o, wo, bo = vim.o, vim.wo, vim.bo
@@ -178,7 +174,6 @@ opt.startofline = false
 --set ft=markdown
 -- }}}
 
-vim.cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
 -- vim.api.nvim_create_autocmd({'BufWritePost'})
 
 -- OTHERS {{{
