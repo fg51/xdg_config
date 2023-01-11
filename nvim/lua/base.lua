@@ -46,7 +46,7 @@ local opt = vim.opt
 
 -- {{{ neovim provider
 -- {{{ python3, python2
-g.python_host_prog = '~/.anyenv/envs/pyenv/versions/neovim2/bin/python2'
+-- g.python_host_prog = '~/.anyenv/envs/pyenv/versions/neovim2/bin/python2'
 --g.python3_host_prog = '~/.anyenv/envs/pyenv/versions/neovim3/bin/python3'
 g.python3_host_prog = vim.env.HOME .. '/.local/share/nvim_python3_host/.venv/bin/python3'
 -- }}}
@@ -81,7 +81,7 @@ opt.scrolloff = 5 -- view set scrolloff=5
 opt.shiftwidth = 2 -- indent
 opt.showcmd = true -- view cmd "set showcmd" --set showcmd
 opt.showtabline = 2 -- view -- cmd "set showtabline=2" --set showtabline=2
-opt.smartcase = true -- search
+opt.smartcase = true -- search --  Don't ignore case with capitals
 opt.smartindent = true -- indent
 opt.smarttab = true -- indent
 opt.softtabstop = 2 -- indent --bo.softtabstop = 2
@@ -89,13 +89,13 @@ opt.tabstop = 2 -- indent
 opt.termguicolors = true --  set termguicolors
 opt.title = true -- cmd "set title"  --set title
 opt.virtualedit:append({ "block" }) -- input -- set virtualedit& virtualedit+=block
-opt.wrap = true -- view -- cmd "set wrap" --set wrap
+opt.wrap = true -- view -- cmd "set wrap"
 opt.writebackup = false -- buffer --set nowritebackup
 
 wo.cursorline = false -- view --set nocursorline
 wo.number = true -- view -- show line-number
 wo.relativenumber = false -- view -- cmd "set norelativenumber"
-wo.signcolumn = 'yes' -- view
+wo.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 
 cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
 -- o.listchars = {
@@ -190,6 +190,7 @@ o.ttimeoutlen = 10 -- set ttimeoutlen=10 -- unnoticeable small value
 
 -- ### complete {{{
 -- opt.completeopt = "menu,menuone,noselect"
+opt.completeopt = "menu,menuone,noselect"
 -- cmd "set completeopt-=preview" --set completeopt-=preview
 -- }}} complet
 -- opt.completeopt = ""
@@ -227,6 +228,14 @@ o.matchtime = 1
 cmd "set matchpairs& matchpairs+=<:>" --  set nocompatible
 
 opt.formatoptions:append { 'r' }
+
+if vim.fn.has("nvim-0.9.0") == 1 then
+  vim.opt.splitkeep = "screen"
+  vim.o.shortmess = "filnxtToOFWIcC"
+end
+
+-- fix markdown indentation settings
+vim.g.markdown_recommended_style = 0
 
 -- Restore cursor location when file is opened
 vim.api.nvim_create_autocmd('BufReadPost', {
