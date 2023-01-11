@@ -1,6 +1,5 @@
 vim.cmd("autocmd!")
 
-
 local g = vim.g
 local o, wo, bo = vim.o, vim.wo, vim.bo
 local cmd = vim.cmd
@@ -13,9 +12,7 @@ local opt = vim.opt
 -- local buffer = {o, bo}
 -- local window = {o, wo}
 
-
 -- # INITIALIZE {{{
-
 
 -- {{{ disable builtin plugins
 --g.did_install_default_menus = 1
@@ -48,7 +45,7 @@ local opt = vim.opt
 -- {{{ python3, python2
 -- g.python_host_prog = '~/.anyenv/envs/pyenv/versions/neovim2/bin/python2'
 --g.python3_host_prog = '~/.anyenv/envs/pyenv/versions/neovim3/bin/python3'
-g.python3_host_prog = vim.env.HOME .. '/.local/share/nvim_python3_host/.venv/bin/python3'
+g.python3_host_prog = vim.env.HOME .. "/.local/share/nvim_python3_host/.venv/bin/python3"
 -- }}}
 
 g.loaded_node_provider = 0
@@ -56,27 +53,26 @@ g.loaded_perl_provider = 1
 g.loaded_python_provider = 0
 g.loaded_ruby_provider = 1
 
-
 -- }}}
 
 -- opt.fileencoding
-cmd "set foldcolumn=1" -- fold
+cmd("set foldcolumn=1") -- fold
 
 opt.autoindent = true -- indent
 opt.autoread = true -- buffer -- cmd "set autoread"
 opt.clipboard:append({ "unnamedplus" }) -- input --set clipboard=unnamed
 opt.cmdheight = 3 -- view --cmd "set cmdheight=3" --set cmdheight=3
 opt.cursorcolumn = false -- view -- cmd "set nocursorcolumn"
-opt.display = 'lastline' -- view -- cmd "set display=lastline" --set display=lastline "NOTE: no-@ in long line
+opt.display = "lastline" -- view -- cmd "set display=lastline" --set display=lastline "NOTE: no-@ in long line
 opt.expandtab = true -- indent
 opt.foldlevel = 99 -- fold
-opt.foldmethod = 'marker' -- fold
+opt.foldmethod = "marker" -- fold
 opt.hidden = false -- buufer -- disable unsaved file. -- set nohidden
 opt.hlsearch = true -- search
 opt.ignorecase = true -- search
 opt.laststatus = 2 -- view -- cmd "set laststatus=2" --set laststatus=2
 opt.list = true -- view -- show invisible chars cmd "set list" --set list
-opt.mouse = 'a' -- cmd "set mouse=a" --set mouse=a
+opt.mouse = "a" -- cmd "set mouse=a" --set mouse=a
 opt.scrolloff = 5 -- view set scrolloff=5
 opt.shiftwidth = 2 -- indent
 opt.showcmd = true -- view cmd "set showcmd" --set showcmd
@@ -97,7 +93,7 @@ wo.number = true -- view -- show line-number
 wo.relativenumber = false -- view -- cmd "set norelativenumber"
 wo.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 
-cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
+cmd("set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%")
 -- o.listchars = {
 --   tab = '»-',
 --   trail = '-',
@@ -106,11 +102,9 @@ cmd "set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%"
 --   nbsp = '%',
 -- }
 
-cmd "set fillchars=stl:\\ ,stlnc:\\ ,vert:\\|,fold:-,diff:-" -- set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
-cmd "let g:vim_indent_cont = 0" --let g:vim_indent_cont = 0
-cmd "set backspace=indent,eol,start" -- input -- set backspace=indent,eol,start
-
-
+cmd("set fillchars=stl:\\ ,stlnc:\\ ,vert:\\|,fold:-,diff:-") -- set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
+cmd("let g:vim_indent_cont = 0") --let g:vim_indent_cont = 0
+cmd("set backspace=indent,eol,start") -- input -- set backspace=indent,eol,start
 
 --" ## BUFFER {{{
 
@@ -122,16 +116,14 @@ cmd "set backspace=indent,eol,start" -- input -- set backspace=indent,eol,start
 --  set backupdir=c:/tmp/swap,c:/temp/swap
 --  set undodir=c:/tmp/undo,c:/temp/undo
 --else
-cmd "set directory=~/.cache/vim/swap" --  set directory=~/.cache/vim/swap
-cmd "set undofile undodir=~/.cache/vim/undo" --  set undofile undodir=~/.cache/vim/undo
+cmd("set directory=~/.cache/vim/swap") --  set directory=~/.cache/vim/swap
+cmd("set undofile undodir=~/.cache/vim/undo") --  set undofile undodir=~/.cache/vim/undo
 --endif
 -- }}} BUFFER
-
 
 -- ## VIEW {{{
 
 --"set textwidth=0 "NOTE: auto by-return
-
 
 -- NOTE: simple statuline
 --"set statusline=%f%M%R%H%W%q%{&ff=='unix'?'':',['.&ff.']'}%{&fenc=='utf-8'\|\|&fenc==''?'':',['.&fenc.']'}%{GetQuickFixCount()==0?'':'\ [!'.GetQuickFixCount().']'}%=%(\|%3p%%%)
@@ -144,21 +136,18 @@ cmd "set undofile undodir=~/.cache/vim/undo" --  set undofile undodir=~/.cache/v
 --"  return len(filter(getqflist(), 'v:val.valid != 0'))
 --"endfunction
 
-
 -- }}} VIEW
-
 
 -- ## COMMAND {{{
 opt.wildmenu = true --cmd "set wildmenu" --set wildmenu  -- complete in the commandline mode.
 opt.wildmode = { "longest", "full" } --set wildmode=longest:full,full
-opt.wildignore = { '*.o', '*.a', '*.pyc', '__pycache__', 'node_modules' }
+opt.wildignore = { "*.o", "*.a", "*.pyc", "__pycache__", "node_modules" }
 o.history = 2000 -- cmd "set history=2000" --set history=2000
 -- cmd "set nostartofline" --set nostartofline
 opt.startofline = false
 --}}} COMMAND
 
 --}}} VIM OPTIONS
-
 
 -- SET FILETYPE {{{
 --" autocmd myautocmd BufNewFile,BufRead *.{go} set noexpandtab
@@ -198,8 +187,8 @@ opt.completeopt = "menu,menuone,noselect"
 -- opt.completeopt = "menuone,noinsert,noselect"
 -- * menuone: display menu at one
 -- * noinsert: disable insert with displaying menu
-cmd "set completeopt-=preview"
-opt.shortmess:append('c') --cmd "set shortmess+=c"
+cmd("set completeopt-=preview")
+opt.shortmess:append("c") --cmd "set shortmess+=c"
 
 --local cmp = require"cmp"
 --cmp.setup({
@@ -225,9 +214,9 @@ opt.shortmess:append('c') --cmd "set shortmess+=c"
 
 o.showmatch = true
 o.matchtime = 1
-cmd "set matchpairs& matchpairs+=<:>" --  set nocompatible
+cmd("set matchpairs& matchpairs+=<:>") --  set nocompatible
 
-opt.formatoptions:append { 'r' }
+opt.formatoptions:append({ "r" })
 
 if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.splitkeep = "screen"
@@ -238,9 +227,10 @@ end
 vim.g.markdown_recommended_style = 0
 
 -- Restore cursor location when file is opened
-vim.api.nvim_create_autocmd('BufReadPost', {
-  pattern = { '*' },
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = { "*" },
   callback = function()
     vim.api.nvim_exec('silent! normal! g`"zv', false)
   end,
 })
+-- opt.guifont = "font-name:h11"
