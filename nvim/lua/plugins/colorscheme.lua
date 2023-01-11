@@ -4,7 +4,13 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd [[colorscheme nightfox]]
+      require("nightfox").setup({
+        options = {
+          transparent = true,
+        },
+        on_attach = vim.cmd("colorscheme duskfox"),
+      })
+      -- vim.cmd([[colorscheme nightfox]])
     end,
   },
 }

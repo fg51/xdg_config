@@ -17,6 +17,9 @@ return {
         enable = true,
         disable = {},
       },
+      autotag = {
+        enable = true,
+      },
       context_commentstring = { enable = true, enable_automd = false },
       ensure_installed = {
         "bash",
@@ -54,13 +57,12 @@ return {
         "vue",
         "yaml",
       },
-      -- autotag = {
-      --   enable = true,
-      -- },
     },
     ---@param opts TSConfig
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
+      -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+      -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
     end,
   },
 }

@@ -8,9 +8,9 @@ return {
     version = "*",
     lazy = true,
     event = { 'VeryLazy' }, -- event = { 'VimEnter' },
-    config = function()
-      require 'nvim-surround'.setup({})
-    end
+    -- config = function()
+    --   require 'nvim-surround'.setup({})
+    -- end
   },
 
   --  { 'h1mesuke/vim-alignta', opt = true, cmd = 'Alignta' }
@@ -19,9 +19,9 @@ return {
     'windwp/nvim-autopairs', -- autopair
     lazy = true,
     event = { "InsertEnter" },
-    config = function()
-      require 'nvim-autopairs'.setup()
-    end,
+    -- config = function()
+    --   require 'nvim-autopairs'.setup()
+    -- end,
   },
   {
     'windwp/nvim-ts-autotag', -- autotag for html
@@ -34,7 +34,7 @@ return {
     'phaazon/hop.nvim',
     version = 'v2',
     lazy = true,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     keys = {
       { "f", "<cmd>lua require'hop'.hint_char1()<cr>", },
       { '<leader>hf', "<cmd>lua require'hop'.hint_char2()<cr>", },

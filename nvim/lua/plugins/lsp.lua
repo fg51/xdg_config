@@ -175,7 +175,7 @@ return {
                 unusedLocalExclude = { "_*" },
               },
               format = {
-                enable = true,
+                enable = false,
                 defaultConfig = {
                   indent_style = "space",
                   indent_size = "2",
@@ -235,8 +235,7 @@ return {
       end
 
       -- Diagnostic Settings
-      vim.lsp.handlers["textDocument/publishDiagnostics"] =
-      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
         update_in_insert = false,
         virtual_text = false,
@@ -270,28 +269,15 @@ return {
           nls.builtins.formatting.stylua,
         },
       }
+      -- vim.api.nvim_create_autocmd({ 'FileType' }, {
+      --   pattern = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+      --   callback = function()
+      --     vim.keymap.set({ 'n' }, '<Plug>(lsp)f', function()
+      --       vim.cmd([[EslintFixAll]])
+      --       vim.lsp.buf.format({ name = 'null-ls' })
+      --     end)
+      --   end,
+      -- })
     end,
-    --    requires = {
-    --      { 'williamboman/mason.nvim', opt = true, } ,
-    --      { 'jose-elias-alvarez/null-ls.nvim', opt = true, },
-    --    },
-    --    wants = { 'mason.nvim', 'null-ls' },
-    --    config = function()
-    --      require'mason-null-ls'.setup()
-    --      local null_ls = require'null-ls'
-    --      null_ls.setup({
-    --        sources = { null_ls.builtins.formatting.prettier },
-    --      })
-    --
-    --      -- vim.api.nvim_create_autocmd({ 'FileType' }, {
-    --      --   pattern = { 'typescript', 'typescriptreact', 'typescript.tsx' },
-    --      --   callback = function()
-    --      --     vim.keymap.set({ 'n' }, '<Plug>(lsp)f', function()
-    --      --       vim.cmd([[EslintFixAll]])
-    --      --       vim.lsp.buf.format({ name = 'null-ls' })
-    --      --     end)
-    --      --   end,
-    --      -- })
-    --    end
   },
 }
