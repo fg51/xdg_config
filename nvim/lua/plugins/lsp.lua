@@ -10,19 +10,24 @@ return {
   {
     "glepnir/lspsaga.nvim", -- ui for lsp
     branch = "main",
+    dependencies = { { "nvim-tree/nvim-web-devicons" }, },
     lazy = true,
     event = "VeryLazy",
     config = function()
+      require("lspsaga").setup({})
       vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
+      vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true })
       vim.keymap.set("n", "<C-k>", "<cmd>Lspsaga signature_help<CR>", { silent = true })
 
       vim.keymap.set("n", "<space>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
       vim.keymap.set({ "n", "v" }, "<space>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
       vim.keymap.set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
       vim.keymap.set("n", "<space>e", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
-      vim.keymap.set("n", "]g", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
-      vim.keymap.set("n", "[g", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+      vim.keymap.set("n", "[g", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+      vim.keymap.set("n", "]g", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
       vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
+
+      vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", { silent = true })
 
       vim.keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
       -- vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', { silent = true })
@@ -215,17 +220,17 @@ return {
         end,
       })
 
-      vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>")
+      vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>")
       vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
       vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
       vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-      vim.keymap.set("n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
-      vim.keymap.set("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
+      vim.keymap.set("n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
+      vim.keymap.set("n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
 
-      vim.keymap.set("n", "<space>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+      vim.keymap.set("n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
       vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-      vim.keymap.set("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
-      vim.keymap.set("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>")
+      vim.keymap.set("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>")
+      vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>")
 
       -- Diagnostic symbols in the sign column
       local signs = { Error = " ", Warn = ">>", Hint = ">", Info = ">" }
@@ -267,6 +272,7 @@ return {
         sources = {
           nls.builtins.formatting.prettier,
           nls.builtins.formatting.stylua,
+          nls.builtins.formatting.rustfmt,
         },
       }
       -- vim.api.nvim_create_autocmd({ 'FileType' }, {

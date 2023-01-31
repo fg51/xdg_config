@@ -14,7 +14,7 @@ return {
         disable = {},
       },
       indent = {
-        enable = true,
+        enable = false,
         disable = {},
       },
       autotag = {
