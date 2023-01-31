@@ -69,3 +69,8 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 #   case '*'
 #     source (dirname (status --current-filename))/config-windows.fish
 # end
+
+# pnpm
+set -gx PNPM_HOME $HOME/.local/share/pnpm
+set -gx PATH $PNPM_HOME $PATH
+# pnpm end
