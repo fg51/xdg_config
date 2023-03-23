@@ -71,6 +71,8 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 # end
 
 # pnpm
-set -gx PNPM_HOME $HOME/.local/share/pnpm
-set -gx PATH $PNPM_HOME $PATH
+set -gx PNPM_HOME "/home/kflange/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
 # pnpm end

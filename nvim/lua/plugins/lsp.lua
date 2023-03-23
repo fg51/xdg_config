@@ -23,8 +23,8 @@ return {
       vim.keymap.set({ "n", "v" }, "<space>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
       vim.keymap.set("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
       vim.keymap.set("n", "<space>e", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
-      vim.keymap.set("n", "[g", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
-      vim.keymap.set("n", "]g", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
+      vim.keymap.set("n", "]g", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
+      vim.keymap.set("n", "[g", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
       vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 
       vim.keymap.set("n", "<leader>o", "<cmd>Lspsaga outline<CR>", { silent = true })
@@ -141,55 +141,55 @@ return {
           },
         },
         yamlls = {},
-        sumneko_lua = {
-          single_file_support = true,
-          settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
-              },
-              completion = {
-                workspaceWord = true,
-                callSnippet = "Both",
-              },
-              misc = {
-                parameters = {
-                  "--log-level=trace",
-                },
-              },
-              diagnostics = {
-                -- enable = false,
-                groupSeverity = {
-                  strong = "Warning",
-                  strict = "Warning",
-                },
-                groupFileStatus = {
-                  ["ambiguity"] = "Opened",
-                  ["await"] = "Opened",
-                  ["codestyle"] = "None",
-                  ["duplicate"] = "Opened",
-                  ["global"] = "Opened",
-                  ["luadoc"] = "Opened",
-                  ["redefined"] = "Opened",
-                  ["strict"] = "Opened",
-                  ["strong"] = "Opened",
-                  ["type-check"] = "Opened",
-                  ["unbalanced"] = "Opened",
-                  ["unused"] = "Opened",
-                },
-                unusedLocalExclude = { "_*" },
-              },
-              format = {
-                enable = false,
-                defaultConfig = {
-                  indent_style = "space",
-                  indent_size = "2",
-                  continuation_indent_size = "2",
-                },
-              },
-            },
-          },
-        },
+        -- sumneko_lua = {
+        --   single_file_support = true,
+        --   settings = {
+        --     Lua = {
+        --       workspace = {
+        --         checkThirdParty = false,
+        --       },
+        --       completion = {
+        --         workspaceWord = true,
+        --         callSnippet = "Both",
+        --       },
+        --       misc = {
+        --         parameters = {
+        --           "--log-level=trace",
+        --         },
+        --       },
+        --       diagnostics = {
+        --         -- enable = false,
+        --         groupSeverity = {
+        --           strong = "Warning",
+        --           strict = "Warning",
+        --         },
+        --         groupFileStatus = {
+        --           ["ambiguity"] = "Opened",
+        --           ["await"] = "Opened",
+        --           ["codestyle"] = "None",
+        --           ["duplicate"] = "Opened",
+        --           ["global"] = "Opened",
+        --           ["luadoc"] = "Opened",
+        --           ["redefined"] = "Opened",
+        --           ["strict"] = "Opened",
+        --           ["strong"] = "Opened",
+        --           ["type-check"] = "Opened",
+        --           ["unbalanced"] = "Opened",
+        --           ["unused"] = "Opened",
+        --         },
+        --         unusedLocalExclude = { "_*" },
+        --       },
+        --       format = {
+        --         enable = false,
+        --         defaultConfig = {
+        --           indent_style = "space",
+        --           indent_size = "2",
+        --           continuation_indent_size = "2",
+        --         },
+        --       },
+        --     },
+        --   },
+        -- },
         -- teal_ls = {},
         -- vimls = {},
         -- tailwindcss = {},

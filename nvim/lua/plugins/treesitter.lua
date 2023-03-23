@@ -22,6 +22,7 @@ return {
       },
       context_commentstring = { enable = true, enable_automd = false },
       ensure_installed = {
+        "astro",
         "bash",
         "c",
         "cmake",

@@ -5,7 +5,7 @@ vim.opt.fileencodings = { 'utf-8', 'default', 'ucs-bom', 'euc-jp', 'cp932', 'shi
 
 -- require 'impatient'
 
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 
 -- require 'base'
 -- require 'maps'
