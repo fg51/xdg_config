@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
+    lazy = false,
     event = "BufReadPost",
     -- event = "BufEnter",
     build = ":TSUpdate",
@@ -14,7 +14,7 @@ return {
         disable = {},
       },
       indent = {
-        enable = true,
+        enable = false,
         disable = {},
       },
       autotag = {

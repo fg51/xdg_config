@@ -58,18 +58,18 @@ return {
         },
       })
 
-      cmp.setup.cmdline("/", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-        },
-      })
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "path" },
-        },
-      })
+      -- cmp.setup.cmdline("/", {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     { name = "buffer" },
+      --   },
+      -- })
+      -- cmp.setup.cmdline(":", {
+      --   mapping = cmp.mapping.preset.cmdline(),
+      --   sources = {
+      --     { name = "path" },
+      --   },
+      -- })
 
       require("nvim-autopairs").setup()
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")

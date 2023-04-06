@@ -22,7 +22,8 @@ if status is-interactive
   starship init fish | source
 end
 
-source /opt/asdf-vm/asdf.fish
+#source /opt/asdf-vm/asdf.fish
+source ~/.asdf/asdf.fish
 
 # {{{ my bin path
 fish_add_path $HOME/.local/bin
@@ -159,3 +160,10 @@ fish_add_path $CARGO_ROOT/bin
 # }}}
 
 set -U FZF_LEGACY_KEYBINDINGS 0
+
+# pnpm
+set -gx PNPM_HOME "/home/finch/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
