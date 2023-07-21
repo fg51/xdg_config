@@ -26,6 +26,7 @@ source ~/.asdf/asdf.fish
 # my bin path
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.bin
+fish_add_path $HOME/.local/share/azure-functions-cli
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 
 
