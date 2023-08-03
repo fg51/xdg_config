@@ -3,16 +3,23 @@ return {
     "j-hui/fidget.nvim", -- ui for nvim-lsp progress
     lazy = true,
     event = "VeryLazy",
+    requires = { "neovim/nvim-lspconfig" },
+    tag = "legacy",
     config = function()
       require("fidget").setup({})
     end,
   },
   {
-    "glepnir/lspsaga.nvim", -- ui for lsp
-    branch = "main",
-    dependencies = { { "nvim-tree/nvim-web-devicons" }, },
+    -- "glepnir/lspsaga.nvim", -- ui for lsp
+    "nvimdev/lspsaga.nvim", -- ui for lsp
+    -- branch = "main",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
+    },
     lazy = true,
     event = "VeryLazy",
+    -- ft = {'c', 'cpp', 'lua', 'go', 'rust', 'js', 'ts'},
     config = function()
       require("lspsaga").setup({})
       vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
@@ -108,7 +115,6 @@ return {
         clangd = {},
         cssls = {},
         dockerls = {},
-        tsserver = {},
         svelte = {},
         eslint = {},
         html = {},
@@ -127,20 +133,50 @@ return {
           },
         },
         gopls = {},
+        lua_ls = {
+          signle_file_suport = true,
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+              },
+              completion = {
+                workspaceWord = true,
+                callSnippet = "Both",
+              },
+            },
+          },
+        },
         marksman = {},
         pyright = {},
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
-              cargo = { allFeatures = true },
+              assist = {
+                importGranularity = "module",
+                importPrefix = "self",
+              },
+              cargo = {
+                allFeatures = true,
+                loadOutDirsFromCheck = true,
+              },
               checkOnSave = {
                 command = "clippy",
                 extraArgs = { "--no-deps" },
               },
+              procMacro = {
+                enable = true
+              },
             },
           },
         },
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
         -- sumneko_lua = {
         --   single_file_support = true,
         --   settings = {
@@ -192,7 +228,17 @@ return {
         -- },
         -- teal_ls = {},
         -- vimls = {},
-        -- tailwindcss = {},
+        tailwindcss = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+        },
+        tsserver = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+          single_file_support = false,
+        },
       },
       ---@type table<string, fun(server:string,  opts:_.lspconfig.options):boolean?>
       setup = {},
@@ -243,12 +289,18 @@ return {
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,
         update_in_insert = false,
-        virtual_text = false,
+        -- virtual_text = false,
+        virtual_text = {
+          format = function(diagnostic)
+            return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+          end,
+        },
         severity_sort = true,
       })
       vim.diagnostic.config({
         underline = true,
         virtual_text = false,
+        -- virtual_text = true,
         update_in_insert = false,
         float = {
           source = "always", -- Or "if_many"
@@ -270,8 +322,13 @@ return {
       local nls = require("null-ls")
       return {
         sources = {
-          nls.builtins.formatting.prettier,
-          nls.builtins.formatting.stylua,
+          nls.builtins.formatting.prettier.with({
+            prefer_local = "node_modlues/.bin",
+          }),
+          nls.builtins.formatting.black, -- python formatter
+          nls.builtins.formatting.isort, -- python formatter
+          nls.builtins.formatting.stylua, -- lua formatter
+          nls.builtins.formatting.luacheck, -- lua linter
           nls.builtins.formatting.rustfmt,
         },
       }
@@ -286,4 +343,23 @@ return {
       -- })
     end,
   },
+  -- {
+  --   "nvimdev/guard.nvim",
+  --   lazy = true,
+  --   -- event = "BufReadPre",
+  --   event = "BufReadPre",
+  --   opts = function()
+  --     local ft = require("guard.filetype")
+
+  --     ft("c"):fmt("clang-format"):lint("clang-tidy")
+
+  --     ft("lua"):fmt("stylua")
+
+  --     ft("python"):fmt("black"):append("isort")
+
+  --     require("guard").setup({
+  --       fmt_on_save = true,
+  --     })
+  --   end,
+  -- },
 }

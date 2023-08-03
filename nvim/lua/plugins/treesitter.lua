@@ -2,9 +2,13 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
-    event = "BufReadPost",
+    event = {"BufReadPost", "BufNewFile"},
     -- event = "BufEnter",
     build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "windwp/nvim-ts-autotag",  -- auto close and rename tags
+    },
     ---@type TSConfig
     opts = {
       -- auto_install = false,
@@ -19,8 +23,22 @@ return {
       },
       autotag = {
         enable = true,
+        filetypes = {
+          "astro",
+          "html",
+          "javascript",
+          "javascriptreact",
+          "jsx",
+          "markdown",
+          "svelte",
+          "tsx",
+          "typescript",
+          "typescriptreact",
+          "vue",
+        },
       },
       context_commentstring = { enable = true, enable_automd = false },
+      ignore_install = { "help" },
       ensure_installed = {
         "astro",
         "bash",
@@ -57,6 +75,7 @@ return {
         "vim",
         "vue",
         "yaml",
+        "zig",
       },
     },
     ---@param opts TSConfig

@@ -82,7 +82,7 @@ opt.smartindent = true -- indent
 opt.smarttab = true -- indent
 opt.softtabstop = 2 -- indent --bo.softtabstop = 2
 opt.tabstop = 2 -- indent
-opt.termguicolors = true --  set termguicolors
+opt.termguicolors = true --  true use 24bit color. set termguicolors
 opt.title = true -- cmd "set title"  --set title
 opt.virtualedit:append({ "block" }) -- input -- set virtualedit& virtualedit+=block
 opt.wrap = true -- view -- cmd "set wrap"
@@ -212,8 +212,8 @@ opt.shortmess:append("c") --cmd "set shortmess+=c"
 --  })
 --})
 
-o.showmatch = true
-o.matchtime = 1
+opt.showmatch = true
+opt.matchtime = 1
 cmd("set matchpairs& matchpairs+=<:>") --  set nocompatible
 
 opt.formatoptions:append({ "r" })

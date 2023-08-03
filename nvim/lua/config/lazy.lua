@@ -29,5 +29,8 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
+    chache = {
+      enabled = true,
+    },
   },
 })

@@ -6,11 +6,10 @@ return {
   {
     "kylechui/nvim-surround", -- add/delete/change surrounding pairs
     version = "*",
-    lazy = true,
     event = { "VeryLazy" }, -- event = { 'VimEnter' },
-    -- config = function()
-    --   require 'nvim-surround'.setup({})
-    -- end
+    config = function()
+      require 'nvim-surround'.setup({})
+    end
   },
 
   --  { 'h1mesuke/vim-alignta', opt = true, cmd = 'Alignta' }

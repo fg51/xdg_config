@@ -73,6 +73,20 @@ return {
       --  })
       --})
 
+      local lspkind = require("lspkind")
+      cmp.setup({
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = "symbol",
+            maxwidth = 50,
+            ellipsis_char = "...",
+            before = function(entry, vim_item)
+              return vim_item
+            end,
+          }),
+        },
+      })
+
       require("nvim-autopairs").setup()
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
