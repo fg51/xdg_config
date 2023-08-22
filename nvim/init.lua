@@ -8,6 +8,10 @@ vim.opt.fileencodings = { 'utf-8', 'default', 'ucs-bom', 'euc-jp', 'cp932', 'shi
 vim.g.mapleader = " "
 
 -- require 'base'
+vim.opt.expandtab = true -- indent  -- priority to editorconfig
+vim.opt.shiftwidth = 2 -- indent  -- priority to editorconfig
+vim.opt.softtabstop = 2 -- indent --bo.softtabstop = 2  -- priority to editorconfig
+vim.opt.tabstop = 2 -- indent  -- priority to editorconfig
 -- require 'maps'
 -- require 'highlights'
 -- require 'plugins'

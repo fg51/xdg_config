@@ -64,7 +64,7 @@ opt.clipboard:append({ "unnamedplus" }) -- input --set clipboard=unnamed
 opt.cmdheight = 3 -- view --cmd "set cmdheight=3" --set cmdheight=3
 opt.cursorcolumn = false -- view -- cmd "set nocursorcolumn"
 opt.display = "lastline" -- view -- cmd "set display=lastline" --set display=lastline "NOTE: no-@ in long line
-opt.expandtab = true -- indent
+-- opt.expandtab = true -- indent  -- priority to editorconfig
 opt.foldlevel = 99 -- fold
 opt.foldmethod = "marker" -- fold
 opt.hidden = false -- buufer -- disable unsaved file. -- set nohidden
@@ -74,14 +74,14 @@ opt.laststatus = 2 -- view -- cmd "set laststatus=2" --set laststatus=2
 opt.list = true -- view -- show invisible chars cmd "set list" --set list
 opt.mouse = "a" -- cmd "set mouse=a" --set mouse=a
 opt.scrolloff = 5 -- view set scrolloff=5
-opt.shiftwidth = 2 -- indent
+-- opt.shiftwidth = 2 -- indent  -- priority to editorconfig
 opt.showcmd = true -- view cmd "set showcmd" --set showcmd
 opt.showtabline = 2 -- view -- cmd "set showtabline=2" --set showtabline=2
 opt.smartcase = true -- search --  Don't ignore case with capitals
 opt.smartindent = true -- indent
 opt.smarttab = true -- indent
-opt.softtabstop = 2 -- indent --bo.softtabstop = 2
-opt.tabstop = 2 -- indent
+-- opt.softtabstop = 2 -- indent --bo.softtabstop = 2  -- priority to editorconfig
+-- opt.tabstop = 2 -- indent  -- priority to editorconfig
 opt.termguicolors = true --  true use 24bit color. set termguicolors
 opt.title = true -- cmd "set title"  --set title
 opt.virtualedit:append({ "block" }) -- input -- set virtualedit& virtualedit+=block
@@ -149,19 +149,6 @@ opt.startofline = false
 
 --}}} VIM OPTIONS
 
--- SET FILETYPE {{{
---" autocmd myautocmd BufNewFile,BufRead *.{go} set noexpandtab
---autocmd myautocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
---autocmd myautocmd BufNewFile,BufRead *.{pug,tag} set filetype=pug
---autocmd myautocmd BufNewFile,BufRead *.{py} set filetype=python tabstop=4 softtabstop=4 shiftwidth=4
---autocmd myautocmd BufNewFile,BufRead *.{toml} set filetype=toml
---"autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue.html.typescript.javascript.css
---autocmd myautocmd BufNewFile,BufRead *.vue setlocal filetype=vue
---autocmd myautocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
---autocmd myautocmd BufNewFile,BufRead *.{scad} set filetype=scad
---autocmd myautocmd BufNewFile,BufRead *.template.yaml setlocal filetype=cloudformation.yaml
---set ft=markdown
--- }}}
 
 -- vim.api.nvim_create_autocmd({'BufWritePost'})
 
@@ -190,27 +177,6 @@ opt.completeopt = "menu,menuone,noselect"
 cmd("set completeopt-=preview")
 opt.shortmess:append("c") --cmd "set shortmess+=c"
 
---local cmp = require"cmp"
---cmp.setup({
---  snippet = {
---    expand = function(args)
---      vim.fn["vsnip#anonymous"](args.body)
---    end,
---  },
---  mapping = {
---    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
---    ["<C-f>"] = cmp.mapping.scroll_docs(4),
---    ["<C-Space>"] = cmp.mapping.complete(),
---    ["<C-e>"] = cmp.mapping.close(),
---    ["<CR>"] = cmp.mapping.confirm({ select = true }),
---  },
---  sources = cmp.config.sources({
---    { name = "nvim_lsp" },
---    { name = "vsnip" },
---  }, {
---    { name = "buffer" },
---  })
---})
 
 opt.showmatch = true
 opt.matchtime = 1

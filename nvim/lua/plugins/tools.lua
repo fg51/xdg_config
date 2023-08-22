@@ -1,9 +1,5 @@
 return {
   {
-    "editorconfig/editorconfig-vim",
-    lazy = false,
-  },
-  {
     "kylechui/nvim-surround", -- add/delete/change surrounding pairs
     version = "*",
     event = { "VeryLazy" }, -- event = { 'VimEnter' },
@@ -18,6 +14,7 @@ return {
     "windwp/nvim-autopairs", -- autopair
     lazy = true,
     event = { "InsertEnter" },
+    opts = {},
     -- config = function()
     --   require 'nvim-autopairs'.setup()
     -- end,
