@@ -21,7 +21,8 @@ if status is-interactive
   starship init fish | source
 end
 
-source ~/.asdf/asdf.fish
+#source ~/.asdf/asdf.fish
+~/.local/share/rtx/bin/rtx activate fish | source
 
 # my bin path
 fish_add_path $HOME/.local/bin

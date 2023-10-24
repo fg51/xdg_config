@@ -4,6 +4,7 @@ return {
     version = false,
     lazy = true,
     event = { "InsertEnter" },
+    opts = {},
     -- symbol = "| ",
   },
 }
