@@ -266,6 +266,8 @@ return {
         end,
       })
 
+      vim.cmd("LspStart")
+
       vim.keymap.set("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>")
       vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
       vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")

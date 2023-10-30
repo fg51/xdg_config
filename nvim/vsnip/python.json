@@ -4,16 +4,16 @@
       "fread"
     ],
     "body": [
-      "with open(\"$1\", \"r\", encoding=\"cp932\") as finn:",
+      "with open(\"$1\", \"r\", encoding=\"cp932\", newline=\"\") as finn:",
       "    text = finn.read()"
     ]
-  }, 
+  },
   "fwrite": {
     "prefix": [
       "fwrite"
     ],
     "body": [
-      "with open(\"$1\", \"w\", encoding=\"cp932\") as fout:",
+      "with open(\"$1\", \"w\", encoding=\"cp932\", newline=\"\") as fout:",
       "    finn.write($2)"
     ]
   }
