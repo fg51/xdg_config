@@ -1,0 +1,20 @@
+{
+  "errorkind": {
+    "prefix": [
+      "thiserror"
+    ],
+    "body": [
+      "use std::io::Error as IoError;",
+      "",
+      "use thiserror::Error;",
+      "",
+      "pub type Result<T> = std::result::Result<T, ErrorKind>;",
+      "",
+      "#[derive(Error, Debug, PartialEq)]",
+      "pub enum ErrorKind {",
+      "    #[error(\"io error: {0}\".)]",
+      "    IOError(#[from] IoError),",
+      "}"
+    ]
+  }
+}

@@ -177,7 +177,6 @@ opt.completeopt = "menu,menuone,noselect"
 cmd("set completeopt-=preview")
 opt.shortmess:append("c") --cmd "set shortmess+=c"
 
-
 opt.showmatch = true
 opt.matchtime = 1
 cmd("set matchpairs& matchpairs+=<:>") --  set nocompatible
