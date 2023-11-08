@@ -28,6 +28,7 @@ end
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.bin
 fish_add_path $HOME/.local/share/azure-functions-cli
+fish_add_path $HOME/.rye/shims
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 
 
