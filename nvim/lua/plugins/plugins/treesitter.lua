@@ -84,12 +84,14 @@ return {
         "cmake",
         -- "comment", -- comments are slowing down TS bigtime, so disable for now
         "cpp",
+        "css",
         "diff",
         "fish",
         "gitignore",
         "go",
         "graphql",
         "help",
+        "html",
         "http",
         "javascript",
         "jsdoc",
@@ -97,6 +99,7 @@ return {
         "jsonc",
         "latex",
         "lua",
+        "make",
         "markdown",
         "markdown_inline",
         "ninja",
@@ -123,6 +126,12 @@ return {
     --      p.install_info.url = p.install_info.url:gsub("https://github.com/", "git@github.com:")
     --    end
     --  end
+    vim.filetype.add({
+      extension = {
+        mdx = "mdx",
+      },
+    })
+    vim.treesitter.language.register("markdown", "mdx")
   end),
 
   --    ---@type TSConfig

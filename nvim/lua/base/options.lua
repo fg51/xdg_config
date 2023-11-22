@@ -136,4 +136,26 @@ local function load_options()
 end
 
 load_options()
+
+vim.g.markdown_fenced_languages = {
+  "bash",
+  "c",
+  "cpp",
+  "css",
+  "fish",
+  "javascript",
+  "js=javascript",
+  "jsx",
+  "html",
+  "python",
+  "rust",
+  "sh",
+  "svelte",
+  "tsx",
+  "typescript",
+  "ts=typescript",
+  "zig",
+}
+
 vim.scriptencoding = "utf-8"
+--markdown_fenced_languages = { "html", "python" },

@@ -1,7 +1,7 @@
 return {
   { "sirtaj/vim-openscad", ft = "scad" }, -- filetype
   { "ron-rs/ron.vim", ft = "ron" }, -- filetype
-  { "mattn/emmet-vim", ft = { "css", "html", "javascript", "markdown", "typescript" } }, -- filetype
+  { "mattn/emmet-vim", ft = { "css", "html", "javascript", "markdown", "typescript", "svelte" } }, -- filetype
   {
     "iamcco/markdown-preview.nvim",
     lazy = true,
@@ -38,5 +38,9 @@ return {
     "chrisbra/csv.vim",
     lazy = true,
     ft = "csv",
+  },
+  {
+    "evanleck/vim-svelte",
+    ft = "svelte",
   },
 }
