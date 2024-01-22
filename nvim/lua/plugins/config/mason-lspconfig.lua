@@ -44,8 +44,9 @@ M.setup = function()
       --- See `clangd.lua` for example.
       custom_handler(opts)
       return
-      -- elseif type(custom_handler) == "table" then
-      --   nvim_lsp[lsp_name].setup(vim.tbl_deep_extend("force", opts, custom_handler))
+    elseif type(custom_handler) == "table" then
+      nvim_lsp[lsp_name].setup(vim.tbl_deep_extend("force", opts, custom_handler))
+      return
     else
       vim.notify(
         string.format(
