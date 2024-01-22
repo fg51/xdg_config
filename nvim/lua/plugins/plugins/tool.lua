@@ -11,4 +11,29 @@ return {
     event = { "CursorHold", "CursorHoldI" },
     config = require("plugins.config.which-key"),
   },
+  {
+    "mfussenegger/nvim-dap",
+    lazy = true,
+    cmd = {
+      "DapSetLogLevel",
+      "DapShowLog",
+      "DapContinue",
+      "DapToggleBreakpoint",
+      "DapToggleRepl",
+      "DapStepOver",
+      "DapStepInto",
+      "DapStepOut",
+      "DapTerminate",
+    },
+    config = require("plugins.config.dap"),
+    --config = require("tool.dap"),
+    dependencies = {
+      {
+        "rcarriga/nvim-dap-ui",
+        config = require("plugins.config.dap.dapui"),
+        --config = require("tool.dap.dapui"),
+      },
+      { "jay-babu/mason-nvim-dap.nvim" },
+    },
+  },
 }
