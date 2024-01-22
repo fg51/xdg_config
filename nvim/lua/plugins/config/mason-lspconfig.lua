@@ -32,30 +32,31 @@ M.setup = function()
     --local ok, custom_handler = pcall(require, "user.configs.lsp-servers." .. lsp_name)
     -- Use preset if there is no user definition
     --if not ok then
-    ok, custom_handler = pcall(require, "plugins.config.lsp-servers." .. lsp_name)
+    local ok, custom_handler = pcall(require, "plugins.config.lsp-servers." .. lsp_name)
     --end
-    -- if not ok then
-    --   -- Default to use factory config for server(s) that doesn't include a spec
-    --   nvim_lsp[lsp_name].setup(opts)
-    --   return
-    -- elseif type(custom_handler) == "function" then
-    --   --- Case where language server requires its own setup
-    --   --- Make sure to call require("lspconfig")[lsp_name].setup() in the function
-    --   --- See `clangd.lua` for example.
-    --   custom_handler(opts)
-    -- elseif type(custom_handler) == "table" then
-    --   nvim_lsp[lsp_name].setup(vim.tbl_deep_extend("force", opts, custom_handler))
-    -- else
-    --   vim.notify(
-    --     string.format(
-    --       "Failed to setup [%s].\n\nServer definition under `completion/servers` must return\neither a fun(opts) or a table (got '%s' instead)",
-    --       lsp_name,
-    --       type(custom_handler)
-    --     ),
-    --     vim.log.levels.ERROR,
-    --     { title = "nvim-lspconfig" }
-    --   )
-    -- end
+    if not ok then
+      -- Default to use factory config for server(s) that doesn't include a spec
+      nvim_lsp[lsp_name].setup(opts)
+      return
+    elseif type(custom_handler) == "function" then
+      --- Case where language server requires its own setup
+      --- Make sure to call require("lspconfig")[lsp_name].setup() in the function
+      --- See `clangd.lua` for example.
+      custom_handler(opts)
+      return
+      -- elseif type(custom_handler) == "table" then
+      --   nvim_lsp[lsp_name].setup(vim.tbl_deep_extend("force", opts, custom_handler))
+    else
+      vim.notify(
+        string.format(
+          "Failed to setup [%s].\n\nServer definition under `completion/servers` must return\neither a fun(opts) or a table (got '%s' instead)",
+          lsp_name,
+          type(custom_handler)
+        ),
+        vim.log.levels.ERROR,
+        { title = "nvim-lspconfig" }
+      )
+    end
   end
 
   mason_lspconfig.setup_handlers({ mason_lsp_handler })
