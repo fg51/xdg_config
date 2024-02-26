@@ -20,12 +20,21 @@ return {
     build = ":GoInstallBinaries",
     -- config = require("lang.vim-go"),
   },
+  -- {
+  --   "simrat39/rust-tools.nvim",
+  --   lazy = true,
+  --   ft = "rust",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   opt = require("plugins.config.rust-tools"),
+  -- },
   {
-    "simrat39/rust-tools.nvim",
+    "mrcjkb/rustaceanvim",
+    --version = "^4",
+    version = "^3",
     lazy = true,
     ft = "rust",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opt = require("plugins.config.rust-tools"),
+    config = require("plugins.config.rustaceanvim"),
   },
   {
     "Saecki/crates.nvim",
