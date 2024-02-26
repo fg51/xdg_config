@@ -22,7 +22,8 @@ if status is-interactive
 end
 
 #source ~/.asdf/asdf.fish
-~/.local/share/rtx/bin/rtx activate fish | source
+#~/.local/share/rtx/bin/rtx activate fish | source
+~/.local/bin/mise activate fish | source
 
 # my bin path
 fish_add_path $HOME/.local/bin
