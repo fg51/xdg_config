@@ -4,16 +4,20 @@
 
 local function load_options()
   local global_local = {
+    -- backupdir = global.cache_dir .. "backup/",
+    -- directory = global.cache_dir .. "swap/",
+    -- spellfile = global.cache_dir .. "spell/en.uft-8.add",
+    -- viewdir = global.cache_dir .. "view/",
     autoindent = true, -- indent
     autoread = true, -- buffer
     --autowrite = true,
     backspace = "indent,eol,start", -- input
     backup = false,
     backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
-    breakat = [[\ \  ;:,!?]],
+    breakat = [[\ \	;:,!?]],
     breakindentopt = "shift:2,min:20",
     clipboard = "unnamedplus",
-    cmdheight = 3, -- 0, 1, 2  -- view
+    cmdheight = 1, -- 0, 1, 2  -- view
     cmdwinheight = 5,
     complete = ".,w,b,k",
     completeopt = "menuone,noselect",
@@ -115,9 +119,9 @@ local function load_options()
     return s == nil or s == ""
   end
 
-  --local function use_if_defined(val, fallback)
-  --  return val ~= nil and val or fallback
-  --end
+  local function use_if_defined(val, fallback)
+    return val ~= nil and val or fallback
+  end
 
   ---- custom python provider
   --local conda_prefix = os.getenv("CONDA_PREFIX")
@@ -128,6 +132,7 @@ local function load_options()
   --  vim.g.python_host_prog = use_if_defined(vim.g.python_host_prog, "python")
   --  vim.g.python3_host_prog = use_if_defined(vim.g.python3_host_prog, "python3")
   --end
+  vim.g.python3_host_prog = vim.env.HOME .. "/.local/share/nvim_python3_host/.venv/bin/python3"
 
   --for name, value in pairs(require("modules.utils").extend_config(global_local, "user.options")) do
   for name, value in pairs(global_local) do

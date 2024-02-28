@@ -1,11 +1,9 @@
 return {
-  {
-    "lambdalisue/gina.vim",
+  ["lambdalisue/gina.vim"] = {
     lazy = true,
     cmd = { "Gina" },
   },
-  {
-    "lewis6991/gitsigns.nvim", -- show a git diff in the sign column
+  ["lewis6991/gitsigns.nvim"] = { -- show a git diff in the sign column
     lazy = true,
     event = { "CursorHold", "CursorHoldI" },
     config = function()

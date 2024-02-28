@@ -1,18 +1,15 @@
 return {
-  {
-    "folke/trouble.nvim",
+  ["folke/trouble.nvim"] = {
     lazy = true,
     cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
     config = require("plugins.config.trouble"),
   },
-  {
-    "folke/which-key.nvim",
+  ["folke/which-key.nvim"] = {
     lazy = true,
     event = { "CursorHold", "CursorHoldI" },
     config = require("plugins.config.which-key"),
   },
-  {
-    "mfussenegger/nvim-dap",
+  ["mfussenegger/nvim-dap"] = {
     lazy = true,
     cmd = {
       "DapSetLogLevel",

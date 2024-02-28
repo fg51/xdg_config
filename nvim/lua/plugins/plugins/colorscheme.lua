@@ -1,6 +1,5 @@
 return {
-  {
-    "EdenEast/nightfox.nvim", -- theme
+  ["EdenEast/nightfox.nvim"] = { -- theme
     lazy = false,
     priority = 1000,
     config = function()
@@ -12,5 +11,5 @@ return {
       })
       -- vim.cmd([[colorscheme nightfox]])
     end,
-  },
+  }
 }

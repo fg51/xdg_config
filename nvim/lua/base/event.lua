@@ -44,6 +44,29 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- auto close some filetype with <q>
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "qf",
+    "help",
+    "man",
+    "notify",
+    "nofile",
+    "lspinfo",
+    "terminal",
+    "prompt",
+    "toggleterm",
+    "copilot",
+    "startuptime",
+    "tsplayground",
+    "PlenaryTestPopup",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.api.nvim_buf_set_keymap(event.buf, "n", "q", "<CMD>close<CR>", { silent = true })
+  end,
+})
+
 function autocmd.load_autocmds()
   local definitions = {
     lazy = {},

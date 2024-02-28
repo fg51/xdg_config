@@ -8,6 +8,9 @@ return {
       ["vim.lsp.util.stylize_markdown"] = true,
       ["cmp.entry.get_documentation"] = true,
     },
+    signature = {
+      enabled = false, -- conflict for lsp_signature.nvim
+    },
   },
   messages = {
     view_search = "mini",

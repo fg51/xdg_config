@@ -1,6 +1,6 @@
 return {
-  {
-    "neovim/nvim-lspconfig",
+
+  ["neovim/nvim-lspconfig"] = {
     lazy = true,
     event = { "CursorHold", "CursorHoldI" },
     config = require("plugins.config.lsp"),
@@ -8,14 +8,13 @@ return {
       { "b0o/SchemaStore.nvim" }, -- json schemas for the major config files
       {
         "Jint-lzxy/lsp_signature.nvim",
-        opt = require("plugins.config.lsp-signature"),
+        opts = require("plugins.config.lsp-signature"),
       },
       { "williamboman/mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
     },
   },
-  {
-    "nvimdev/lspsaga.nvim",
+  ["nvimdev/lspsaga.nvim"] = {
     lazy = true,
     event = "LspAttach",
     config = require("plugins.config.lspsaga"),
@@ -26,8 +25,11 @@ return {
   --	event = "LspAttach",
   --	config = require("completion.symbols-outline"),
   --}
-  {
-    "hrsh7th/nvim-cmp",
+  ["joechrisellis/lsp-format-modifications.nvim"] = {
+    lazy = true,
+    event = "LspAttach",
+  },
+  ["hrsh7th/nvim-cmp"] = {
     lazy = true,
     event = "InsertEnter",
     config = require("plugins.config.cmp"),
@@ -46,15 +48,11 @@ return {
       --{ "f3fora/cmp-spell" },
       { "hrsh7th/cmp-buffer" },
       --{ "kdheepak/cmp-latex-symbols" },
-      {
-        "windwp/nvim-autopairs", -- autopair
-        opts = {},
-      },
+      { "windwp/nvim-autopairs", config = true }, -- autopair
       { "ray-x/cmp-treesitter", commit = "c8e3a74" },
     },
   },
-  {
-    "williamboman/mason.nvim", -- lsp manager
+  ["williamboman/mason.nvim"] = { -- lsp manager
     lazy = true,
     cmd = "Mason",
     opts = {

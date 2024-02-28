@@ -69,10 +69,12 @@ local M = {
   base = {
 
     -- Plugin: hop
-    ["nv|<leader>w"] = rhs_options:new():map_cmd("<Cmd>HopWordMW<CR>"):with_noremap():with_desc("jump: Goto word"),
+    -- conflict : nvim-surround
+    --["nv|<leader>w"] = rhs_options:new():map_cmd("<Cmd>HopWordMW<CR>"):with_noremap():with_desc("jump: Goto word"),
     ["nv|<leader>j"] = rhs_options:new():map_cmd("<Cmd>HopLineMW<CR>"):with_noremap():with_desc("jump: Goto line"),
     ["nv|<leader>k"] = rhs_options:new():map_cmd("<Cmd>HopLineMW<CR>"):with_noremap():with_desc("jump: Goto line"),
-    ["nv|<leader>c"] = rhs_options:new():map_cmd("<Cmd>HopChar1MW<CR>"):with_noremap():with_desc("jump: Goto one char"),
+    -- conflict : nvim-surround
+    -- ["nv|<leader>c"] = rhs_options:new():map_cmd("<Cmd>HopChar1MW<CR>"):with_noremap():with_desc("jump: Goto one char"),
     ["nv|<leader>cc"] = rhs_options
       :new()
       :map_cmd("<Cmd>HopChar2MW<CR>")

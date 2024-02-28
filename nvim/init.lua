@@ -11,5 +11,14 @@ if not vim.g.vscode then
   -- vim.opt.softtabstop = 2 -- indent --bo.softtabstop = 2  -- priority to editorconfig
   -- vim.opt.tabstop = 2 -- indent  -- priority to editorconfig
 
-  require("config.lazy")
+  --require("config.lazy")
+  require("/lazy")
+
+  --require("keymap")
+  require("base.keymap")
+
+  --local colorscheme = settings.colorscheme
+  --local background = settings.background
+  --vim.api.nvim_command("set background=" .. background)
+  --vim.api.nvim_command("colorscheme " .. colorscheme)
 end

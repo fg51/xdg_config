@@ -1,5 +1,7 @@
 --local settings = require("core.settings")
+local settings = require("base.settings")
 --local global = require("core.global")
+local global = require("base.global")
 
 -- Create cache dir and data dirs
 local create_dir = function()
@@ -21,67 +23,71 @@ local create_dir = function()
   --	end
 end
 
---local disable_distribution_plugins = function()
---	-- disable menu loading
---	vim.g.did_install_default_menus = 1
---	vim.g.did_install_syntax_menu = 1
---
---	-- Uncomment this if you define your own filetypes in `after/ftplugin`
---	-- vim.g.did_load_filetypes = 1
---
---	-- Do not load native syntax completion
---	vim.g.loaded_syntax_completion = 1
---
---	-- Do not load spell files
---	vim.g.loaded_spellfile_plugin = 1
---
---	-- Whether to load netrw by default
---	-- vim.g.loaded_netrw = 1
---	-- vim.g.loaded_netrwFileHandlers = 1
---	-- vim.g.loaded_netrwPlugin = 1
---	-- vim.g.loaded_netrwSettings = 1
---	-- newtrw liststyle: https://medium.com/usevim/the-netrw-style-options-3ebe91d42456
---	vim.g.netrw_liststyle = 3
---
---	-- Do not load tohtml.vim
---	vim.g.loaded_2html_plugin = 1
---
---	-- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim (all these plugins are
---	-- related to checking files inside compressed files)
---	vim.g.loaded_gzip = 1
---	vim.g.loaded_tar = 1
---	vim.g.loaded_tarPlugin = 1
---	vim.g.loaded_vimball = 1
---	vim.g.loaded_vimballPlugin = 1
---	vim.g.loaded_zip = 1
---	vim.g.loaded_zipPlugin = 1
---
---	-- Do not use builtin matchit.vim and matchparen.vim since the use of vim-matchup
---	vim.g.loaded_matchit = 1
---	vim.g.loaded_matchparen = 1
---
---	-- Disable sql omni completion.
---	vim.g.loaded_sql_completion = 1
---
---	-- Disable EditorConfig support
---	vim.g.editorconfig = 1
---
---	-- Disable remote plugins
---	-- NOTE: Disabling rplugin.vim will show error for `wilder.nvim` in :checkhealth,
---	-- NOTE:  but since it's config doesn't require python rtp, it's fine to ignore.
---	-- vim.g.loaded_remote_plugins = 1
---end
+local disable_distribution_plugins = function()
+  -- disable menu loading
+  vim.g.did_install_default_menus = 1
+  vim.g.did_install_syntax_menu = 1
+
+  -- Uncomment this if you define your own filetypes in `after/ftplugin`
+  -- vim.g.did_load_filetypes = 1
+
+  -- Do not load native syntax completion
+  vim.g.loaded_syntax_completion = 1
+
+  -- Do not load spell files
+  vim.g.loaded_spellfile_plugin = 1
+
+  -- Whether to load netrw by default
+  -- vim.g.loaded_netrw = 1
+  -- vim.g.loaded_netrwFileHandlers = 1
+  -- vim.g.loaded_netrwPlugin = 1
+  -- vim.g.loaded_netrwSettings = 1
+  -- newtrw liststyle: https://medium.com/usevim/the-netrw-style-options-3ebe91d42456
+  vim.g.netrw_liststyle = 3
+
+  -- Do not load tohtml.vim
+  --vim.g.loaded_2html_plugin = 1
+
+  -- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim (all these plugins are
+  -- related to checking files inside compressed files)
+  vim.g.loaded_gzip = 1
+  vim.g.loaded_tar = 1
+  vim.g.loaded_tarPlugin = 1
+  vim.g.loaded_vimball = 1
+  vim.g.loaded_vimballPlugin = 1
+  vim.g.loaded_zip = 1
+  vim.g.loaded_zipPlugin = 1
+
+  -- Do not use builtin matchit.vim and matchparen.vim since the use of vim-matchup
+  vim.g.loaded_matchit = 1
+  vim.g.loaded_matchparen = 1
+
+  -- Disable sql omni completion.
+  vim.g.loaded_sql_completion = 1
+
+  -- Set this to 0 in order to disable native EditorConfig support
+  vim.g.editorconfig = 1
+
+  -- Disable remote plugins
+  -- NOTE:
+  --  > Disabling rplugin.vim will make `wilder.nvim` complain about missing rplugins during :checkhealth,
+  --  > but since it's config doesn't require python rtp (strictly), it's fine to ignore that for now.
+  -- vim.g.loaded_remote_plugins = 1
+end
 
 local leader_map = function()
   vim.g.mapleader = " "
-  vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
-  vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
+  -- NOTE:
+  --  > Uncomment the following if you're using a <leader> other than <Space>, and you wish
+  --  > to disable advancing one character by pressing <Space> in normal/visual mode.
+  -- vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
+  -- vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
 end
 
 --local gui_config = function()
 --	vim.api.nvim_set_option_value("guifont", settings.gui_config.font_name .. ":h" .. settings.gui_config.font_size, {})
 --end
---
+
 --local neovide_config = function()
 --	for name, config in ipairs(settings.neovide_config) do
 --		vim.g["neovide_" .. name] = config
@@ -142,7 +148,7 @@ end
 
 local load_core = function()
   --	createdir()
-  --	disable_distribution_plugins()
+  disable_distribution_plugins()
   leader_map()
 
   --	gui_config()
@@ -150,11 +156,20 @@ local load_core = function()
   --	clipboard_config()
   --	shell_config()
 
+  --require("core.options")
   require("base.options")
   --	require("core.mapping")
-  require("base.keymap")
+  --require("core.event")
   require("base.event")
-  --	require("core.pack")
+
+  -- followings are called in root/init.lua
+  --require("core.pack")
+  --require("keymap")
+
+  --local colorscheme = settings.colorscheme
+  --local background = settings.background
+  --vim.api.nvim_command("set background=" .. background)
+  --vim.api.nvim_command("colorscheme " .. colorscheme)
 end
 
 load_core()
