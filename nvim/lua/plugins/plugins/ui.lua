@@ -30,7 +30,7 @@ return {
   {
     "j-hui/fidget.nvim", -- ui for nvim-lsp progress
     lazy = true,
-    tag = "legacy",
+    -- tag = "legacy",
     event = "LspAttach",
     config = require("plugins.config.fidget"),
   },

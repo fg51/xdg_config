@@ -1,6 +1,7 @@
 return {
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    -- "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     lazy = true,
     event = { "CursorHold", "CursorHoldI" },
     config = require("plugins.config.null-ls"),

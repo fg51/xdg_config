@@ -24,7 +24,7 @@ return function()
         "markdown",
       },
     }),
-    btns.formatting.rustfmt,
+    -- btns.formatting.rustfmt,
   }
   --require("modules.utils").load_plugin("null-ls", {
   null_ls.setup({
