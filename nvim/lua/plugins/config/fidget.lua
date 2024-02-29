@@ -9,8 +9,9 @@ return function()
     -- },
 
     progress = {
-      supress_on_insert = false,
+      suppress_on_insert = false,
       ignore_done_already = false,
+      --ignore = { "null-ls" }, -- List of LSP servers to ignore
       display = {
         render_limit = 5,
         done_ttl = 2,
