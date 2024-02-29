@@ -24,7 +24,7 @@ return function()
         "markdown",
       },
     }),
-    -- btns.formatting.rustfmt,
+    btns.formatting.rustfmt,
   }
   --require("modules.utils").load_plugin("null-ls", {
   null_ls.setup({
@@ -35,22 +35,7 @@ return function()
     sources = sources,
   })
 
-  require("mason-null-ls").setup({
-    -- ensure_installed = require("core.settings").null_ls_deps,
-
-    ensure_installed = {
-      "clang_format",
-      --"gofumpt",
-      --"goimports",
-      "prettier",
-      "shfmt",
-      "stylua",
-      "vint",
-    },
-    automatic_installation = false,
-    automatic_setup = true,
-    handlers = {},
-  })
+  require("plugins.config.mason-null-ls").setup()
 
   -- Setup usercmd to register/deregister available source(s)
   local function _gen_completion()

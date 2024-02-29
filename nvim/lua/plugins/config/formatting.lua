@@ -1,28 +1,28 @@
 local M = {}
 
--- local settings = require("core.settings")
---local disabled_workspaces = settings.format_disabled_dirs
---local format_on_save = settings.format_on_save
---local format_notify = settings.format_notify
---local format_modifications_only = settings.format_modifications_only
---local server_formatting_block_list = settings.server_formatting_block_list
+local settings = require("base.settings")
+local disabled_workspaces = settings.format_disabled_dirs
+local format_on_save = settings.format_on_save
+local format_notify = settings.format_notify
+local format_modifications_only = settings.format_modifications_only
+local server_formatting_block_list = settings.server_formatting_block_list
 
-local disabled_workspaces = {}
-local format_on_save = true
-local format_notify = true
-local format_modifications_only = false
-local server_formatting_block_list = {
-  lua_ls = true,
-  tsserver = true,
-  clangd = true,
-}
+--local disabled_workspaces = {}
+--local format_on_save = true
+--local format_notify = true
+--local format_modifications_only = false
+--local server_formatting_block_list = {
+--  lua_ls = true,
+--  tsserver = true,
+--  clangd = true,
+--}
 
 vim.api.nvim_create_user_command("FormatToggle", function()
   M.toggle_format_on_save()
 end, {})
 
--- local block_list = require("core.settings").formatter_block_list
-local block_list = { lua = false }
+local block_list = require("base.settings").formatter_block_list
+--local block_list = { lua = false }
 vim.api.nvim_create_user_command("FormatterToggleFt", function(opts)
   if block_list[opts.args] == nil then
     vim.notify(

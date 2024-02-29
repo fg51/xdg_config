@@ -1,16 +1,17 @@
 local M = {}
 
 M.setup = function()
-  local diagnostics_virtual_text = true
-  local diagnostics_level = "Hint"
+  local diagnostics_virtual_text = require("base.settings").diagnostics_virtual_text
+  local diagnostics_level = require("base.settings").diagnostics_level
 
   local nvim_lsp = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
   require("lspconfig.ui.windows").default_options.border = "rounded"
 
   --require("modules.utils").load_plugin("mason-lspconfig", {
-  --	ensure_installed = require("core.settings").lsp_deps,
-  --})
+  require("mason-lspconfig").setup({
+    ensure_installed = require("base.settings").lsp_deps,
+  })
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     signs = true,
@@ -29,6 +30,8 @@ M.setup = function()
   ---A handler to setup all servers defined under `completion/servers/*.lua`
   ---@param lsp_name string
   local function mason_lsp_handler(lsp_name)
+    -- rust_analyzer is configured using mrcjkb/rustaceanvim
+    -- warn users if they have set it up manually
     if lsp_name == "rust_analyzer" then
       local config_exist = pcall(require, "plugins.config.lsp-servers." .. lsp_name)
       if config_exist then
