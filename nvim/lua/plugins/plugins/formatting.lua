@@ -8,7 +8,7 @@ return {
   -- "jose-elias-alvarez/null-ls.nvim",
   ["nvimtools/none-ls.nvim"] = {
     lazy = true,
-    commit = "b4bd764cd1705086de4bd89f7ccf9d9ed0401259",
+    --commit = "b4bd764cd1705086de4bd89f7ccf9d9ed0401259",
     event = { "CursorHold", "CursorHoldI" },
     config = require("plugins.config.null-ls"),
     dependencies = {

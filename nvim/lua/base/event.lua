@@ -32,6 +32,21 @@ function autocmd.nvim_create_augroups(definitions)
   end
 end
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(event)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = { "*.rs" },
+      callback = function()
+        vim.lsp.buf.format({
+          buffer = event.buf,
+          async = false,
+        })
+      end,
+    })
+  end,
+})
+
 -- defer setting LSP-related keymaps till LspAttach
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LspKeymapLoader", { clear = true }),
