@@ -13,9 +13,8 @@ return {
       -- { "mfussenegger/nvim-treehopper" },
       -- { "andymass/vim-matchup" },
       --{
-      --  "hiphish/rainbow-delimiters.nvim",
-      --  config = require("editor.rainbow_delims"),
-      --},
+      { "hiphish/rainbow-delimiters.nvim", config = require("plugins.config.rainbow_delimiters") },
+      --{ "hiphish/rainbow-delimiters.nvim" },
       {
         "nvim-treesitter/nvim-treesitter-context",
         config = require("plugins.config.ts-context"),
