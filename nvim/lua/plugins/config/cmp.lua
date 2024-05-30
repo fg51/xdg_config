@@ -88,7 +88,7 @@ return function()
     },
     sorting = {
       priority_weight = 2,
-      -- comparators = comparators,
+      comparators = comparators,
     },
     formatting = {
       fields = { "abbr", "kind", "menu" },
@@ -154,7 +154,8 @@ return function()
         if cmp.visible() then
           cmp.select_prev_item()
         elseif require("luasnip").jumpable(-1) then
-          vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+          --vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+          require("luasnip").jump(-1)
         else
           fallback()
         end
@@ -175,7 +176,15 @@ return function()
       { name = "spell", keyword_length = 2 },
       -- { name = "tmux", keyword_length = 2 },
       { name = "orgmode", keyword_length = 2 },
-      { name = "buffer", keyword_length = 2 },
+      {
+        name = "buffer",
+        keyword_length = 2,
+        option = {
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end,
+        },
+      },
       { name = "latex_symbols", keyword_length = 2 },
       { name = "copilot", keyword_length = 2 },
       -- { name = "codeium" },

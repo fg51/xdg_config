@@ -21,6 +21,12 @@ return {
       keys = "etovxqpdygfblzhckisuran",
     },
   },
+  ["max397574/better-escape.nvim"] = {
+    lazy = true,
+    event = { "CursorHold", "CursorHoldI" },
+    config = require("plugins.config.better-escape"),
+  },
+
   ["LunarVim/bigfile.nvim"] = {
     lazy = false,
     config = require("plugins.config.bigfile"),
