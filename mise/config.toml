@@ -1,0 +1,5 @@
+[tools]
+node = "lts"
+ghq = "latest"
+deno = "latest"
+pnpm = "latest"
