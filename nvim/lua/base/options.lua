@@ -115,13 +115,13 @@ local function load_options()
     writebackup = false,
   }
 
-  local function isempty(s)
-    return s == nil or s == ""
-  end
+  --local function isempty(s)
+  --  return s == nil or s == ""
+  --end
 
-  local function use_if_defined(val, fallback)
-    return val ~= nil and val or fallback
-  end
+  --local function use_if_defined(val, fallback)
+  --  return val ~= nil and val or fallback
+  --end
 
   ---- custom python provider
   --local conda_prefix = os.getenv("CONDA_PREFIX")

@@ -20,14 +20,10 @@ return {
     config = require("plugins.config.lspsaga"),
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
-  --completion["simrat39/symbols-outline.nvim"] = {
-  --	lazy = true,
-  --	event = "LspAttach",
-  --	config = require("completion.symbols-outline"),
-  --}
-  ["joechrisellis/lsp-format-modifications.nvim"] = {
+  ["stevearc/aerial.nvim"] = {
     lazy = true,
     event = "LspAttach",
+    config = require("plugins.config.aerial"),
   },
   ["hrsh7th/nvim-cmp"] = {
     lazy = true,

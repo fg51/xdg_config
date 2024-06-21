@@ -26,10 +26,18 @@ return {
     event = { "CursorHold", "CursorHoldI" },
     config = require("plugins.config.better-escape"),
   },
-
+  ["sindrets/diffview.nvim"] = {
+    lazy = true,
+    cmd = { "DiffviewOpen", "DiffviewClose" },
+    config = require("plugins.config.diffview"),
+  },
   ["LunarVim/bigfile.nvim"] = {
     lazy = false,
     config = require("plugins.config.bigfile"),
     cond = require("base.settings").load_big_files_faster,
+  },
+  ["ojroques/nvim-bufdel"] = {
+    lazy = true,
+    cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
   },
 }

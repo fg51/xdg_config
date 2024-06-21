@@ -80,3 +80,12 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 #  set -gx PATH "$PNPM_HOME" $PATH
 #end
 # pnpm end
+
+function yy
+  set tmp (mktemp -t "yazi-cwd.XXXXXXX")
+  yazi $argv --cwd-file="$tmp"
+  if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+    cd -- "$cwd"
+  end
+  rm -f -- "$tmp"
+end

@@ -23,14 +23,10 @@ local Lazy = {}
 function Lazy:load_plugins()
   self.modules = {}
 
-	local append_nativertp = function()
-		package.path = package.path
-			.. string.format(
-				";%s;%s",
-				modules_dir .. "/configs/?.lua",
-				modules_dir .. "/configs/?/init.lua"
-			)
-	end
+  local append_nativertp = function()
+    package.path = package.path
+      .. string.format(";%s;%s", modules_dir .. "/configs/?.lua", modules_dir .. "/configs/?/init.lua")
+  end
 
   local get_plugins_list = function()
     local list = {}
@@ -71,7 +67,7 @@ function Lazy:load_plugins()
 end
 
 function Lazy:load_lazy()
-  if not vim.loop.fs_stat(lazy_path) then
+  if not (vim.uv or vim.loop).fs_stat(lazy_path) then
     local lazy_repo = use_ssh and "git@github.com:folke/lazy.nvim.git " or "https://github.com/folke/lazy.nvim.git "
     api.nvim_command("!git clone --filter=blob:none --branch=stable " .. lazy_repo .. lazy_path)
   end
