@@ -1,31 +1,13 @@
 -- Now use `<A-k>` or `<A-1>` to back to the `dotstutor`.
 local autocmd = {}
 
--- TODO: delete it. call from "keymap.lua"
-function nvim_load_mapping_with_buf(buf, mapping)
-  for key, value in pairs(mapping) do
-    local modes, keymap = key:match("([^|]*)|?(.*)")
-    --    if type(value) == "table" then
-    for _, mode in ipairs(vim.split(modes, "")) do
-      local rhs = value.cmd
-      local options = value.options
-      local buf = value.buffer
-      if buf and type(buf) == "number" then
-        vim.api.nvim_buf_set_keymap(buf, mode, keymap, rhs, options)
-      else
-        vim.api.nvim_set_keymap(mode, keymap, rhs, options)
-      end
-    end
-    --    end
-  end
-end
-
 function autocmd.nvim_create_augroups(definitions)
   for group_name, definition in pairs(definitions) do
-    vim.api.nvim_command("augroup " .. group_name)
+    -- Prepend an underscore to avoid name clashes
+    vim.api.nvim_command("augroup _" .. group_name)
     vim.api.nvim_command("autocmd!")
     for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
+      local command = table.concat(vim.iter({ "autocmd", def }):flatten(math.huge):totable(), " ")
       vim.api.nvim_command(command)
     end
     vim.api.nvim_command("augroup END")
@@ -47,6 +29,25 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- TODO: delete it. call from "keymap.lua"
+function nvim_load_mapping_with_buf(buf, mapping)
+  for key, value in pairs(mapping) do
+    local modes, keymap = key:match("([^|]*)|?(.*)")
+    --    if type(value) == "table" then
+    for _, mode in ipairs(vim.split(modes, "")) do
+      local rhs = value.cmd
+      local options = value.options
+      local buf = value.buffer
+      if buf and type(buf) == "number" then
+        vim.api.nvim_buf_set_keymap(buf, mode, keymap, rhs, options)
+      else
+        vim.api.nvim_set_keymap(mode, keymap, rhs, options)
+      end
+    end
+    --    end
+  end
+end
+
 -- defer setting LSP-related keymaps till LspAttach
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LspKeymapLoader", { clear = true }),
@@ -55,6 +56,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if not _G._debugging then
       --mapping.lsp(event.buf)
       nvim_load_mapping_with_buf(event.buf, keymap.lsp)
+
+      -- LSP Inlay Hints
+      -- local inlayhints_enabled = require("base.settings").lsp_inlayhints
+      local inlayhints_enabled = true
+      local client = vim.lsp.get_client_by_id(event.data.client_id)
+      if client and client.server_capabilities.inlayHintProvider ~= nil then
+        vim.lsp.inlay_hint.enable(inlayhints_enabled == true, { bufnr = event.buf })
+      end
     end
   end,
 })
@@ -78,7 +87,7 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.api.nvim_buf_set_keymap(event.buf, "n", "q", "<CMD>close<CR>", { silent = true })
+    vim.api.nvim_buf_set_keymap(event.buf, "n", "q", "<Cmd>close<CR>", { silent = true })
   end,
 })
 
@@ -115,6 +124,17 @@ function autocmd.load_autocmds()
       -- {"BufLeave", "*", ":silent !fcitx5-remote -c "}
     },
     wins = {
+      -- Highlight current line only on focused window
+      {
+        "WinEnter,BufEnter,InsertLeave",
+        "*",
+        [[if ! &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal cursorline | endif]],
+      },
+      {
+        "WinLeave,BufLeave,InsertEnter",
+        "*",
+        [[if &cursorline && &filetype !~# '^\(dashboard\|clap_\)' && ! &pvw | setlocal nocursorline | endif]],
+      },
       -- Attempt to write shada when leaving nvim
       {
         "VimLeave",
@@ -127,15 +147,11 @@ function autocmd.load_autocmds()
       { "VimResized", "*", [[tabdo wincmd =]] },
     },
     ft = {
-      { "FileType", "alpha", "set showtabline=0" },
-      { "FileType", "markdown", "set wrap" },
+      { "FileType", "*", "setlocal formatoptions-=cro" },
+      { "FileType", "alpha", "setlocal showtabline=0" },
+      { "FileType", "markdown", "setlocal wrap" },
       { "FileType", "make", "set noexpandtab shiftwidth=8 softtabstop=0" },
       { "FileType", "dap-repl", "lua require('dap.ext.autocompl').attach()" },
-      {
-        "FileType",
-        "*",
-        [[setlocal formatoptions-=cro]],
-      },
       {
         "FileType",
         "c,cpp",

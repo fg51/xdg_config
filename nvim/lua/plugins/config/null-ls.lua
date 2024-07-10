@@ -6,7 +6,7 @@ return function()
   -- Don't specify any config here if you are using the default one.
   local sources = {
     btns.formatting.clang_format.with({
-      filetypes = { "c", "cpp" },
+      filetypes = { "c", "cpp", "cs" },
       extra_args = require("plugins.config.formatters.clang_format"),
     }),
     btns.formatting.prettier.with({
@@ -40,7 +40,8 @@ return function()
   -- Setup usercmd to register/deregister available source(s)
   local function _gen_completion()
     local sources_cont = null_ls.get_source({
-      filetype = vim.api.nvim_get_option_value("filetype", { scope = "local" }),
+      -- filetype = vim.api.nvim_get_option_value("filetype", { scope = "local" }),
+      filetype = vim.bo.filetype,
     })
     local completion_items = {}
     for _, server in pairs(sources_cont) do

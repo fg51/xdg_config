@@ -63,7 +63,7 @@ return function()
       compare.score,
       compare.recently_used,
       -- compare.locality, -- Items closer to cursor will have higher priority, conflicts with `offset`
-      --require("cmp-under-comparator").under,
+      -- require("cmp-under-comparator").under,
       compare.kind,
       compare.length,
       compare.order,
@@ -71,7 +71,8 @@ return function()
 
   local cmp = require("cmp")
   require("cmp").setup({
-    preselect = cmp.PreselectMode.Item,
+    -- preselect = cmp.PreselectMode.Item,
+    preselect = cmp.PreselectMode.None,
     completion = {
       keyword_length = 2,
     },
@@ -123,6 +124,11 @@ return function()
           vim_item.abbr = truncated_label .. "..."
         end
 
+        -- deduplicate results from nvim_lsp
+        if entry.source.name == "nvim_lsp" then
+          vim_item.dup = 0
+        end
+
         return vim_item
       end,
     },
@@ -136,30 +142,41 @@ return function()
     -- You can set mappings if you want
     mapping = cmp.mapping.preset.insert({
       ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
+      ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+      ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-w>"] = cmp.mapping.close(),
+      --["<C-w>"] = cmp.mapping.close(),
+      ["<C-w>"] = cmp.mapping.abort(),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_next_item()
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
         elseif require("luasnip").expand_or_locally_jumpable() then
-          vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"))
+          require("luasnip").expand_or_jump()
         else
           fallback()
         end
       end, { "i", "s" }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_prev_item()
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
         elseif require("luasnip").jumpable(-1) then
-          --vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
           require("luasnip").jump(-1)
         else
           fallback()
         end
       end, { "i", "s" }),
+      ["<CR>"] = cmp.mapping({
+        i = function(fallback)
+          if cmp.visible() and cmp.get_active_entry() then
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = false })
+          else
+            fallback()
+          end
+        end,
+        s = cmp.mapping.confirm({ select = true }),
+        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+      }),
     }),
     snippet = {
       expand = function(args)
@@ -181,7 +198,7 @@ return function()
         keyword_length = 2,
         option = {
           get_bufnrs = function()
-            return vim.api.nvim_list_bufs()
+            return vim.api.nvim_buf_line_count(0) < 7500 and vim.api.nvim_list_bufs() or {}
           end,
         },
       },

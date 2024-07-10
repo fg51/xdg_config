@@ -19,7 +19,9 @@ M.setup = function()
     virtual_text = diagnostics_virtual_text
         and {
           -- severity_limit = diagnostics_level,
-          severity = diagnostics_level,
+          severity = {
+            min = vim.diagnostic.severity[diagnostics_level],
+          },
         }
       or false,
     -- set update_in_insert to false bacause it was enabled by lspsaga
@@ -27,7 +29,11 @@ M.setup = function()
   })
 
   local opts = {
-    capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = vim.tbl_deep_extend(
+      "force",
+      vim.lsp.protocol.make_client_capabilities(),
+      require("cmp_nvim_lsp").default_capabilities()
+    ),
   }
 
   ---A handler to setup all servers defined under `completion/servers/*.lua`

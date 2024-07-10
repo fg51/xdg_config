@@ -32,11 +32,11 @@ return {
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
-        -- version = "v2.*",
+        -- build = "make install_jsregexp",
         dependencies = { "rafamadriz/friendly-snippets" },
         config = require("plugins.config.luasnip"),
       },
-      --{ "lukas-reineke/cmp-under-comparator" },
+      { "lukas-reineke/cmp-under-comparator" },
       { "saadparwaiz1/cmp_luasnip" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-nvim-lua" },

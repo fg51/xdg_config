@@ -1,7 +1,7 @@
 return function()
   local icons = {
     ui = require("plugins.config.icons").get("ui"),
-    diagnostics = require("plugins.config.icons").get("diagnostics"),
+    -- diagnostics = require("plugins.config.icons").get("diagnostics"),
   }
 
   require("trouble").setup({
@@ -51,5 +51,19 @@ return function()
       other = icons.diagnostics.Question_alt,
     },
     use_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
+    modes = {
+      project_diagnositcs = {
+        mode = "diagnostics",
+        filter = {
+          any = {
+            {
+              function(item)
+                return item.filename:find(vim.fn.getcwd(), 1, true)
+              end,
+            },
+          },
+        },
+      },
+    },
   })
 end

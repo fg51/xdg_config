@@ -1,17 +1,9 @@
 return function()
   require("fidget").setup({
-    -- window = { blend = 0 },
-    -- sources = {
-    --   ["null-ls"] = { ignore = true },
-    -- },
-    -- fmt = {
-    --   max_messages = 3,
-    -- },
-
     progress = {
-      suppress_on_insert = false,
-      ignore_done_already = false,
-      --ignore = { "null-ls" }, -- List of LSP servers to ignore
+      suppress_on_insert = false, -- Suppress new messages while in insert mode
+      ignore_done_already = false, -- Ignore new tasks that are already complete
+      ignore = { "null-ls" }, -- List of LSP servers to ignore
       display = {
         render_limit = 5,
         done_ttl = 2,

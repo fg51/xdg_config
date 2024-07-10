@@ -21,8 +21,7 @@ vim.api.nvim_create_user_command("FormatToggle", function()
   M.toggle_format_on_save()
 end, {})
 
-local block_list = require("base.settings").formatter_block_list
---local block_list = { lua = false }
+local block_list = settings.formatter_block_list
 vim.api.nvim_create_user_command("FormatterToggleFt", function(opts)
   if block_list[opts.args] == nil then
     vim.notify(
@@ -120,7 +119,7 @@ function M.format(opts)
   end
 
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.buf_get_clients(bufnr)
+  local clients = vim.lsp.get_clients({ buffer = bufnr })
 
   if opts.filter then
     clients = opts.filter(clients)
@@ -159,7 +158,8 @@ function M.format(opts)
         { title = "LSP Formatter Warning" }
       )
       return
-    elseif
+    end
+    if
       format_modifications_only
       and require("lsp-format-modifications").format_modifications(client, bufnr).success
     then

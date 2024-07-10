@@ -20,11 +20,11 @@ return {
     -- config = require("lang.vim-go"),
   },
   ["mrcjkb/rustaceanvim"] = {
-    --version = "^4",
-    version = "^3",
-    lazy = true,
+    version = "^4",
+    -- version = "^3",
+    lazy = false,
     ft = "rust",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    -- dependencies = { "nvim-lua/plenary.nvim" },
     config = require("plugins.config.rustaceanvim"),
   },
   ["Saecki/crates.nvim"] = {
