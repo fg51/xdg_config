@@ -40,4 +40,10 @@ return {
     lazy = true,
     cmd = { "BufDel", "BufDelAll", "BufDelOthers" },
   },
+  ["vim-skk/skkeleton"] = {
+    lazy = true,
+    event = { "InsertEnter", "CmdlineEnter", "CmdwinEnter" },
+    dependencies = { "vim-denops/denops.vim" },
+    config = require("plugins.config.skkeleton"),
+  },
 }

@@ -206,6 +206,7 @@ return function()
       { name = "copilot", keyword_length = 2 },
       -- { name = "codeium" },
       -- { name = "cmp_tabnine" },
+      { name = "skkeleton" },
     },
     experimental = {
       -- ghost_text = false,
