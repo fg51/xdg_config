@@ -31,7 +31,7 @@ return {
     lazy = true,
     event = "BufReadPost Cargo.toml",
     dependencies = { "nvim-lua/plenary.nvim" },
-    --	config = require("lang.crates"),
+    config = require("plugins.config.crates"),
   },
   ["chrisbra/csv.vim"] = {
     lazy = true,
@@ -39,5 +39,14 @@ return {
   },
   ["evanleck/vim-svelte"] = {
     ft = "svelte",
+  },
+  ["MeanderingProgrammer/render-markdown.nvim"] = {
+    lazy = true,
+    ft = "markdown",
+    config = require("plugins.config.lang.render-markdown"),
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
+    },
   },
 }

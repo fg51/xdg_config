@@ -1,5 +1,8 @@
 [tools]
-node = "lts"
 ghq = "latest"
 deno = "latest"
-pnpm = "latest"
+uv = "latest"
+node = "22.12"
+pnpm = "9.15"
+usage = "latest"
+python = "3.10"

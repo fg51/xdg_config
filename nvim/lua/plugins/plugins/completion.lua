@@ -46,6 +46,7 @@ return {
       --{ "kdheepak/cmp-latex-symbols" },
       { "windwp/nvim-autopairs", config = true }, -- autopair
       { "ray-x/cmp-treesitter", commit = "c8e3a74" },
+      { "rinx/cmp-skkeleton" },
     },
   },
   --["williamboman/mason.nvim"] = { -- lsp manager

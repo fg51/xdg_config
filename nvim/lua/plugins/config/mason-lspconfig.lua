@@ -59,7 +59,7 @@ please REMOVE your LSP configuration (rust_analyzer.lua) from the `servers` dire
     --local ok, custom_handler = pcall(require, "user.configs.lsp-servers." .. lsp_name)
     -- Use preset if there is no user definition
     --if not ok then
-    local ok, custom_handler = pcall(require, "plugins.config.lsp-servers." .. lsp_name)
+    local ok, custom_handler = pcall(require, "plugins.config.lsp-serversxxx." .. lsp_name)
     --end
     if not ok then
       -- Default to use factory config for server(s) that doesn't include a spec

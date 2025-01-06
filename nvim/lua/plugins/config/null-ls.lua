@@ -5,10 +5,10 @@ return function()
   -- Please set additional flags for the supported servers here
   -- Don't specify any config here if you are using the default one.
   local sources = {
-    btns.formatting.clang_format.with({
-      filetypes = { "c", "cpp", "cs" },
-      extra_args = require("plugins.config.formatters.clang_format"),
-    }),
+    --btns.formatting.clang_format.with({
+    --  filetypes = { "c", "cpp", "cs" },
+    --  extra_args = require("plugins.config.formatters.clang_format"),
+    --}),
     btns.formatting.prettier.with({
       filetypes = {
         "vue",
