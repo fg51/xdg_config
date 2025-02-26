@@ -1,6 +1,7 @@
 vim.filetype.add({
   extension = {
-    astro = 'astro',
-    mdx = 'mdx',
-  }
+    astro = "astro",
+    mdx = "mdx",
+    v = "verilog",
+  },
 })
