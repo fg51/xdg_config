@@ -1,0 +1,9 @@
+[tools]
+bat = "latest"
+fzf = "latest"
+ghq = "latest"
+pnpm = "latest"
+ripgrep = "latest"
+usage = "latest"
+uv = "latest"
+zoxide = "latest"
