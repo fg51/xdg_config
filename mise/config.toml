@@ -1,8 +1,0 @@
-[tools]
-ghq = "latest"
-deno = "latest"
-uv = "latest"
-node = "22.12"
-pnpm = "9.15"
-usage = "latest"
-python = "3.10"
