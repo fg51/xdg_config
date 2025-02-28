@@ -12,15 +12,16 @@ if status is-interactive
 
   eval (dircolors -c $HOME/.config/dir_colors)
 
-  # zoxide
-  if command -sq zoxide
-      zoxide init fish | source
-  end
 
   starship init fish | source
   ~/.local/bin/mise activate fish | source
 #else
 #  mise activate fish --shims | source
+
+  # zoxide
+  if command -sq zoxide
+      zoxide init fish | source
+  end
 end
 
 
