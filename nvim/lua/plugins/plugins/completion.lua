@@ -1,0 +1,84 @@
+return {
+
+  ["neovim/nvim-lspconfig"] = {
+    lazy = true,
+    event = { "CursorHold", "CursorHoldI" },
+--     config = require("plugins.config.lsp"),
+     dependencies = {
+       { "b0o/SchemaStore.nvim" }, -- json schemas for the major config files
+       {
+         "Jint-lzxy/lsp_signature.nvim",
+         opts = require("plugins.config.lsp-signature"),
+       },
+--       { "williamboman/mason.nvim" },
+--       { "williamboman/mason-lspconfig.nvim" },
+     },
+  },
+  -- dependencies for nvim-lspconfig
+--  ["williamboman/mason.nvim"] = { lazy = true, },
+--  ["williamboman/mason-lspconfig.nvim"] = { lazy = true, },
+
+  ["nvimdev/lspsaga.nvim"] = {
+    lazy = true,
+    event = "LspAttach",
+    config = require("plugins.config.lspsaga"),
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+
+  ["stevearc/aerial.nvim"] = {
+    lazy = true,
+    event = "LspAttach",
+    config = require("plugins.config.aerial"),
+  },
+
+  ["hrsh7th/nvim-cmp"] = {
+    lazy = true,
+    event = "InsertEnter",
+    config = require("plugins.config.cmp"),
+    dependencies = {
+      {
+        "L3MON4D3/LuaSnip",
+        -- build = "make install_jsregexp",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        config = require("plugins.config.luasnip"),
+      },
+      { "lukas-reineke/cmp-under-comparator" },
+      { "saadparwaiz1/cmp_luasnip" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lua" },
+      { "hrsh7th/cmp-path" },
+      --{ "f3fora/cmp-spell" },
+      { "hrsh7th/cmp-buffer" },
+      --{ "kdheepak/cmp-latex-symbols" },
+      { "windwp/nvim-autopairs", config = true }, -- autopair
+      { "ray-x/cmp-treesitter", commit = "c8e3a74" },
+      -- { "rinx/cmp-skkeleton" },
+    },
+  },
+
+
+--   --["williamboman/mason.nvim"] = { -- lsp manager
+--   --  lazy = true,
+--   --  cmd = "Mason",
+--   --  opts = {
+--   --    ensure_installed = {
+--   --      "bashls",
+--   --      "black",
+--   --      "clangd",
+--   --      "deno",
+--   --      "eslint_d",
+--   --      "html",
+--   --      "lua_ls",
+--   --      "luacheck",
+--   --      "prettierd",
+--   --      -- "pylsp",
+--   --      "selene",
+--   --      "shellcheck",
+--   --      "shfmt",
+--   --      "stylua",
+--   --      -- "isort",
+--   --      -- "flake8",
+--   --    },
+--   --  },
+--   --},
+}

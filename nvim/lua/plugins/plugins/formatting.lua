@@ -1,0 +1,33 @@
+--vim.g.nonels_suppress_issue58 = false
+--
+return {
+  ["joechrisellis/lsp-format-modifications.nvim"] = {
+    lazy = true,
+    event = "LspAttach",
+  },
+-- "jose-elias-alvarez/null-ls.nvim",
+--  ["nvimtools/none-ls.nvim"] = {
+--   lazy = true,
+--   event = { "CursorHold", "CursorHoldI" },
+--   config = require("plugins.config.null-ls"),
+----    dependencies = {
+----      "nvim-lua/plenary.nvim",
+----      "jay-babu/mason-null-ls.nvim",
+----    },
+--  },
+--  -- dependencies for null-ls
+--  ["nvim-lua/plenary.nvim"] = {
+--    lazy = true,
+--    event = "VeryLazy",
+--  },
+--  ["jay-babu/mason-null-ls.nvim"] = {
+--    lazy = true,
+--    event = "VeryLazy",
+--  },
+
+  ["stevearc/conform.nvim"] = {
+    lazy = true,
+    event = { "CursorHold", "CursorHoldI" },
+    config = require("plugins.config.conform"),
+  },
+}
