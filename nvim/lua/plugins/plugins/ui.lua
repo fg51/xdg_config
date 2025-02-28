@@ -18,25 +18,14 @@ return {
     lazy = true,
     event = "VeryLazy",
     dependencies = {
---      "MunifTanjim/nui.nvim",
---      {
---        "rcarriga/nvim-notify",
---        config = require("plugins.config.notify"),
---      },
+      "MunifTanjim/nui.nvim",
+      {
+        "rcarriga/nvim-notify",
+        config = require("plugins.config.notify"),
+      },
     },
     opts = require("plugins.config.noice"),
   },
-  -- dependencies for noice
-  ["MunifTanjim/nui.nvim"] = {
-    lazy = true,
-    event = "VeryLazy",
-  },
-  ["rcarriga/nvim-notify"] = {
-    lazy = true,
-    event = "VeryLazy",
-    config = require("plugins.config.notify"),
-  },
-
 
  ["j-hui/fidget.nvim"] = { -- ui for nvim-lsp progress
    lazy = true,

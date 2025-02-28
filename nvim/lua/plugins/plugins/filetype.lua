@@ -21,29 +21,21 @@ return {
 --   },
   ["mrcjkb/rustaceanvim"] = {
 --     version = "^4",
-    version = "*",
-    lazy = true,
+    version = "^5",
+    lazy = false,
     ft = "rust",
---     -- dependencies = { "nvim-lua/plenary.nvim" },
+    -- dependencies = { "nvim-lua/plenary.nvim" },
     init = require("plugins.config.rustaceanvim"),
   },
-  -- dependencies for rustaceanvim
-  ["nvim-lua/plenary.nvim"] = {
-    lazy = true,
-    event = "VeryLazy",
-  },
 
-  ["Saecki/crates.nvim"] = {
+  ["saecki/crates.nvim"] = {
+    tag = "stable",
     lazy = true,
     event = "BufReadPost Cargo.toml",
---     dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = require("plugins.config.crates"),
   },
-  -- dependencies for crates.nvim
-  ["nvim-lua/plenary.nvim"] = {
-    lazy = true,
-    event = "VeryLazy",
-  },
+
 --   ["chrisbra/csv.vim"] = {
 --     lazy = true,
 --     ft = "csv",

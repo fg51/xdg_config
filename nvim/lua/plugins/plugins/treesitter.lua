@@ -13,22 +13,22 @@ return {
     --  { "andymass/vim-matchup" },
     --   { "mfussenegger/nvim-treehopper" },
       { "nvim-treesitter/nvim-treesitter-textobjects" },
-    --   {
-    --     "windwp/nvim-ts-autotag",
-    --     config = require("editor.autotag"),
-    --   },
-    --   {
-    --     "hiphish/rainbow-delimiters.nvim",
-    --     config = require("editor.rainbow_delims"),
-    --   },
-    --   {
-    --     "nvim-treesitter/nvim-treesitter-context",
-    --     config = require("editor.ts-context"),
-    --   },
-    --   {
-    --     "JoosepAlviste/nvim-ts-context-commentstring",
-    --     config = require("editor.ts-context-commentstring"),
-    --   },
+      {
+        "windwp/nvim-ts-autotag",
+         config = require("plugins.config.autotag"),
+      },
+      {
+        "hiphish/rainbow-delimiters.nvim",
+        config = require("plugins.config.rainbow_delimiters"),
+      },
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = require("plugins.config.ts-context"),
+      },
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        config = require("plugins.config.ts-context-commentstring"),
+      },
     },
     config = vim.schedule_wrap(function()
       --local use_ssh = require("core.settings").use_ssh
