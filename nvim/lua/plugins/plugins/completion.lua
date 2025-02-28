@@ -3,13 +3,13 @@ return {
   ["neovim/nvim-lspconfig"] = {
     lazy = true,
     event = { "CursorHold", "CursorHoldI" },
---     config = require("plugins.config.lsp"),
-     dependencies = {
-       { "b0o/SchemaStore.nvim" }, -- json schemas for the major config files
-       {
-         "Jint-lzxy/lsp_signature.nvim",
-         opts = require("plugins.config.lsp-signature"),
-       },
+    config = require("plugins.config.lspconfig"),
+    dependencies = {
+      { "b0o/SchemaStore.nvim" }, -- json schemas for the major config files
+      {
+        "Jint-lzxy/lsp_signature.nvim",
+        opts = require("plugins.config.lsp-signature"),
+      },
 --       { "williamboman/mason.nvim" },
 --       { "williamboman/mason-lspconfig.nvim" },
      },
