@@ -30,7 +30,8 @@ return function()
     },
     formatters = {
       clang_format = {
-        prepend_args = { "--style=file", "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 2}" },
+        -- prepend_args = { "--style=file", "--fallback-style={BasedOnStyle: LLVM, IndentWidth: 2}" },
+        prepend_args = { "--style=file", "--fallback-style=LLVM" },
       },
       shfmt = {
         prepend_args = { "-i", "4" },
