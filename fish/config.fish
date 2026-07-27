@@ -1,29 +1,28 @@
 set fish_greeting ""
 if status is-interactive
-  # Commands to run in interactive sessions can go here
-  alias image sxiv
-  alias view_pdf evince
-  alias paraview /opt/paraview/bin/paraview
-  alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
-  alias explorer /mnt/c/Windows/explorer.exe
-  alias hx helix
-  alias ls exa
-  alias la 'exa -la'
+    # Commands to run in interactive sessions can go here
+    alias image sxiv
+    alias view_pdf evince
+    alias paraview /opt/paraview/bin/paraview
+    alias powershell /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
+    alias explorer /mnt/c/Windows/explorer.exe
+    alias hx helix
+    alias ls exa
+    alias la 'exa -la'
 
-  eval (dircolors -c $HOME/.config/dir_colors)
+    eval (dircolors -c $HOME/.config/dir_colors)
 
+    starship init fish | source
+    ~/.local/bin/mise activate fish | source
+    #else
+    #  mise activate fish --shims | source
 
-  starship init fish | source
-  ~/.local/bin/mise activate fish | source
-#else
-#  mise activate fish --shims | source
+    # zoxide
+    if command -sq zoxide
+        zoxide init fish | source
+    end
 
-  # zoxide
-  if command -sq zoxide
-      zoxide init fish | source
-  end
 end
-
 
 # my bin path
 fish_add_path $HOME/.local/bin
@@ -32,20 +31,19 @@ fish_add_path $HOME/.local/share/azure-functions-cli
 # fish_add_path $HOME/.rye/shims
 set -gx LD_LIBRARY_PATH $LD_LIBRARY_PATH $HOME/.local/lib
 
+# mise
+set -gx MISE_IGNORED_CONFIG_PATHS /mnt/c/Users/
 
 # EDITOR
 set -gx EDITOR nvim
 set -gx SUDO_EDITOR nvim
 
-
 # fix java for xmonad wmname
 set -gx wmname LG3D
-
 
 # fix zip for mojibake
 set -gx ZIPINFOOPT -OCP932
 set -gx UNZIPOPT -OCP932
-
 
 # XDG
 #
@@ -75,17 +73,17 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 # end
 
 # pnpm
-#set -gx PNPM_HOME "/home/kflange/.local/share/pnpm"
-#if not string match -q -- $PNPM_HOME $PATH
-#  set -gx PATH "$PNPM_HOME" $PATH
-#end
+# set -gx PNPM_HOME "/home/fg51/.local/share/pnpm"
+# if not string match -q -- "$PNPM_HOME/bin" $PATH
+#     set -gx PATH "$PNPM_HOME/bin" $PATH
+# end
 # pnpm end
 
 function yy
-  set tmp (mktemp -t "yazi-cwd.XXXXXXX")
-  yazi $argv --cwd-file="$tmp"
-  if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-    cd -- "$cwd"
-  end
-  rm -f -- "$tmp"
+    set tmp (mktemp -t "yazi-cwd.XXXXXXX")
+    command yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
+        builtin cd -- "$cwd"
+    end
+    rm -f -- "$tmp"
 end
